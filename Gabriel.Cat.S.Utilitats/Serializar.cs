@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-
+using Gabriel.Cat.S.Extension;
 namespace Gabriel.Cat.S.Utilitats
 {
     /// <summary>

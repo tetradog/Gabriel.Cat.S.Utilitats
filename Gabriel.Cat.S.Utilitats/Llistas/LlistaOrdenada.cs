@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gabriel.Cat.S.Extension;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
@@ -83,7 +84,7 @@ namespace Gabriel.Cat.S.Utilitats
             {
                 ICollection<TValue> values;
                 Monitor.Enter(llistaOrdenada);
-                values = llistaOrdenada.ValuesToArray();
+                values = llistaOrdenada.GetValues(); 
                 Monitor.Exit(llistaOrdenada);
                 return values;
             }
