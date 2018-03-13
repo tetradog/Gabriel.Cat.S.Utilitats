@@ -120,7 +120,13 @@ namespace Gabriel.Cat.S.Utilitats
                 return syncRoot;
             }
         }
-
+        public void AddRange(IList<T> items)
+        {
+            if (items == null)
+                throw new ArgumentNullException("items");
+            for (int i = 0; i < items.Count; i++)
+                Add(items[i]);
+        }
         public void Add(T item)
         {
             try
