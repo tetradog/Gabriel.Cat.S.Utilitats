@@ -12,7 +12,7 @@ namespace Gabriel.Cat.S.Extension
             byte[] arrayFinal;
             int lenght = array.Length;
             for (int i = 0; i < arraysToAdd.Length; i++)
-                if (arraysToAdd[j] != null)
+                if (arraysToAdd[i] != null)
                     lenght += arraysToAdd[i].Length;
             arrayFinal = new byte[lenght];
             unsafe
