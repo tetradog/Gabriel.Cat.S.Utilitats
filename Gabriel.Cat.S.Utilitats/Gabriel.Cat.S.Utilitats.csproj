@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.2</TargetFramework>
+    <PackageProjectUrl>https://github.com/tetradog/Gabriel.Cat.S.Utilitats</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/tetradog/Gabriel.Cat.S.Utilitats</RepositoryUrl>
+    <RepositoryType>Github</RepositoryType>
+    <PackageLicenseUrl>https://github.com/tetradog/Gabriel.Cat.S.Utilitats/blob/master/LICENSE</PackageLicenseUrl>
+    <Copyright>GNU v3</Copyright>
+    <Authors>Gabriel</Authors>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
 
 </Project>
