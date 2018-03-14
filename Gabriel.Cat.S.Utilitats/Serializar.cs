@@ -37,7 +37,7 @@ namespace Gabriel.Cat.S.Utilitats
         /// </summary>
         public static readonly string NullAssemblyName = "NULL.AssemblyName";
         //mis clases
-        // public static readonly string PointZAssemblyName = typeof(PointZ).AssemblyQualifiedName;
+        public static readonly string PointZAssemblyName = typeof(PointZ).AssemblyQualifiedName;
         //mientras no le cambie esta info sera valida...
         //se añade la constante en la lista :D
         /// <summary>
@@ -60,7 +60,7 @@ namespace Gabriel.Cat.S.Utilitats
             CharAssemblyName,
             DateTimeAssemblyName,
            // PointAssemblyName,
-           // PointZAssemblyName,
+            PointZAssemblyName,
            // ColorAssemblyName,
             TimeSpanAssemblyName
         };
@@ -86,7 +86,7 @@ namespace Gabriel.Cat.S.Utilitats
             Char,
             DateTime,
             // Point,
-            // PointZ,
+            PointZ,
             //Color,
             TimeSpan
         }
@@ -148,11 +148,11 @@ namespace Gabriel.Cat.S.Utilitats
                 {
                     /*  case TiposAceptados.Point:
                           bytes = GetBytes((Point)objTipoAceptado);
-                          break;
-                      case TiposAceptados.PointZ:
-                          bytes = GetBytes((PointZ)objTipoAceptado);
-                          break;
-                          */
+                          break;*/
+                    case TiposAceptados.PointZ:
+                        bytes = GetBytes((PointZ)objTipoAceptado);
+                        break;
+
                     case TiposAceptados.Bool:
                         bytes = GetBytes((bool)objTipoAceptado);
                         break;
@@ -216,6 +216,11 @@ namespace Gabriel.Cat.S.Utilitats
         }
 
         //aqui empieza la serializacion de cada tipo
+
+        public static byte[] GetBytes(PointZ point)
+        {
+            return GetBytes(point.X).AddArray(GetBytes(point.Y), GetBytes(point.Z));
+        }
         /*    public static byte[] GetBytes(System.Drawing.Color color)
             {
                 return new byte[] { color.A, color.R, color.G, color.B };
@@ -224,10 +229,7 @@ namespace Gabriel.Cat.S.Utilitats
             {
                 return GetBytes(point.X).AddArray(GetBytes(point.Y));
             }
-            public static byte[] GetBytes(PointZ point)
-            {
-                return GetBytes(point.X).AddArray(GetBytes(point.Y), GetBytes(point.Z));
-            }
+           
             //mirar de poder serializar null
             public static byte[] GetBytes(Bitmap img)
             {
@@ -383,12 +385,13 @@ namespace Gabriel.Cat.S.Utilitats
                 case TiposAceptados.DateTime:
                     obj = ToDateTime(ms.Read(sizeof(long)));
                     break;
+                case TiposAceptados.PointZ:
+                    obj = ToPointZ(ms.Read(sizeof(int) * 3));
+                    break;
                 /*   case TiposAceptados.Point:
                        obj = ToPoint(ms.Read(sizeof(int) * 2));
                        break;
-                   case TiposAceptados.PointZ:
-                       obj = ToPointZ(ms.Read(sizeof(int) * 3));
-                       break;
+                   
                    case TiposAceptados.String:
                        obj = ToString(ms.Read(ToLong(ms.Read(sizeof(long)))));
                        break;
@@ -428,16 +431,18 @@ namespace Gabriel.Cat.S.Utilitats
 
 
         #region Desserializar Medida Fija
+        public static PointZ ToPointZ(byte[] bytesObj)
+        {
+            const int LENGHTINT = 4;
+            return new PointZ(ToInt(bytesObj), ToInt(bytesObj.SubArray(4, LENGHTINT)), ToInt(bytesObj.SubArray(8, LENGHTINT)));
+        }
         /*    public static Color ToColor(byte[] bytesObj)
             {
                 if (bytesObj.Length != 4)
                     throw new ArgumentException("Un color consta de 4 bytes ARGB");
                 return System.Drawing.Color.FromArgb(bytesObj[0], bytesObj[1], bytesObj[2], bytesObj[3]);
             }
-            public static PointZ ToPointZ(byte[] bytesObj)
-            {
-                return new PointZ(ToPoint(bytesObj), ToInt(bytesObj.SubArray(8)));
-            }
+          
 
             public static Point ToPoint(byte[] bytesObj)
             {
