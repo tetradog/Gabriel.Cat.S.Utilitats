@@ -15,7 +15,7 @@ namespace Gabriel.Cat.S.Extension
         {
             return ListOfWhat((dynamic)list);
         }
-        public static TCasting[] Casting<T, TCasting>(this IList<T> lst,bool elementosNoCompatiblesDefault=true)
+        public static TCasting[] Casting<T,TCasting>(this IList<T> lst,bool elementosNoCompatiblesDefault=true)
         {
         
             TCasting[] castings = new TCasting[lst.Count];
