@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Gabriel.Cat.S.Extension
@@ -122,6 +123,15 @@ namespace Gabriel.Cat.S.Extension
             }
 
             return direccionBytes;
+        }
+
+        public static string Hash(this byte[] array)
+        {
+            return  System.Security.Cryptography.MD5Core.GetHashString(array);
+        }
+        public static void CopyTo(this byte[] source, IntPtr ptrDestino, int startIndex = 0)
+        {
+            System.Runtime.InteropServices.Marshal.Copy(source, startIndex, ptrDestino, source.Length);
         }
     }
 }

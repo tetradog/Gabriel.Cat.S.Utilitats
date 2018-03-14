@@ -17,5 +17,14 @@ namespace Gabriel.Cat.S.Extension
         {
             return str.Position == str.Length;
         }
+        public static byte[] GetAllBytes(this Stream str)
+        {
+            byte[] bytes = new byte[str.Length];
+            long position = str.Position;
+            str.Position = 0;
+            str.Read(bytes, 0, bytes.Length);
+            str.Position = position;
+            return bytes;
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
@@ -10,6 +11,7 @@ namespace Gabriel.Cat.S.Utilitats
     {
         List<T> list;
         Semaphore semaphore;
+        public event EventHandler<ListEventArgs<T>> Updated;
         public Llista(IEnumerable<T> initialElements = null)
         {
             list = new List<T>();
@@ -43,6 +45,8 @@ namespace Gabriel.Cat.S.Utilitats
                 {
                     semaphore.WaitOne();
                     list[index] = value;
+                    if (Updated != null)
+                        Updated(this, new ListEventArgs<T>(this, value));
 
                 }
                 catch { throw; }
@@ -124,8 +128,20 @@ namespace Gabriel.Cat.S.Utilitats
         {
             if (items == null)
                 throw new ArgumentNullException("items");
-            for (int i = 0; i < items.Count; i++)
-                Add(items[i]);
+            try
+            {
+                semaphore.WaitOne();
+           
+                for (int i = 0; i < items.Count; i++)
+                    list.Add(items[i]);
+                if (Updated != null)
+                    Updated(this, new ListEventArgs<T>(this, items));
+            }
+            catch { throw; }
+            finally
+            {
+                semaphore.Release();
+            }
         }
         public void Add(T item)
         {
@@ -133,7 +149,8 @@ namespace Gabriel.Cat.S.Utilitats
             {
                 semaphore.WaitOne();
                 list.Add(item);
-
+                if (Updated != null)
+                    Updated(this, new ListEventArgs<T>(this, item));
             }
             catch { throw; }
             finally
@@ -148,7 +165,8 @@ namespace Gabriel.Cat.S.Utilitats
             {
                 semaphore.WaitOne();
                 list.Clear();
-
+                if (Updated != null)
+                    Updated(this, new ListEventArgs<T>(this));
             }
             catch { throw; }
             finally
@@ -344,4 +362,36 @@ namespace Gabriel.Cat.S.Utilitats
         }
 
     }
+    public class ListEventArgs<T> : EventArgs
+    {
+        IList<T> items;
+        object list;
+        public ListEventArgs(object list) : this(list, new T[0])
+        { }
+        public ListEventArgs(object list, T item) : this(list, new T[] { item })
+        { }
+        public ListEventArgs(object list, IEnumerable<T> items) : this(list, items.ToArray())
+        { }
+        public ListEventArgs(object list, IList<T> items)
+        {
+            this.list = list;
+            this.items = items;
+        }
+        public object List
+        {
+            get
+            {
+                return list;
+            }
+        }
+        public IList<T> Items
+        {
+            get
+            {
+                return items;
+            }
+        }
+    }
+
+
 }
