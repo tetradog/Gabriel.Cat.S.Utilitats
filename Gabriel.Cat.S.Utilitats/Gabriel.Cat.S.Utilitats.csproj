@@ -9,6 +9,9 @@
     <Copyright>GNU v3</Copyright>
     <Authors>Gabriel</Authors>
     <SignAssembly>false</SignAssembly>
+    <Version>1.0.2</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
