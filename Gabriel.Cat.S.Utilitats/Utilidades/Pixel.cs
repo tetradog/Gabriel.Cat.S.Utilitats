@@ -1,4 +1,4 @@
-﻿namespace Gabriel.Cat.S.Drawing
+﻿namespace Gabriel.Cat.S.Utilitats
 {
     public class Pixel
     {

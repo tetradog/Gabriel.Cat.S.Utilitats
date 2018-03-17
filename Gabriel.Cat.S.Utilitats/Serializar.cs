@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using Gabriel.Cat.S.Extension;
@@ -25,10 +26,10 @@ namespace Gabriel.Cat.S.Utilitats
         public static readonly string ByteArrayAssemblyName = typeof(byte[]).AssemblyQualifiedName;
         public static readonly string ByteAssemblyName = typeof(byte).AssemblyQualifiedName;
         public static readonly string BooleanAssemblyName = typeof(bool).AssemblyQualifiedName;
-        // public static readonly string BitmapAssemblyName = typeof(Bitmap).AssemblyQualifiedName;
+        public static readonly string BitmapAssemblyName = typeof(Bitmap).AssemblyQualifiedName;
         public static readonly string UIntAssemblyName = typeof(uint).AssemblyQualifiedName;
-        //public static readonly string PointAssemblyName = typeof(Point).AssemblyQualifiedName;
-        // public static readonly string ColorAssemblyName = typeof(Color).AssemblyQualifiedName;
+        public static readonly string PointAssemblyName = typeof(Point).AssemblyQualifiedName;
+        public static readonly string ColorAssemblyName = typeof(Color).AssemblyQualifiedName;
 
         //por comprovar
         public static readonly string TimeSpanAssemblyName = typeof(TimeSpan).AssemblyQualifiedName;
@@ -45,7 +46,7 @@ namespace Gabriel.Cat.S.Utilitats
         /// </summary>
         public static readonly string[] AsseblyQualifiedName = new String[] {
             StringAssemblyName,
-          //  BitmapAssemblyName,
+            BitmapAssemblyName,
             NullAssemblyName,
             ByteAssemblyName,
             BooleanAssemblyName,
@@ -59,9 +60,9 @@ namespace Gabriel.Cat.S.Utilitats
             FloatAssemblyName,
             CharAssemblyName,
             DateTimeAssemblyName,
-           // PointAssemblyName,
+            PointAssemblyName,
             PointZAssemblyName,
-           // ColorAssemblyName,
+            ColorAssemblyName,
             TimeSpanAssemblyName
         };
         #endregion
@@ -70,7 +71,7 @@ namespace Gabriel.Cat.S.Utilitats
         {
             //lo tipos anteriores a Null son variables en su longitud
             String,
-            //  Bitmap,
+            Bitmap,
             //los tipos que vayan apartir de aqui son tipos con longitud fija
             Null,
             Byte,
@@ -85,9 +86,9 @@ namespace Gabriel.Cat.S.Utilitats
             Float,
             Char,
             DateTime,
-            // Point,
+            Point,
             PointZ,
-            //Color,
+            Color,
             TimeSpan
         }
 
@@ -146,9 +147,9 @@ namespace Gabriel.Cat.S.Utilitats
             {
                 switch (tipo)
                 {
-                    /*  case TiposAceptados.Point:
+                     case TiposAceptados.Point:
                           bytes = GetBytes((Point)objTipoAceptado);
-                          break;*/
+                          break;
                     case TiposAceptados.PointZ:
                         bytes = GetBytes((PointZ)objTipoAceptado);
                         break;
@@ -186,10 +187,10 @@ namespace Gabriel.Cat.S.Utilitats
                     case TiposAceptados.String:
                         bytes = GetBytes((string)objTipoAceptado);
                         break;
-                    /* case TiposAceptados.Bitmap:
+                   case TiposAceptados.Bitmap:
                          bytes = GetBytes((Bitmap)objTipoAceptado);
                          break;
-                         */
+                      
                     case TiposAceptados.DateTime:
                         bytes = GetBytes((DateTime)objTipoAceptado);
                         break;
@@ -199,10 +200,10 @@ namespace Gabriel.Cat.S.Utilitats
                     case TiposAceptados.Null:
                         bytes = new byte[] { 0x00 };
                         break;
-                    /* case TiposAceptados.Color:
+                   case TiposAceptados.Color:
                          bytes = GetBytes((Color)objTipoAceptado);
                          break;
-                         */
+                     
                     case TiposAceptados.TimeSpan:
                         bytes = GetBytes((TimeSpan)objTipoAceptado);
                         break;
@@ -388,20 +389,20 @@ namespace Gabriel.Cat.S.Utilitats
                 case TiposAceptados.PointZ:
                     obj = ToPointZ(ms.Read(sizeof(int) * 3));
                     break;
-                /*   case TiposAceptados.Point:
+                 case TiposAceptados.Point:
                        obj = ToPoint(ms.Read(sizeof(int) * 2));
                        break;
                    
                    case TiposAceptados.String:
-                       obj = ToString(ms.Read(ToLong(ms.Read(sizeof(long)))));
+                       obj = ToString(ExtensionStream.Read( ms,(int)ToLong(ms.Read(sizeof(int)))));
                        break;
                    case TiposAceptados.Bitmap:
-                       obj = ToBitmap(ms.Read(ToLong(ms.Read(sizeof(long)))));
-                       break;
+                       obj = ToBitmap(ExtensionStream.Read(ms, (int)ToLong(ms.Read(sizeof(int)))));
+                    break;
                    case TiposAceptados.Color:
                        obj = ToColor(ms.Read(sizeof(int)));
                        break;
-                       */
+                     
                 case TiposAceptados.TimeSpan:
                     obj = ToTimeSpan(ms.Read(sizeof(long)));
                     break;
@@ -436,19 +437,19 @@ namespace Gabriel.Cat.S.Utilitats
             const int LENGHTINT = 4;
             return new PointZ(ToInt(bytesObj), ToInt(bytesObj.SubArray(4, LENGHTINT)), ToInt(bytesObj.SubArray(8, LENGHTINT)));
         }
-        /*    public static Color ToColor(byte[] bytesObj)
-            {
-                if (bytesObj.Length != 4)
-                    throw new ArgumentException("Un color consta de 4 bytes ARGB");
-                return System.Drawing.Color.FromArgb(bytesObj[0], bytesObj[1], bytesObj[2], bytesObj[3]);
-            }
-          
+        public static Color ToColor(byte[] bytesObj)
+        {
+            if (bytesObj.Length != 4)
+                throw new ArgumentException("Un color consta de 4 bytes ARGB");
+            return System.Drawing.Color.FromArgb(bytesObj[0], bytesObj[1], bytesObj[2], bytesObj[3]);
+        }
 
-            public static Point ToPoint(byte[] bytesObj)
-            {
-                return new Point(ToInt(bytesObj), ToInt(bytesObj.SubArray(4)));
-            }
-            */
+
+        public static Point ToPoint(byte[] bytesObj)
+        {
+            return new Point(ToInt(bytesObj), ToInt(bytesObj.SubArray(4)));
+        }
+
         public static bool ToBoolean(byte[] boolean)
         {
             return BitConverter.ToBoolean(boolean, 0);
@@ -499,7 +500,7 @@ namespace Gabriel.Cat.S.Utilitats
         }
         #endregion
         #region Deserializar medias dynamicas
-        /*   /// <summary>
+        /// <summary>
            /// bytes img
            /// </summary>
            /// <param name="bytesImgSerializada"></param>
@@ -517,7 +518,7 @@ namespace Gabriel.Cat.S.Utilitats
                return imgDeserializada;
 
            }
-   */
+   
 
         public static string ToString(byte[] bytes)
         {

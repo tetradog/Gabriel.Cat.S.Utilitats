@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
-namespace Gabriel.Cat.S.Drawing
+namespace Gabriel.Cat.S.Utilitats
 {
     //no funciona bien cuando coge el primero pero si que lo hace cuando hace el GetEnumerator :)
     public class DiccionarioColor : IEnumerable<KeyValuePair<byte[], byte[][]>>

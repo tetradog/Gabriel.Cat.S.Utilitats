@@ -1,4 +1,4 @@
-﻿using Gabriel.Cat.S.Drawing;
+﻿
 using Gabriel.Cat.S.Utilitats;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace Gabriel.Cat.S.Extension
     public  static unsafe class BitmapExtension
     {
         delegate byte[] MetodoColor(byte[] colorValue, byte[] colorKey);
-        delegate void MetodoTrataMientoPixel(ref byte r, ref byte g, ref byte b);
+        
 
         public static unsafe void SetFragment(byte* bmpTotalInicio, int alturaBmpTotal, int anchuraBmpTotal, bool bmpTotalIsArgb, byte* bmpFragmentoInicio, int alturaBmpFragmento, int anchuraBmpFragmento, bool bmpFragmentoIsArgb, System.Drawing.Point posicionFragmento)
         {
@@ -329,7 +329,7 @@ namespace Gabriel.Cat.S.Extension
             return bmp.PixelFormat.IsArgb();
         }
 
-        unsafe delegate void TratarImg(byte* ptrImg);
+       
         #region BitmapImportado
         /// <summary>
         /// Recorta una imagen en formato Bitmap

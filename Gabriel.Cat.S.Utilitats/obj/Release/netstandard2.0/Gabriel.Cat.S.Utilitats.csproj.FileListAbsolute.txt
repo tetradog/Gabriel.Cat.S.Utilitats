@@ -6,4 +6,3 @@ C:\Users\pc\MisProgramas\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\obj\Rel
 C:\Users\pc\MisProgramas\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\obj\Release\netstandard2.0\Gabriel.Cat.S.Utilitats.AssemblyInfo.cs
 C:\Users\pc\MisProgramas\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\obj\Release\netstandard2.0\Gabriel.Cat.S.Utilitats.dll
 C:\Users\pc\MisProgramas\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\obj\Release\netstandard2.0\Gabriel.Cat.S.Utilitats.pdb
-C:\Users\pc\MisProgramas\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\obj\Release\netstandard2.0\Gabriel.Cat.S.Utilitats.csprojResolveAssemblyReference.cache

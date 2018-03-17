@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Text;
 using System.Threading;
 
-namespace Gabriel.Cat.S.Drawing
+namespace Gabriel.Cat.S.Utilitats
 {
     public delegate void BitmapAnimatedFrameChangedEventHanlder(BitmapAnimated bmpAnimated, Bitmap frameActual);
     public class BitmapAnimated : ObjectAutoId

@@ -9,7 +9,7 @@
     <Copyright>GNU v3</Copyright>
     <Authors>Gabriel</Authors>
     <SignAssembly>false</SignAssembly>
-    <Version>1.0.3.5</Version>
+    <Version>1.0.3.7</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Company>Gabriel.Cat.Developer</Company>
