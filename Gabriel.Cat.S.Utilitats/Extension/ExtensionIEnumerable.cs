@@ -42,5 +42,63 @@ namespace Gabriel.Cat.S.Extension
         {
             return (T[])list.ToArray().Sort(orden);
         }
+        public static Tvalue[,] ToMatriu<Tvalue>(this IEnumerable<Tvalue> llista, int numeroDimension, DimensionMatriz dimensionTamañoMax = DimensionMatriz.Fila)
+        { return llista.ToArray().ToMatriu(numeroDimension, dimensionTamañoMax); }
+        public static List<Tvalue> Filtra<Tvalue>(this IEnumerable<Tvalue> valors, ComprovaEventHandler<Tvalue> comprovador)
+        { return valors.ToArray().Filtra(comprovador); }
+        public static List<Tvalue> AfegirValor<Tvalue>(this IEnumerable<Tvalue> valors, Tvalue valorNou)
+        {
+            List<Tvalue> valorsFinals = new List<Tvalue>(valors);
+            valorsFinals.Add(valorNou);
+            return valorsFinals;
+        }
+        public static List<Tvalue> AfegirValors<Tvalue>(this IEnumerable<Tvalue> valors, IEnumerable<Tvalue> valorsNous, bool noPosarValorsJaExistents = false) where Tvalue : IComparable
+        {
+            List<Tvalue> llista = new List<Tvalue>(valors);
+            bool valorEnLista = true;
+            if (valorsNous != null)
+            {
+
+                if (valorsNous != null)
+                    foreach (Tvalue valor in valorsNous)
+                    {
+                        if (noPosarValorsJaExistents)
+                            valorEnLista =Extension.ExtensionIList.Contains(llista, valor);
+                        if (!valorEnLista && noPosarValorsJaExistents)
+                            llista.Add(valor);
+                        else if (!noPosarValorsJaExistents)
+                        {
+                            llista.Add(valor);
+                        }
+                    }
+
+            }
+            return llista;
+
+        }
+
+      
+
+        public static List<Tvalue> AfegirValors<Tvalue>(this IEnumerable<Tvalue> valors, IEnumerable<Tvalue> valorsNous)
+        {
+            List<Tvalue> llista = new List<Tvalue>(valors);
+            if (valorsNous != null)
+                llista.AddRange(valorsNous);
+            return llista;
+
+        }
+
+        public static List<T> SubList<T>(this IEnumerable<T> arrayB, int inicio)
+        {
+            return arrayB.ToArray().SubList(inicio);
+        }
+
+      
+        public static List<T> SubList<T>(this IEnumerable<T> arrayB, int inicio, int longitud)
+        {
+            return arrayB.ToArray().SubList(inicio, longitud);
+        }
+
+        
     }
 }

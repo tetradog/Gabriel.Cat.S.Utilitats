@@ -28,7 +28,7 @@ namespace Gabriel.Cat.S.Extension
         public static IList<Attribute> GetAttributes(this PropertyInfo propiedad)
         {
             List<System.Attribute> atributos = new List<Attribute>();
-            atributos.AddRange(propiedad.GetCustomAttributes(true));
+            atributos.AddRange(propiedad.GetCustomAttributes(true).Casting<object,System.Attribute>());
             return atributos;
         }
     }

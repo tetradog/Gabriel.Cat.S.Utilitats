@@ -6,7 +6,8 @@ using System.Text;
 
 namespace Gabriel.Cat.S.Extension
 {
-   public static class ExtensionIList
+    public delegate bool ComprovaEventHandler<Tvalue>(Tvalue valorAComprovar);
+    public static class ExtensionIList
     {
         public static Type ListOfWhat<T>(this IList<T> list)
         {
@@ -16,9 +17,9 @@ namespace Gabriel.Cat.S.Extension
         {
             return ListOfWhat((dynamic)list);
         }
-        public static TCasting[] Casting<T,TCasting>(this IList<T> lst,bool elementosNoCompatiblesDefault=true)
+        public static TCasting[] Casting<T, TCasting>(this IList<T> lst, bool elementosNoCompatiblesDefault = true)
         {
-        
+
             TCasting[] castings = new TCasting[lst.Count];
             for (int i = 0; i < lst.Count; i++)
             {
@@ -67,7 +68,7 @@ namespace Gabriel.Cat.S.Extension
             }
             return llista[posicio];
         }
-   
+
         /// <summary>
         /// Ordena la array actual
         /// </summary>
@@ -90,7 +91,7 @@ namespace Gabriel.Cat.S.Extension
             }
             return listSorted;
         }
-       
+
         public static IList<T> SortByQuickSort<T>(this IList<T> elements) where T : IComparable
         {
             int left = 0, right = elements.Count - 1;
@@ -145,7 +146,7 @@ namespace Gabriel.Cat.S.Extension
 
             return elements;
         }
-  
+
         public static IList<T> SortByBubble<T>(this IList<T> listaParaOrdenar) where T : IComparable
         {
             //codigo de internet adaptado :)
@@ -172,6 +173,136 @@ namespace Gabriel.Cat.S.Extension
             }
             return listaParaOrdenar;
 
+        }
+
+        //poder hacer que se pueda poner los valores en el orden contrario, de izquierda a derecha o  al rebes o por culumnas en vez de por filas...(y=0,x=0,y=1,x=0...)
+        public static Tvalue[,] ToMatriu<Tvalue>(this IList<Tvalue> llista, int numeroDimension, DimensionMatriz dimensionTamañoMax = DimensionMatriz.Fila)
+        {
+            if (numeroDimension < 1)
+                throw new Exception("Como minimo 1 " + dimensionTamañoMax.ToString());
+
+            int numeroOtraDimension = (llista.Count / (numeroDimension * 1.0)) > (llista.Count / numeroDimension) ? (llista.Count / numeroDimension) + 1 : (llista.Count / numeroDimension);
+            int contador = 0;
+            Tvalue[,] matriu;
+
+            if (dimensionTamañoMax.Equals(DimensionMatriz.Fila))
+                matriu = new Tvalue[numeroOtraDimension, numeroDimension];
+            else
+                matriu = new Tvalue[numeroDimension, numeroOtraDimension];
+
+            for (int y = 0; y < matriu.GetLength(DimensionMatriz.Y) && contador < llista.Count; y++)
+                for (int x = 0; x < matriu.GetLength(DimensionMatriz.X) && contador < llista.Count; x++)
+                    matriu[x, y] = llista[contador++];
+
+            return matriu;
+
+        }
+
+        //para los tipos genericos :) el tipo generico se define en el NombreMetodo<Tipo> y se usa en todo el metodoConParametros ;)
+        public static List<Tvalue> Filtra<Tvalue>(this IList<Tvalue> valors, ComprovaEventHandler<Tvalue> comprovador)
+        {
+            if (comprovador == null)
+                throw new ArgumentNullException("El metodo para realizar la comparacion no puede ser null");
+
+            List<Tvalue> valorsOk = new List<Tvalue>();
+            for (int i = 0; i < valors.Count; i++)
+                if (comprovador(valors[i]))
+                    valorsOk.Add(valors[i]);
+            return valorsOk;
+
+        }
+        public static int BinarySearch<T>(this IList<T> list, T value) where T : IComparable
+        {//source https://stackoverflow.com/questions/8067643/binary-search-of-a-sorted-array
+            int pos = -1;
+            int compareTo;
+
+            bool found = false;
+            int first = 0, last = list.Count - 1, mid = list.Count / 2;
+
+            list.SortByQuickSort();
+            //for a sorted array with descending values
+            while (!found && first <= last)
+            {
+                mid = (first + last) / 2;
+                compareTo = list[mid].CompareTo(value);
+                if (0 < compareTo)
+                {
+                    first = mid + 1;
+                }
+
+                if (0 > compareTo)
+                {
+                    last = mid - 1;
+                }
+
+                else
+                {
+                    // You need to stop here once found or it's an infinite loop once it finds it.
+                    found = true;
+                    pos = mid;
+                }
+            }
+
+            return pos;
+        }
+        /// <summary>
+        /// Mira en la lista IEnumerable si contiene exactamente todos los elementos de la otra lista, no tiene en cuenta el orden
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="listToContain">lista a tener dentro de la otra</param>
+        /// <returns></returns>
+        public static bool Contains<T>(this IList<T> list, IList<T> listToContain) where T : IComparable
+        {
+            if (listToContain == null)
+                throw new ArgumentNullException("La lista ha contener no puede ser null!!");
+            bool contains = false;
+            for (int i = 0; i < list.Count && !contains; i++)
+            {
+                contains = list.Contains(list[i])||Contains(list,list[i]);
+
+            }
+            return contains;
+        }
+        public static bool Contains<T>(this IList<T> list, T element) where T : IComparable
+        {
+            const int IGUALS= (int)Gabriel.Cat.S.Utilitats.CompareTo.Iguals; 
+            bool contains = false;
+            for (int i = 0; i < list.Count && !contains; i++)
+            {
+                contains = list[i].CompareTo(element) == IGUALS;
+            }
+            return contains;
+        }
+        public static List<T> SubList<T>(this IList<T> arrayB, int inicio)
+        {
+            return arrayB.SubList(inicio, arrayB.Count - inicio);
+        }
+        public static List<T> SubList<T>(this IList<T> arrayB, int inicio, int longitud)
+        {
+
+            List<T> subArray;
+
+            if (inicio < 0 || longitud <= 0)
+                throw new IndexOutOfRangeException();
+            if (longitud + inicio > arrayB.Count)
+                throw new IndexOutOfRangeException();
+            subArray = new List<T>();
+
+            for (int i = inicio, fin = inicio + longitud; i < fin; i++)
+                subArray.Add(arrayB[i]);
+
+            return subArray;
+
+        }
+        public static void SetIList<T>(this IList<T> listToSet, IList<T> source, int startIndexListToSet = 0, int startIndexSource = 0, int endIndexSource = -1)
+        {
+            if (source == null)
+                throw new ArgumentNullException();
+            if (startIndexSource < 0 || source.Count < startIndexSource || endIndexSource > 0 && (source.Count < endIndexSource || listToSet.Count < startIndexListToSet + (endIndexSource - startIndexSource)))
+                throw new ArgumentOutOfRangeException();
+            for (int i = startIndexListToSet, j = startIndexSource; i < source.Count && (endIndexSource == -1 || j < endIndexSource); i++, j++)
+                listToSet[i] = source[j];
         }
     }
 }
