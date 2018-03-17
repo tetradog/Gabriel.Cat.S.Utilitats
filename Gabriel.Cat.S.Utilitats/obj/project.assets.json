@@ -34,6 +34,15 @@
         "build": {
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
+      },
+      "System.Drawing.Common/4.5.0-preview1-26216-02": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.0/System.Drawing.Common.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.Drawing.Common.dll": {}
+        }
       }
     }
   },
@@ -244,12 +253,44 @@
         "netstandard.library.2.0.1.nupkg.sha512",
         "netstandard.library.nuspec"
       ]
+    },
+    "System.Drawing.Common/4.5.0-preview1-26216-02": {
+      "sha512": "+hNFjaDH/ATpPC37RTffgDUwgCWgWur7pxn9D5S5kDLL+7gfHS/cITZvIeOj3W6r8DzMNRzMOYxRSHu6DYjKcg==",
+      "type": "package",
+      "path": "system.drawing.common/4.5.0-preview1-26216-02",
+      "files": [
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net461/System.Drawing.Common.dll",
+        "lib/netstandard2.0/System.Drawing.Common.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net461/System.Drawing.Common.dll",
+        "ref/netstandard2.0/System.Drawing.Common.dll",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "runtimes/unix/lib/netcoreapp2.0/System.Drawing.Common.dll",
+        "runtimes/win/lib/netcoreapp2.0/System.Drawing.Common.dll",
+        "system.drawing.common.4.5.0-preview1-26216-02.nupkg.sha512",
+        "system.drawing.common.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
       "Microsoft.CSharp >= 4.5.0-preview1-26216-02",
-      "NETStandard.Library >= 2.0.1"
+      "NETStandard.Library >= 2.0.1",
+      "System.Drawing.Common >= 4.5.0-preview1-26216-02"
     ]
   },
   "packageFolders": {
@@ -257,7 +298,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.0.3.4",
+    "version": "1.0.3.5",
     "restore": {
       "projectUniqueName": "C:\\Users\\pc\\MisProgramas\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats.csproj",
       "projectName": "Gabriel.Cat.S.Utilitats",
@@ -302,6 +343,10 @@
             "target": "Package",
             "version": "[2.0.1, )",
             "autoReferenced": true
+          },
+          "System.Drawing.Common": {
+            "target": "Package",
+            "version": "[4.5.0-preview1-26216-02, )"
           }
         },
         "imports": [
