@@ -35,7 +35,7 @@
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
       },
-      "System.Drawing.Common/4.5.0-preview1-26216-02": {
+      "System.Drawing.Common/4.5.0-preview1-25914-04": {
         "type": "package",
         "compile": {
           "ref/netstandard2.0/System.Drawing.Common.dll": {}
@@ -254,10 +254,10 @@
         "netstandard.library.nuspec"
       ]
     },
-    "System.Drawing.Common/4.5.0-preview1-26216-02": {
-      "sha512": "+hNFjaDH/ATpPC37RTffgDUwgCWgWur7pxn9D5S5kDLL+7gfHS/cITZvIeOj3W6r8DzMNRzMOYxRSHu6DYjKcg==",
+    "System.Drawing.Common/4.5.0-preview1-25914-04": {
+      "sha512": "xe9fRaplCuFFkqa2FNSuhZrux4ENP6b1sKxcGIqI0en4aEDMHsHQxtIwwkMsvlKDHoFlLcPkvpUefUnttajA8w==",
       "type": "package",
-      "path": "system.drawing.common/4.5.0-preview1-26216-02",
+      "path": "system.drawing.common/4.5.0-preview1-25914-04",
       "files": [
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
@@ -279,7 +279,7 @@
         "ref/xamarinwatchos10/_._",
         "runtimes/unix/lib/netcoreapp2.0/System.Drawing.Common.dll",
         "runtimes/win/lib/netcoreapp2.0/System.Drawing.Common.dll",
-        "system.drawing.common.4.5.0-preview1-26216-02.nupkg.sha512",
+        "system.drawing.common.4.5.0-preview1-25914-04.nupkg.sha512",
         "system.drawing.common.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"
@@ -290,7 +290,7 @@
     ".NETStandard,Version=v2.0": [
       "Microsoft.CSharp >= 4.5.0-preview1-26216-02",
       "NETStandard.Library >= 2.0.1",
-      "System.Drawing.Common >= 4.5.0-preview1-26216-02"
+      "System.Drawing.Common >= 4.5.0-preview1-25914-04"
     ]
   },
   "packageFolders": {
@@ -298,7 +298,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.0.3.7",
+    "version": "1.0.4.1",
     "restore": {
       "projectUniqueName": "C:\\Users\\pc\\MisProgramas\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats.csproj",
       "projectName": "Gabriel.Cat.S.Utilitats",
@@ -346,7 +346,7 @@
           },
           "System.Drawing.Common": {
             "target": "Package",
-            "version": "[4.5.0-preview1-26216-02, )"
+            "version": "[4.5.0-preview1-25914-04, )"
           }
         },
         "imports": [

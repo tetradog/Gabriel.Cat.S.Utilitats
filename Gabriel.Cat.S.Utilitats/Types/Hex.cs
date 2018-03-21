@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gabriel.Cat.S.Extension;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -231,15 +232,16 @@ namespace Gabriel.Cat.S.Utilitats
 
         public static implicit operator Hex(string numero)
         {
-            return new Hex(numero);
+            const int BASEHEX = 16;
+            return (Hex)Convert.ToUInt64(numero,BASEHEX);
         }
         public static implicit operator Hex(int numero)
         {
-            return (long)numero;
+            return (Hex)Serializar.GetBytes(numero);
         }
         public static implicit operator Hex(byte numero)
         {
-            return (long)numero;
+            return (Hex)Serializar.GetBytes(numero);
         }
         public static explicit operator Hex(byte[] numero)
         {
@@ -264,14 +266,17 @@ namespace Gabriel.Cat.S.Utilitats
         }
         public static implicit operator Hex(uint numero)
         {
-            return (Hex)Convert.ToInt64(numero);
+            return (Hex)Serializar.GetBytes(numero);
         }
 
         public static implicit operator Hex(long numero)
         {
             return new Hex(QuitaCerosInutiles(numero.ToString("X4")));
         }
-
+        public static implicit operator Hex(ulong numero)
+        {
+            return new Hex(QuitaCerosInutiles(numero.ToString("X4")));
+        }
         static string QuitaCerosInutiles(string numero)
         {
             StringBuilder num = new StringBuilder(numero);
@@ -286,19 +291,39 @@ namespace Gabriel.Cat.S.Utilitats
         }
         public static explicit operator int(Hex numero)
         {
-            return Convert.ToInt32((string)numero.numberHex, 16);
+            const int LENGHT = 4;
+            return Serializar.ToInt(DameArray(numero, LENGHT));
         }
         public static explicit operator uint(Hex numero)
         {
-            return Convert.ToUInt32((long)numero);
+            const int LENGHT = 4;
+            return Serializar.ToUInt(DameArray(numero,LENGHT));
+        }
+        static byte[] DameArray(byte[] bytes, int lenght)
+        {
+            if (bytes.Length < lenght)
+                bytes = bytes.AddArray(new byte[lenght - bytes.Length]);
+            return bytes.ReverseArray();
+        }
+        public static explicit operator ushort(Hex numero)
+        {
+            const int LENGHT = 2;
+            return Serializar.ToUShort(DameArray(numero, LENGHT));
         }
         public static explicit operator byte(Hex numero)
         {
-            return Convert.ToByte((int)numero);
+            const int LENGHT = 1;
+            return (DameArray(numero, LENGHT))[0];
         }
         public static implicit operator long(Hex numero)
         {
-            return Convert.ToInt64((string)numero.numberHex, 16);
+            const int LENGHT = 8;
+            return Serializar.ToLong(DameArray(numero, LENGHT));
+        }
+        public static implicit operator ulong(Hex numero)
+        {
+            const int LENGHT = 8;
+            return Serializar.ToULong(DameArray(numero, LENGHT));
         }
         public static implicit operator byte[] (Hex numero)
         {//sacado de internet

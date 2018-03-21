@@ -62,8 +62,27 @@ namespace Gabriel.Cat.S.Extension
         }
         public static byte[] SubArray(this byte[] array, int inicio, int lenght)
         {
+            if (inicio < 0 || lenght < 0)
+                throw new IndexOutOfRangeException();
+
             byte[] bytes = new byte[lenght];
-            array.CopyTo(bytes, inicio);
+            unsafe
+            {
+                byte* ptrArray;
+                byte* ptrBytes;
+                fixed (byte* ptArray = array)
+                fixed (byte* ptBytes = bytes)
+                {
+                    ptrArray = ptArray + inicio;
+                    ptrBytes = ptBytes;
+                    for (int i = 0; i < lenght; i++)
+                    {
+                        *ptrBytes = *ptrArray;
+                        ptrArray++;
+                        ptrBytes++;
+                    }
+                }
+            }
             return bytes;
         }
         public static int SearchArray(this byte[] datos, byte[] arrayAEncontrar)
@@ -135,7 +154,7 @@ namespace Gabriel.Cat.S.Extension
 
         public static string Hash(this byte[] array)
         {
-            return  System.Security.Cryptography.MD5Core.GetHashString(array);
+            return System.Security.Cryptography.MD5Core.GetHashString(array);
         }
         public static void CopyTo(this byte[] source, IntPtr ptrDestino, int startIndex = 0)
         {
@@ -428,9 +447,9 @@ namespace Gabriel.Cat.S.Extension
             }
             return byteArrayReversed;
         }
-    
-          
-        }
+
+
+    }
 
 }
 
