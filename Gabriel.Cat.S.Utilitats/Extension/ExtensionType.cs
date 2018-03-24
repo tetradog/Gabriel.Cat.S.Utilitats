@@ -10,10 +10,18 @@ namespace Gabriel.Cat.S.Extension
     {
         public static bool ImplementInterficie(this Type type, Type interficieType)
         {
+            if (interficieType == null)
+                throw new ArgumentNullException();
+            if (!interficieType.IsInterface)
+                throw new ArgumentException("Se esperaba una interficie");
+
             bool implemented=false;
-            IEnumerator<Type> interficiesTipo = type.GetTypeInfo().ImplementedInterfaces.GetEnumerator();
-            while (!interficiesTipo.MoveNext() && !implemented)
-                implemented = interficiesTipo.Current.Equals(interficiesTipo);
+            Type[] interficiesTipo= type.GetInterfaces();
+
+            for (int i = 0; i < interficiesTipo.Length && !implemented; i++)
+                implemented = Equals(interficiesTipo[i], interficieType);
+
+
             return implemented;
         }
         public static IList<PropiedadTipo> GetPropiedadesTipos(this Type tipo)

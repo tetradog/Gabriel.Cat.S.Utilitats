@@ -39,7 +39,7 @@ namespace Gabriel.Cat.S.Extension
                 ptrsBmpFragmento = new byte*[lineas];
                 ptrsBmpTotal = new byte*[lineas];
                 //posiciono todos los punteros
-
+                    //POR HACER...
                 //pongo  la opcion aqui asi solo se escoge una vez y no en cada linea como estaba antes :)
                 opcion = bmpTotalIsArgb.Equals(bmpFragmentoIsArgb) ? OPCIONIGUALES : bmpTotalIsArgb ? OPCIONCONSIN : OPCIONSINCON;
 
