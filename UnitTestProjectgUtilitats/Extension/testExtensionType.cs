@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Gabriel.Cat.S.Utilitats;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using Gabriel.Cat.S.Extension;
 namespace UnitTestProjectgUtilitats.Extension
 {
     [TestClass]
@@ -99,6 +99,26 @@ namespace UnitTestProjectgUtilitats.Extension
         public void TestExtensionTypeImplementaInterficiePasanNull()
         {
             Gabriel.Cat.S.Extension.ExtensionType.ImplementInterficie(typeof(Test),null);
+        }
+        [TestMethod]
+        public void TestExtensionTypeNullTypeTrue()
+        {
+            Assert.IsTrue(typeof(BitmapAnimated).IsNullableType());
+        }
+        [TestMethod]
+        public void TestExtensionTypeNullInterficieTypeTrue()
+        {
+            Assert.IsTrue(typeof(IList).IsNullableType());
+        }
+        [TestMethod]
+        public void TestExtensionTypeNullableTypeTrue()
+        {
+            Assert.IsTrue(typeof(int?).IsNullableType());
+        }
+        [TestMethod]
+        public void TestExtensionTypeNullTypeFalse()
+        {
+            Assert.IsFalse(typeof(int).IsNullableType());
         }
     }
 }

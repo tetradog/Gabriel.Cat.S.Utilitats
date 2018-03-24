@@ -8,6 +8,10 @@ namespace Gabriel.Cat.S.Extension
 {
     public static class ExtensionType
     {
+        public static bool IsNullableType(this Type type)
+        {
+            return type.IsClass||type.IsInterface||type.IsGenericType && type.GetGenericTypeDefinition()==typeof(Nullable<>);
+        }
         public static bool ImplementInterficie(this Type type, Type interficieType)
         {
             if (interficieType == null)

@@ -9,15 +9,28 @@ namespace Gabriel.Cat.S.Extension
         public static byte[] CastingToByte(this object[] source)
         {
             byte[] bytes = new byte[source.Length];
-            for (int i = 0; i < source.Length; i++)
+            unsafe
             {
-                try
+                byte* ptrBytes;
+                fixed(byte* ptBytes=bytes)
                 {
-                    bytes[i] = (Convert.ToByte(source[i]));
+                    ptrBytes = ptBytes;
+                    for (int i = 0; i < source.Length; i++)
+                    {
+                        try
+                        {
+
+                            *ptrBytes = (byte)source[i];
+                        }
+                        catch
+                        {
+                        }
+                        finally {
+                            ptrBytes++;
+                        }
+                    }
                 }
-                catch
-                {
-                }
+              
             }
             return bytes;
         }

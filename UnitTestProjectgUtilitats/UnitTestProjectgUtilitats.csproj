@@ -53,10 +53,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extension\testPropertyInfoExtension.cs" />
+    <Compile Include="Extension\testExtensionPropertyInfo.cs" />
     <Compile Include="Extension\testExtensionType.cs" />
     <Compile Include="Extension\testExtensionStream.cs" />
     <Compile Include="Extension\testExtensionRectangle.cs" />
+    <Compile Include="Extension\testExtensionPixelFormat.cs" />
+    <Compile Include="Extension\testExtensionObjectArray.cs" />
+    <Compile Include="Extension\testExtensionObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
