@@ -12,6 +12,8 @@ namespace Gabriel.Cat.S.Extension
         {
             return type.IsClass||type.IsInterface||type.IsGenericType && type.GetGenericTypeDefinition()==typeof(Nullable<>);
         }
+        public static bool IsStruct(this Type type)
+        { return !type.IsNullableType(); }
         public static bool ImplementInterficie(this Type type, Type interficieType)
         {
             if (interficieType == null)

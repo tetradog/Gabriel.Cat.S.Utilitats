@@ -120,5 +120,15 @@ namespace UnitTestProjectgUtilitats.Extension
         {
             Assert.IsFalse(typeof(int).IsNullableType());
         }
+        [TestMethod]
+        public void TestExtensionTypeIsStructTrue()
+        {
+            Assert.IsTrue(typeof(int).IsStruct());
+        }
+        [TestMethod]
+        public void TestExtensionTypeIsStructFalse()
+        {
+            Assert.IsFalse(typeof(BitmapAnimated).IsStruct());
+        }
     }
 }
