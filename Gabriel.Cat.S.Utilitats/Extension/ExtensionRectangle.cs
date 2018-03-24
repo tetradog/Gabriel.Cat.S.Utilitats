@@ -9,7 +9,7 @@ namespace Gabriel.Cat.S.Extension
     {
         public static Point GetRelativePoint(this Rectangle rect, Point point)
         {
-            return new Point(rect.Left - point.X, rect.Top - point.Y);
+            return new Point(point.X-rect.Left, point.Y-rect.Top);
         }
     }
 }

@@ -55,6 +55,8 @@
   <ItemGroup>
     <Compile Include="Extension\testPropertyInfoExtension.cs" />
     <Compile Include="Extension\testExtensionType.cs" />
+    <Compile Include="Extension\testExtensionStream.cs" />
+    <Compile Include="Extension\testExtensionRectangle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
