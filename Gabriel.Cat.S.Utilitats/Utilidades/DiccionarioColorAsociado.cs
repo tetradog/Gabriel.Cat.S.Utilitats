@@ -324,16 +324,16 @@ namespace Gabriel.Cat.S.Utilitats
             diccionario = new LlistaOrdenada<int, List<byte[]>>();
         }
 
-        public DiccionarioColor2(IEnumerable<KeyValuePair<Color, Color>> colorsKeyValue) : this()
+        public DiccionarioColor2(IList<KeyValuePair<Color, Color>> colorsKeyValue) : this()
         {
             Añadir(colorsKeyValue);
         }
 
-        public void Añadir(IEnumerable<KeyValuePair<Color, Color>> colorsKeyValue)
+        public void Añadir(IList<KeyValuePair<Color, Color>> colorsKeyValue)
         {
             if (colorsKeyValue != null)
-                foreach (KeyValuePair<Color, Color> colorKeyValue in colorsKeyValue)
-                    Añadir(colorKeyValue.Key, colorKeyValue.Value);
+              for(int i=0;i<colorsKeyValue.Count;i++)
+                    Añadir(colorsKeyValue[i].Key, colorsKeyValue[i].Value);
         }
 
         public void Añadir(Color key, Color value)

@@ -10,7 +10,12 @@ namespace Gabriel.Cat.S.Extension
         {
             System.Runtime.InteropServices.Marshal.Copy(ptr, destino, startIndex, destino.Length);
         }
-      
+        public static byte[] CopyTo(this IntPtr ptr, int lenght, int startIndex = 0)
+        {
+            byte[] destino = new byte[lenght];
+            CopyTo(ptr, lenght, startIndex);
+            return destino;
+        }
         public static void Dispose(this IntPtr point)
         {
             System.Runtime.InteropServices.Marshal.FreeHGlobal(point);

@@ -9,15 +9,15 @@ namespace Gabriel.Cat.S.Extension
     public delegate bool ComprovaEventHandler<Tvalue>(Tvalue valorAComprovar);
     public static class ExtensionIList
     {
-        public static Type ListOfWhat<T>(this IList<T> list)
+         static Type IListOfWhat<T>(this IList<T> list)
         {
             return typeof(T);
         }
         public static Type ListOfWhat(this IList list)
         {
-            return ListOfWhat((dynamic)list);
+            return IListOfWhat((dynamic)list);
         }
-        public static TCasting[] Casting<T, TCasting>(this IList<T> lst, bool elementosNoCompatiblesDefault = true)
+        public static TCasting[] Casting<TCasting>(this IList lst, bool elementosNoCompatiblesDefault = true)
         {
 
             TCasting[] castings = new TCasting[lst.Count];
@@ -25,7 +25,7 @@ namespace Gabriel.Cat.S.Extension
             {
                 try
                 {
-                    castings[i] = (TCasting)(object)lst[i];
+                    castings[i] = (TCasting)lst[i];
                 }
                 catch
                 {
@@ -36,7 +36,7 @@ namespace Gabriel.Cat.S.Extension
             }
             return castings;
         }
-        public static T GetElementActual<T>(this IList<T> llista, Ordre escogerKey, int contador)
+        public static T GetElementActual<T>(this IList<T> llista, Ordre orden, int contador)
         {
 
             int posicio = 0;
@@ -45,7 +45,7 @@ namespace Gabriel.Cat.S.Extension
                 contador *= -1;
                 contador = llista.Count - (contador % llista.Count);
             }
-            switch (escogerKey)
+            switch (orden)
             {
                 case Ordre.Consecutiu:
                     posicio = contador % llista.Count;
@@ -176,19 +176,19 @@ namespace Gabriel.Cat.S.Extension
         }
 
         //poder hacer que se pueda poner los valores en el orden contrario, de izquierda a derecha o  al rebes o por culumnas en vez de por filas...(y=0,x=0,y=1,x=0...)
-        public static Tvalue[,] ToMatriu<Tvalue>(this IList<Tvalue> llista, int numeroDimension, DimensionMatriz dimensionTamañoMax = DimensionMatriz.Fila)
+        public static Tvalue[,] ToMatriu<Tvalue>(this IList<Tvalue> llista, int length, DimensionMatriz dimensionTamañoMax = DimensionMatriz.Fila)
         {
-            if (numeroDimension < 1)
+            if (length < 1)
                 throw new Exception("Como minimo 1 " + dimensionTamañoMax.ToString());
 
-            int numeroOtraDimension = (llista.Count / (numeroDimension * 1.0)) > (llista.Count / numeroDimension) ? (llista.Count / numeroDimension) + 1 : (llista.Count / numeroDimension);
+            int numeroOtraDimension = (llista.Count / (length * 1.0)) > (llista.Count / length) ? (llista.Count / length) + 1 : (llista.Count / length);
             int contador = 0;
             Tvalue[,] matriu;
 
             if (dimensionTamañoMax.Equals(DimensionMatriz.Fila))
-                matriu = new Tvalue[numeroOtraDimension, numeroDimension];
+                matriu = new Tvalue[numeroOtraDimension, length];
             else
-                matriu = new Tvalue[numeroDimension, numeroOtraDimension];
+                matriu = new Tvalue[length, numeroOtraDimension];
 
             for (int y = 0; y < matriu.GetLength(DimensionMatriz.Y) && contador < llista.Count; y++)
                 for (int x = 0; x < matriu.GetLength(DimensionMatriz.X) && contador < llista.Count; x++)

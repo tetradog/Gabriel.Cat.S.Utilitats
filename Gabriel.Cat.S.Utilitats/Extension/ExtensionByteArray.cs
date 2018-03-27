@@ -56,6 +56,7 @@ namespace Gabriel.Cat.S.Extension
             }
             return arrayFinal;
         }
+
         public static byte[] SubArray(this byte[] array, int lenght)
         {
             return SubArray(array, 0, lenght);
@@ -85,6 +86,7 @@ namespace Gabriel.Cat.S.Extension
             }
             return bytes;
         }
+
         public static int SearchArray(this byte[] datos, byte[] arrayAEncontrar)
         {
             return SearchArray(datos, 0, arrayAEncontrar);
@@ -156,6 +158,7 @@ namespace Gabriel.Cat.S.Extension
         {
             return System.Security.Cryptography.MD5Core.GetHashString(array);
         }
+
         public static void CopyTo(this byte[] source, IntPtr ptrDestino, int startIndex = 0)
         {
             System.Runtime.InteropServices.Marshal.Copy(source, startIndex, ptrDestino, source.Length);
@@ -209,6 +212,7 @@ namespace Gabriel.Cat.S.Extension
             else bytesSplited.Add(array);//no hay bytesPara hacer split pues pongo toda
             return bytesSplited;
         }
+
         public static bool[] ToBits(this byte[] byteToBits)
         {
             const int BITSBYTE = 8;
@@ -246,6 +250,7 @@ namespace Gabriel.Cat.S.Extension
 
             return bits;
         }
+
         public static CompareTo CompareTo(this byte[] arrayLeft, byte[] arrayRight)
         {
             const int IGUALES = (int)Gabriel.Cat.S.Utilitats.CompareTo.Iguals;
@@ -266,6 +271,7 @@ namespace Gabriel.Cat.S.Extension
             }
             return (Gabriel.Cat.S.Utilitats.CompareTo)compareTo;
         }
+
         public static bool ArrayEqual(this byte[] arrayLeft, byte[] arrayRight, int inicioArrayLeft = 0, int inicioArrayRight = 0, int length = -1)
         {
             if (inicioArrayLeft < 0 || inicioArrayRight < 0 || length > -1 && inicioArrayLeft + length >= arrayLeft.Length && inicioArrayRight + length >= arrayRight.Length)
@@ -321,6 +327,7 @@ namespace Gabriel.Cat.S.Extension
             }
             return indexOf;
         }
+
         public static int SearchBlock(this byte[] array, int offsetInicial, int lengthBlock, byte byteBlock = 0x0)
         {
             if (offsetInicial < 0 || lengthBlock < 0)
@@ -355,6 +362,7 @@ namespace Gabriel.Cat.S.Extension
             }
             return posicionFinal;
         }
+
         public static void Remove(this byte[] datos, int offsetInicio, int longitud, byte byteEnBlanco = 0x0)
         {
             if (offsetInicio < 0 || longitud < 0 || datos.Length < offsetInicio + longitud)
@@ -373,6 +381,7 @@ namespace Gabriel.Cat.S.Extension
                 }
             }
         }
+
         public static void SetArray(this byte[] datos, int offsetIncioArrayDatos, byte[] arrayAPoner)
         {
             if (arrayAPoner.Length + offsetIncioArrayDatos > datos.Length)
@@ -403,49 +412,36 @@ namespace Gabriel.Cat.S.Extension
             }
 
         }
+
         public static void Invertir(this byte[] array)
         {
             //por testear!!
             byte aux;
             unsafe
             {
-                fixed (byte* ptrArray = array)
+                byte* ptrArray;
+                fixed (byte* ptArray = array)
+                {
+                    ptrArray = ptArray;
                     for (int i = 0, f = array.Length / 2, j = array.Length - 1; i < f; i++, j--)
                     {
                         aux = ptrArray[i];
                         ptrArray[i] = ptrArray[j];
                         ptrArray[j] = aux;
                     }
+                }
             }
         }
-        public static byte[] ReverseArray(this byte[] byteArrayToReverse)
+        /// <summary>
+        /// Devuelve un clon invertido de la array.
+        /// </summary>
+        /// <param name="byteArrayToReverse"></param>
+        /// <returns></returns>
+        public static byte[] InvertirClone(this byte[] byteArrayToReverse)
         {
-            byte[] byteArrayReversed = new byte[byteArrayToReverse.Length];
-            unsafe
-            {
-
-                byte* ptrInverseBytesOut, ptrInverseBytesIn;
-                byteArrayReversed.UnsafeMethod((ptrBytesOut) =>
-                {
-                    byteArrayToReverse.UnsafeMethod((ptrBytesIn) =>
-                    {
-                        ptrInverseBytesIn = ptrBytesIn.PtrArrayFin;
-                        ptrInverseBytesOut = ptrBytesOut.PtrArrayFin;
-
-                        for (int i = 0, f = (int)ptrBytesIn.Length / 2; i < f; i++)
-                        {
-                            *ptrBytesOut.PtrArray = *ptrInverseBytesIn;
-                            *ptrInverseBytesOut = *ptrBytesIn.PtrArray;
-                            ptrBytesIn.PtrArray++;
-                            ptrBytesOut.PtrArray++;
-                            ptrInverseBytesIn--;
-                            ptrInverseBytesOut--;
-                        }
-
-                    });
-                });
-            }
-            return byteArrayReversed;
+            byte[] array = ((byte[])byteArrayToReverse.Clone());
+            array.Invertir();
+            return array;
         }
 
 

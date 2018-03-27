@@ -303,7 +303,7 @@ namespace Gabriel.Cat.S.Utilitats
         {
             if (bytes.Length < lenght)
                 bytes = bytes.AddArray(new byte[lenght - bytes.Length]);
-            return bytes.ReverseArray();
+            return bytes.InvertirClone();
         }
         public static explicit operator ushort(Hex numero)
         {

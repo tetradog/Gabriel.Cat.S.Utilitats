@@ -64,21 +64,18 @@ namespace Gabriel.Cat.S.Extension
                     {
                         if (noPosarValorsJaExistents)
                             valorEnLista =Extension.ExtensionIList.Contains(llista, valor);
-                        if (!valorEnLista && noPosarValorsJaExistents)
-                            llista.Add(valor);
-                        else if (!noPosarValorsJaExistents)
+                        
+                         if (!noPosarValorsJaExistents)
                         {
                             llista.Add(valor);
-                        }
+                        }else if (!valorEnLista)
+                            llista.Add(valor);
                     }
 
             }
             return llista;
 
         }
-
-      
-
         public static List<Tvalue> AfegirValors<Tvalue>(this IEnumerable<Tvalue> valors, IEnumerable<Tvalue> valorsNous)
         {
             List<Tvalue> llista = new List<Tvalue>(valors);
@@ -87,13 +84,10 @@ namespace Gabriel.Cat.S.Extension
             return llista;
 
         }
-
         public static List<T> SubList<T>(this IEnumerable<T> arrayB, int inicio)
         {
             return arrayB.ToArray().SubList(inicio);
         }
-
-      
         public static List<T> SubList<T>(this IEnumerable<T> arrayB, int inicio, int longitud)
         {
             return arrayB.ToArray().SubList(inicio, longitud);

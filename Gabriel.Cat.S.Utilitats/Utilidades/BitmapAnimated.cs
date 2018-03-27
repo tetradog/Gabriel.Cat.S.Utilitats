@@ -17,19 +17,19 @@ namespace Gabriel.Cat.S.Utilitats
         int numeroDeRepeticionesFijas;
         Thread hiloAnimacion;
         public event BitmapAnimatedFrameChangedEventHanlder FrameChanged;
-        public BitmapAnimated(IEnumerable<Bitmap> bmps, params int[] delays)
+        public BitmapAnimated(IList<Bitmap> bmps, params int[] delays)
         {
-            int i = 0;
+         
             numeroDeRepeticionesFijas = 1;
             frameAlAcabar = 0;
             animarCiclicamente = true;
             frames = new Llista<KeyValuePair<Bitmap, int>>();
             if (bmps != null)
-                foreach (Bitmap bmp in bmps)
+                for(int i=0,j=0;i<bmps.Count;i++)
                 {
-                    frames.Add(new KeyValuePair<Bitmap, int>(bmp, delays[i]));
+                    frames.Add(new KeyValuePair<Bitmap, int>(bmps[i], delays[j]));
                     if (delays.Length > i)
-                        i++;
+                        j++;
                 }
 
         }

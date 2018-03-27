@@ -60,6 +60,9 @@
     <Compile Include="Extension\testExtensionPixelFormat.cs" />
     <Compile Include="Extension\testExtensionObjectArray.cs" />
     <Compile Include="Extension\testExtensionObject.cs" />
+    <Compile Include="Extension\testExtensionMatriu.cs" />
+    <Compile Include="Extension\testExtensionInt.cs" />
+    <Compile Include="Extension\testExtensionIList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

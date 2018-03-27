@@ -139,11 +139,11 @@ namespace Gabriel.Cat.S.Extension
             }
         }
        
-        public static BitmapAnimated ToAnimatedBitmap(this IEnumerable<Bitmap> bmpsToAnimate, bool repetirSiempre = true)
+        public static BitmapAnimated ToAnimatedBitmap(this IList<Bitmap> bmpsToAnimate, bool repetirSiempre = true)
         {
             return bmpsToAnimate.ToAnimatedBitmap(repetirSiempre, 500);
         }
-        public static BitmapAnimated ToAnimatedBitmap(this IEnumerable<Bitmap> bmpsToAnimate, bool repetirSiempre = true, params int[] delay)
+        public static BitmapAnimated ToAnimatedBitmap(this IList<Bitmap> bmpsToAnimate, bool repetirSiempre = true, params int[] delay)
         {
             return new BitmapAnimated(bmpsToAnimate, delay) { AnimarCiclicamente = repetirSiempre };
         }
@@ -377,26 +377,18 @@ namespace Gabriel.Cat.S.Extension
         public static Color[,] GetColorMatriu(this Bitmap bmp)
         {
             Color[,] matriz = new Color[bmp.Width, bmp.Height];
-            ulong posicion = 0;
-            byte a, r, g, b;
             unsafe
             {
                 bmp.TrataBytes(((MetodoTratarBytePointer)((ptrBytesBmp) =>
                 {
 
-                    byte* ptBytesBmp = ptrBytesBmp;
-                    for (int y = 0, yFinal = bmp.Width; y < yFinal; y++)
-                        for (int x = 0, xFinal = bmp.Height; x < xFinal; x++, posicion += 4)
+                    Gabriel.Cat.S.Utilitats.V2.Color* ptrColoresBmp = (Gabriel.Cat.S.Utilitats.V2.Color*)ptrBytesBmp;
+                    for (int y = 0, yFinal = bmp.Width, xFinal = bmp.Height; y < yFinal; y++)
+                        for (int x = 0; x < xFinal; x++)
                         {
-                            a = *ptBytesBmp;
-                            ptBytesBmp++;
-                            r = *ptBytesBmp;
-                            ptBytesBmp++;
-                            g = *ptBytesBmp;
-                            ptBytesBmp++;
-                            b = *ptBytesBmp;
-                            ptBytesBmp++;
-                            matriz[x, y] = Color.FromArgb(a, r, g, b);
+                          
+                            matriz[x, y] = *ptrColoresBmp;
+                            ptrColoresBmp++;
                         }
 
                 })));
@@ -410,19 +402,13 @@ namespace Gabriel.Cat.S.Extension
             {
                 bmp.TrataBytes(((MetodoTratarBytePointer)((ptrBytesBmp) =>
                 {
-                    ulong posicion = 0;
-                    byte* ptBytesBmp = ptrBytesBmp;
-                    for (ulong y = 0, yFinal = (ulong)array.GetLongLength((int)DimensionMatriz.Y); y < yFinal; y++)
-                        for (ulong x = 0, xFinal = (ulong)array.GetLongLength((int)DimensionMatriz.X); x < xFinal; x++, posicion += 4)
+              
+                    Gabriel.Cat.S.Utilitats.V2.Color* ptrColoresBmp = (Gabriel.Cat.S.Utilitats.V2.Color*)ptrBytesBmp;
+                    for (int y = 0, yFinal = array.GetLength((int)DimensionMatriz.Y), xFinal = array.GetLength((int)DimensionMatriz.X); y < yFinal; y++)
+                        for (int x = 0; x < xFinal; x++)
                         {
-                            *ptBytesBmp = array[x, y].A;
-                            ptBytesBmp++;
-                            *ptBytesBmp = array[x, y].R;
-                            ptBytesBmp++;
-                            *ptBytesBmp = array[x, y].G;
-                            ptBytesBmp++;
-                            *ptBytesBmp = array[x, y].B;
-                            ptBytesBmp++;
+                            *ptrColoresBmp = array[x, y];
+                            ptrColoresBmp++;
                         }
 
                 })));
@@ -458,7 +444,11 @@ namespace Gabriel.Cat.S.Extension
 
         public static Bitmap Clone(this Bitmap bmp, PixelFormat format)
         {
-            return bmp.Clone(new Rectangle(new Point(), bmp.Size), format);
+            return bmp.Clone(bmp.GetRectangle(), format);
+        }
+        public static Rectangle GetRectangle(this Bitmap bmp)
+        {
+            return new Rectangle(new Point(), bmp.Size);
         }
         #endregion
 
@@ -466,7 +456,7 @@ namespace Gabriel.Cat.S.Extension
         {
             bmp.CambiarPixel(new KeyValuePair<Color, Color>[] { new KeyValuePair<Color, Color>(aEnontrar, aDefinir) });
         }
-        public static void CambiarPixel(this Bitmap bmp, IEnumerable<KeyValuePair<Color, Color>> colorsKeyValue)
+        public static void CambiarPixel(this Bitmap bmp, IList<KeyValuePair<Color, Color>> colorsKeyValue)
         {
             MetodoColor metodo = (colorValue, colorKey) =>
             {
@@ -527,7 +517,7 @@ namespace Gabriel.Cat.S.Extension
         {
             bmp.MezclaPixel(new KeyValuePair<Color, Color>[] { new KeyValuePair<Color, Color>(aEnontrar, aDefinir) });
         }
-        public static void MezclaPixel(this Bitmap bmp, IEnumerable<KeyValuePair<Color, Color>> colorsKeyValue)
+        public static void MezclaPixel(this Bitmap bmp, IList<KeyValuePair<Color, Color>> colorsKeyValue)
         {
             MetodoColor metodo = (colorValue, arrayKey) =>
             {
@@ -565,7 +555,7 @@ namespace Gabriel.Cat.S.Extension
             };
             ICambiaPixel(bmp, colorsKeyValue, metodo);
         }
-        static void ICambiaPixel(Bitmap bmp, IEnumerable<KeyValuePair<Color, Color>> colorsKeyValue, MetodoColor metodo)
+        static void ICambiaPixel(Bitmap bmp, IList<KeyValuePair<Color, Color>> colorsKeyValue, MetodoColor metodo)
         {
             const int TOTALBYTESCOLOR = 4;
             DiccionarioColor2 diccionario = new DiccionarioColor2(colorsKeyValue);
