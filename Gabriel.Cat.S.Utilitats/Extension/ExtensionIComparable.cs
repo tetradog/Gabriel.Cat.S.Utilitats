@@ -12,5 +12,12 @@ namespace Gabriel.Cat.S.Extension
             const int INFERIOR = -1;
             return left == null && right == null ? IGUALES : left != null ? left.CompareTo(right) : INFERIOR;
         }
+        public static SortedList<T,T> ToSortedList<T>(this IList<T> lst) where T : IComparable
+        {
+            SortedList<T, T> sortedList = new SortedList<T, T>();
+            for (int i = 0; i < lst.Count; i++)
+                sortedList.Add(lst[i], lst[i]);
+            return sortedList;
+        }
     }
 }
