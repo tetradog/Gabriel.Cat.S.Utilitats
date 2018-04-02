@@ -9,7 +9,7 @@ namespace Gabriel.Cat.S.Extension
     public delegate bool ComprovaEventHandler<Tvalue>(Tvalue valorAComprovar);
     public static class ExtensionIList
     {
-         static Type IListOfWhat<T>(this IList<T> list)
+        static Type IListOfWhat<T>(this IList<T> list)
         {
             return typeof(T);
         }
@@ -75,16 +75,16 @@ namespace Gabriel.Cat.S.Extension
         /// <param name="list"></param>
         /// <param name="orden"></param>
         /// <returns></returns>
-        public static IList<T> Sort<T>(this IList<T> list, SortMethod orden) where T : IComparable
+        public static IList<T> Sort<T>(this IList<T> list, SortMethod orden = SortMethod.QuickSort, bool ordenAscendente = true) where T : IComparable
         {
             IList<T> listSorted = null;
             switch (orden)
             {
                 case SortMethod.QuickSort:
-                    listSorted = list.SortByQuickSort();
+                    listSorted = list.SortByQuickSort(ordenAscendente);
                     break;
                 case SortMethod.Bubble:
-                    listSorted = list.SortByBubble();
+                    listSorted = list.SortByBubble(ordenAscendente);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -92,66 +92,96 @@ namespace Gabriel.Cat.S.Extension
             return listSorted;
         }
 
-        public static IList<T> SortByQuickSort<T>(this IList<T> elements) where T : IComparable
+        public static IList<T> SortByQuickSort<T>(this IList<T> elements, bool ordenAscendente = true) where T : IComparable
         {
             int left = 0, right = elements.Count - 1;
-            return ISortByQuickSort(elements, left, right);
+            return ISortByQuickSort(elements, left, right, ordenAscendente);
         }
-        private static IList<T> ISortByQuickSort<T>(IList<T> elements, int left, int right) where T : IComparable
+        private static IList<T> ISortByQuickSort<T>(IList<T> elements, int left, int right, bool ordenAscendente) where T : IComparable
         {
+            //retocar para odenarlo al reves
             //algoritmo sacado se internet
             //todos los derechos son de http://snipd.net/quicksort-in-c
+
+            const int IGUALES = 0;
             int i = left, j = right;
             IComparable pivot;
-            IComparable tmp;
-            if (right >= 0)
+            if (ordenAscendente)
             {
-                pivot = elements[(left + right) / 2];
 
-                while (i <= j)
+                if (right >= 0)
                 {
-                    while (elements[i].CompareTo(pivot) < 0)
+                    pivot = elements[(left + right) / 2];
+
+                    while (i <= j)
                     {
-                        i++;
+
+                        while (ExtensionIComparable.CompareTo(elements[i],pivot) < IGUALES)
+                        {
+                            i++;
+                        }
+
+                        while (ExtensionIComparable.CompareTo(elements[j],pivot) > IGUALES)
+                        {
+                            j--;
+                        }
+                        if (i <= j)
+                        {
+                            // Swap
+                            elements.Swap(i, j);
+
+                            i++;
+                            j--;
+                        }
                     }
 
-                    while (elements[j].CompareTo(pivot) > 0)
+
+
+                    // Recursive calls
+                    if (left < j)
                     {
-                        j--;
+                        ISortByQuickSort(elements, left, j, ordenAscendente);
                     }
 
-                    if (i <= j)
+                    if (i < right)
                     {
-                        // Swap
-                        tmp = elements[i];
-                        elements[i] = elements[j];
-                        elements[j] = (T)tmp;
-
-                        i++;
-                        j--;
+                        ISortByQuickSort(elements, i, right, ordenAscendente);
                     }
                 }
+            }
+            else {
+                //se que no es optimo pero asi hay menos código :3
+                SortByQuickSort(elements).Invertir();
 
-                // Recursive calls
-                if (left < j)
-                {
-                    ISortByQuickSort(elements, left, j);
-                }
-
-                if (i < right)
-                {
-                    ISortByQuickSort(elements, i, right);
-                }
+               
             }
 
             return elements;
         }
-
-        public static IList<T> SortByBubble<T>(this IList<T> listaParaOrdenar) where T : IComparable
+        public static void Invertir<T>(this IList<T> lst) where T : IComparable
+        {
+            for (int i = 0, f = lst.Count / 2, j = lst.Count - 1; i < f; i++, j--)
+            {
+                lst.Swap(i, j);
+            }
+        }
+        public static void Swap<T>(this IList<T> lst, int posLeft, int posRight)
+        {
+           T tmp = lst[posLeft];
+            lst[posLeft] = lst[posRight];
+            lst[posRight] = tmp;
+        }
+        public static void Swap(this IList lst, int posLeft, int posRight)
+        {
+            object tmp = lst[posLeft];
+            lst[posLeft] = lst[posRight];
+            lst[posRight] = tmp;
+        }
+        public static IList<T> SortByBubble<T>(this IList<T> listaParaOrdenar, bool ordenAscendente = true) where T : IComparable
         {
             //codigo de internet adaptado :)
             //Todos los derechos//http://www.c-sharpcorner.com/UploadFile/3d39b4/bubble-sort-in-C-Sharp/
-            const int SUPERIOR = (int)Gabriel.Cat.S.Utilitats.CompareTo.Superior;
+            int orden = ordenAscendente ? (int)Gabriel.Cat.S.Utilitats.CompareTo.Inferior : (int)Gabriel.Cat.S.Utilitats.CompareTo.Superior;
             bool flag = true;
             T temp;
             int numLength = listaParaOrdenar.Count;
@@ -162,7 +192,7 @@ namespace Gabriel.Cat.S.Extension
                 flag = false;
                 for (int j = 0; j < (numLength - 1); j++)
                 {
-                    if (listaParaOrdenar[j + 1].CompareTo(listaParaOrdenar[j]) == SUPERIOR)
+                    if (ExtensionIComparable.CompareTo(listaParaOrdenar[j + 1],listaParaOrdenar[j]) == orden)
                     {
                         temp = listaParaOrdenar[j];
                         listaParaOrdenar[j] = listaParaOrdenar[j + 1];
@@ -213,6 +243,7 @@ namespace Gabriel.Cat.S.Extension
         }
         public static int BinarySearch<T>(this IList<T> list, T value) where T : IComparable
         {//source https://stackoverflow.com/questions/8067643/binary-search-of-a-sorted-array
+            const int IGUALES = 0;
             int pos = -1;
             int compareTo;
 
@@ -224,13 +255,13 @@ namespace Gabriel.Cat.S.Extension
             while (!found && first <= last)
             {
                 mid = (first + last) / 2;
-                compareTo = list[mid].CompareTo(value);
-                if (0 < compareTo)
+                compareTo =ExtensionIComparable.CompareTo(list[mid],value);
+                if (IGUALES < compareTo)
                 {
                     first = mid + 1;
                 }
 
-                if (0 > compareTo)
+                if (IGUALES > compareTo)
                 {
                     last = mid - 1;
                 }
@@ -245,6 +276,7 @@ namespace Gabriel.Cat.S.Extension
 
             return pos;
         }
+    
         /// <summary>
         /// Mira en la lista IEnumerable si contiene exactamente todos los elementos de la otra lista, no tiene en cuenta el orden
         /// </summary>
@@ -259,18 +291,18 @@ namespace Gabriel.Cat.S.Extension
             bool contains = false;
             for (int i = 0; i < list.Count && !contains; i++)
             {
-                contains = list.Contains(list[i])||Contains(list,list[i]);
+                contains = list.Contains(list[i]) || Contains(list, list[i]);
 
             }
             return contains;
         }
         public static bool Contains<T>(this IList<T> list, T element) where T : IComparable
         {
-            const int IGUALS= (int)Gabriel.Cat.S.Utilitats.CompareTo.Iguals; 
+            const int IGUALS = (int)Gabriel.Cat.S.Utilitats.CompareTo.Iguals;
             bool contains = false;
             for (int i = 0; i < list.Count && !contains; i++)
             {
-                contains = list[i].CompareTo(element) == IGUALS;
+                contains = ExtensionIComparable.CompareTo(list[i],element) == IGUALS;
             }
             return contains;
         }
@@ -303,6 +335,20 @@ namespace Gabriel.Cat.S.Extension
                 throw new ArgumentOutOfRangeException();
             for (int i = startIndexListToSet, j = startIndexSource; i < source.Count && (endIndexSource == -1 || j < endIndexSource); i++, j++)
                 listToSet[i] = source[j];
+        }
+        public static bool AreEquals(this IList lstLeft, IList lstRight)
+        {
+            bool equals = lstRight != null && lstLeft.Count == lstRight.Count;
+            for (int i = 0; i < lstLeft.Count && equals; i++)
+                equals = Equals(lstLeft[i],lstRight[i]);
+            return equals;
+        }
+        public static bool AreEquals<T>(this IList<T> lstLeft, IList<T> lstRight)
+        {
+            bool equals = lstRight != null && lstLeft.Count == lstRight.Count;
+            for (int i = 0; i < lstLeft.Count && equals; i++)
+                equals = Equals(lstLeft[i],lstRight[i]);
+            return equals;
         }
     }
 }

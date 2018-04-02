@@ -12,8 +12,8 @@ namespace Gabriel.Cat.S.Extension
     public  static unsafe class BitmapExtension
     {
         delegate byte[] MetodoColor(byte[] colorValue, byte[] colorKey);
-        
 
+        #region SetFragment por acabar
         public static unsafe void SetFragment(byte* bmpTotalInicio, int alturaBmpTotal, int anchuraBmpTotal, bool bmpTotalIsArgb, byte* bmpFragmentoInicio, int alturaBmpFragmento, int anchuraBmpFragmento, bool bmpFragmentoIsArgb, System.Drawing.Point posicionFragmento)
         {
             const int OPCIONIGUALES = 0;
@@ -138,7 +138,8 @@ namespace Gabriel.Cat.S.Extension
 
             }
         }
-       
+        #endregion
+
         public static BitmapAnimated ToAnimatedBitmap(this IList<Bitmap> bmpsToAnimate, bool repetirSiempre = true)
         {
             return bmpsToAnimate.ToAnimatedBitmap(repetirSiempre, 500);
