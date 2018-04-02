@@ -10,26 +10,45 @@ namespace Gabriel.Cat.S.Extension
     {
         public static void Save(this IEnumerable<Byte> array, DirectoryInfo dir, string nameWithExtension, Encoding encoding)
         {
-            
-            array.Save(dir.FullName + Path.DirectorySeparatorChar + nameWithExtension, encoding);
+
+            array.ToArray().Save(Path.Combine(dir.FullName, nameWithExtension), encoding);
         }
         public static void Save(this IEnumerable<Byte> array, DirectoryInfo dir, string nameWithExtension)
         {
-            array.Save(dir, nameWithExtension, Encoding.UTF8);
+            array.Save(dir, nameWithExtension, null);
         }
         public static void Save(this IEnumerable<Byte> array, string path)
         {
-            array.Save(path, Encoding.UTF8);
+            array.ToArray().Save(path, null);
         }
         public static void Save(this IEnumerable<Byte> array, string path, Encoding encoding)
         {
+            array.ToArray().Save(path, encoding);
+        }
+        public static void Save(this byte[] array, DirectoryInfo dir, string nameWithExtension, Encoding encoding)
+        {
+            
+            array.Save(Path.Combine(dir.FullName, nameWithExtension), encoding);
+        }
+        public static void Save(this byte[] array, DirectoryInfo dir, string nameWithExtension)
+        {
+            array.Save(dir, nameWithExtension,null);
+        }
+        public static void Save(this byte[] array, string path)
+        {
+            array.Save(path, null);
+        }
+        public static void Save(this byte[] array, string path, Encoding encoding)
+        {
             if (File.Exists(path))
                 File.Delete(path);
+            if (encoding == null)
+                encoding = Encoding.UTF8;
             FileStream file = new FileStream(path, FileMode.Create);
             BinaryWriter bin = new BinaryWriter(file, encoding);
             try
             {
-                bin.Write(array.ToArray());
+                bin.Write(array);
             }
             finally
             {

@@ -166,6 +166,8 @@ namespace Gabriel.Cat.S.Extension
 
         public static void UnsafeMethod(this byte[] array, MetodoUnsafeArray metodo)
         {
+            if (metodo == null)
+                throw new ArgumentNullException("metodo");
             UnsafeArray.Usar(array, metodo);
         }
 
@@ -254,7 +256,8 @@ namespace Gabriel.Cat.S.Extension
         public static CompareTo CompareTo(this byte[] arrayLeft, byte[] arrayRight)
         {
             const int IGUALES = (int)Gabriel.Cat.S.Utilitats.CompareTo.Iguals;
-            int compareTo = arrayLeft.Length.CompareTo(arrayRight.Length);
+            const int INFERIOR= (int)Gabriel.Cat.S.Utilitats.CompareTo.Inferior;
+            int compareTo =arrayRight!=null? arrayLeft.Length.CompareTo(arrayRight.Length):INFERIOR;
             int pos;
             if (compareTo == IGUALES)
             {
@@ -274,11 +277,14 @@ namespace Gabriel.Cat.S.Extension
 
         public static bool ArrayEqual(this byte[] arrayLeft, byte[] arrayRight, int inicioArrayLeft = 0, int inicioArrayRight = 0, int length = -1)
         {
-            if (inicioArrayLeft < 0 || inicioArrayRight < 0 || length > -1 && inicioArrayLeft + length >= arrayLeft.Length && inicioArrayRight + length >= arrayRight.Length)
-                throw new ArgumentOutOfRangeException();
             bool equals = arrayRight != null;
+           
+           
             if (equals)
             {
+                if (inicioArrayLeft < 0 || inicioArrayRight < 0 || length > -1 && inicioArrayLeft + length >= arrayLeft.Length && inicioArrayRight + length >= arrayRight.Length)
+                    throw new ArgumentOutOfRangeException();
+
                 unsafe
                 {
                     byte* ptrArrayLeft, ptrArrayRight;
