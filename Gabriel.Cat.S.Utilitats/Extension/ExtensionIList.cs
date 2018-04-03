@@ -16,7 +16,16 @@ namespace Gabriel.Cat.S.Extension
         
         public static Type ListOfWhat(this IList list)
         {
-            return IListOfWhat((dynamic)list);
+            Type t;
+            dynamic lst = (dynamic)list;
+            try
+            {
+                t = IListOfWhat(lst);
+            }
+            catch {
+                t = ExtensionIListNullable.IListOfWhat(lst);
+            }
+            return t;
         }
         public static TCasting[] Casting<TCasting>(this IList lst, bool elementosNoCompatiblesDefault = true)
         {
@@ -348,11 +357,27 @@ namespace Gabriel.Cat.S.Extension
         }
         public static bool AreEquals<T>(this IList<T> lstLeft, IList<T> lstRight)
         {
+ 
             bool equals = lstRight != null && lstLeft.Count == lstRight.Count;
             for (int i = 0; i < lstLeft.Count && equals; i++)
                 equals = Equals(lstLeft[i],lstRight[i]);
             return equals;
         }
-  
+        public static bool AreEquals<T>(this IList<T> lstLeft, IList<T?> lstRight) where T : struct
+        {
+
+            bool equals = lstRight != null && lstLeft.Count == lstRight.Count;
+            object right;
+            for (int i = 0; i < lstLeft.Count && equals; i++)
+            {
+                if (lstRight[i].HasValue)
+                    right = lstRight[i].Value;
+                else right = null;
+
+                equals = Equals(lstLeft[i], right);
+            }
+            return equals;
+        }
+
     }
 }

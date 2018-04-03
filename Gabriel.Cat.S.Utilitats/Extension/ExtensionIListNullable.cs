@@ -6,15 +6,29 @@ namespace Gabriel.Cat.S.Extension
 {
     public static class ExtensionIListNullable
     {
-        static Type IListOfWhat<T>(this IList<T?> list) where T : struct
+       internal static Type IListOfWhat<T>(IList<T?> list) where T : struct
         {
-            return typeof(T);
+            return typeof(T?);
         }
         public static bool AreEquals<T>(this IList<T?> lstLeft, IList<T?> lstRight) where T : struct
         {
             bool equals = lstRight != null && lstLeft.Count == lstRight.Count;
             for (int i = 0; i < lstLeft.Count && equals; i++)
                 equals = Equals(lstLeft[i], lstRight[i]);
+            return equals;
+        }
+        public static bool AreEquals<T>(this IList<T?> lstLeft, IList<T> lstRight) where T : struct
+        {
+            bool equals = lstRight != null && lstLeft.Count == lstRight.Count;
+            object left;
+            for (int i = 0; i < lstLeft.Count && equals; i++)
+            {
+                if (lstLeft[i].HasValue)
+                    left = lstLeft[i].Value;
+                else left = null; 
+
+                equals = Equals(left, lstRight[i]);
+            }
             return equals;
         }
         public static IList<Nullable<T>> SortByQuickSort<T>(this IList<Nullable<T>> elements, bool ordenAscendente = true) where T : struct, IComparable
