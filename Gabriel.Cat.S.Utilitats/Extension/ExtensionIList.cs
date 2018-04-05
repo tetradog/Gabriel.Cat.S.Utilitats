@@ -7,26 +7,20 @@ using System.Text;
 namespace Gabriel.Cat.S.Extension
 {
     public delegate bool ComprovaEventHandler<Tvalue>(Tvalue valorAComprovar);
-        public static class ExtensionIList
+    public static class ExtensionIList
     {
+        #region PuestoAPrueba 
+
         static Type IListOfWhat<T>(this IList<T> list)
         {
             return typeof(T);
         }
-        
+
         public static Type ListOfWhat(this IList list)
         {
-            Type t;
-            dynamic lst = (dynamic)list;
-            try
-            {
-                t = IListOfWhat(lst);
-            }
-            catch {
-                t = ExtensionIListNullable.IListOfWhat(lst);
-            }
-            return t;
+            return IListOfWhat((dynamic)list);
         }
+
         public static TCasting[] Casting<TCasting>(this IList lst, bool elementosNoCompatiblesDefault = true)
         {
 
@@ -83,31 +77,37 @@ namespace Gabriel.Cat.S.Extension
         /// Ordena la array actual
         /// </summary>
         /// <param name="list"></param>
-        /// <param name="orden"></param>
-        /// <returns></returns>
-        public static IList<T> Sort<T>(this IList<T> list, SortMethod orden = SortMethod.QuickSort, bool ordenAscendente = true) where T : IComparable
+        /// <param name="orden">método para ordenar</param>
+        /// <param name="ordenAscendente"></param>
+        public static void Sort<T>(this IList<T> list, SortMethod orden = SortMethod.QuickSort, bool ordenAscendente = true) where T : IComparable
         {
-            IList<T> listSorted = null;
+         
             switch (orden)
             {
                 case SortMethod.QuickSort:
-                    listSorted = list.SortByQuickSort(ordenAscendente);
+                  list.SortByQuickSort(ordenAscendente);
                     break;
                 case SortMethod.Bubble:
-                    listSorted = list.SortByBubble(ordenAscendente);
+                    list.SortByBubble(ordenAscendente);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            return listSorted;
-        }
 
-        public static IList<T> SortByQuickSort<T>(this IList<T> elements, bool ordenAscendente = true) where T : IComparable
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="elements"></param>
+        /// <param name="ordenAscendente"></param>
+        /// <returns>devuelve la misma lista no es una copia!</returns>
+        public static void SortByQuickSort<T>(this IList<T> elements, bool ordenAscendente = true) where T : IComparable
         {
             int left = 0, right = elements.Count - 1;
-            return ISortByQuickSort(elements, left, right, ordenAscendente);
+            ISortByQuickSort(elements, left, right, ordenAscendente);
         }
-        private static IList<T> ISortByQuickSort<T>(IList<T> elements, int left, int right, bool ordenAscendente) where T : IComparable
+        private static void ISortByQuickSort<T>(IList<T> elements, int left, int right, bool ordenAscendente) where T : IComparable
         {
             //retocar para odenarlo al reves
             //algoritmo sacado se internet
@@ -126,12 +126,12 @@ namespace Gabriel.Cat.S.Extension
                     while (i <= j)
                     {
 
-                        while (ExtensionIComparable.CompareTo(elements[i],pivot) < IGUALES)
+                        while (ExtensionIComparable.CompareTo(elements[i], pivot) < IGUALES)
                         {
                             i++;
                         }
 
-                        while (ExtensionIComparable.CompareTo(elements[j],pivot) > IGUALES)
+                        while (ExtensionIComparable.CompareTo(elements[j], pivot) > IGUALES)
                         {
                             j--;
                         }
@@ -159,36 +159,25 @@ namespace Gabriel.Cat.S.Extension
                     }
                 }
             }
-            else {
-                //se que no es optimo pero asi hay menos código :3
-                SortByQuickSort(elements).Invertir();
-
-               
-            }
-
-            return elements;
-        }
-        public static void Invertir<T>(this IList<T> lst) 
-        {
-            for (int i = 0, f = lst.Count / 2, j = lst.Count - 1; i < f; i++, j--)
+            else
             {
-                lst.Swap(i, j);
-            }
-        }
+                //se que no es optimo pero asi hay menos código :3
+                SortByQuickSort(elements);
+                elements.Invertir();
 
-        public static void Swap<T>(this IList<T> lst, int posLeft, int posRight)
-        {
-           T tmp = lst[posLeft];
-            lst[posLeft] = lst[posRight];
-            lst[posRight] = tmp;
+
+            }
+
+      
         }
-        public static void Swap(this IList lst, int posLeft, int posRight)
-        {
-            object tmp = lst[posLeft];
-            lst[posLeft] = lst[posRight];
-            lst[posRight] = tmp;
-        }
-        public static IList<T> SortByBubble<T>(this IList<T> listaParaOrdenar, bool ordenAscendente = true) where T : IComparable
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="listaParaOrdenar"></param>
+        /// <param name="ordenAscendente"></param>
+        /// <returns>devuelve la misma lista no es una copia!</returns>
+        public static void SortByBubble<T>(this IList<T> listaParaOrdenar, bool ordenAscendente = true) where T : IComparable
         {
             //codigo de internet adaptado :)
             //Todos los derechos//http://www.c-sharpcorner.com/UploadFile/3d39b4/bubble-sort-in-C-Sharp/
@@ -203,7 +192,7 @@ namespace Gabriel.Cat.S.Extension
                 flag = false;
                 for (int j = 0; j < (numLength - 1); j++)
                 {
-                    if (ExtensionIComparable.CompareTo(listaParaOrdenar[j + 1],listaParaOrdenar[j]) == orden)
+                    if (ExtensionIComparable.CompareTo(listaParaOrdenar[j + 1], listaParaOrdenar[j]) == orden)
                     {
                         temp = listaParaOrdenar[j];
                         listaParaOrdenar[j] = listaParaOrdenar[j + 1];
@@ -212,9 +201,34 @@ namespace Gabriel.Cat.S.Extension
                     }
                 }
             }
-            return listaParaOrdenar;
+         
 
         }
+
+    
+        public static void Swap<T>(this IList<T> lst, int posElementAToB, int posElementBToA)
+        {
+            T tmp = lst[posElementAToB];
+            lst[posElementAToB] = lst[posElementBToA];
+            lst[posElementBToA] = tmp;
+        }      
+
+        #endregion
+
+
+
+
+
+        public static void Invertir<T>(this IList<T> lst)
+        {
+            for (int i = 0, f = lst.Count / 2, j = lst.Count - 1; i < f; i++, j--)
+            {
+                lst.Swap(i, j);
+            }
+        }
+
+
+
 
 
         //poder hacer que se pueda poner los valores en el orden contrario, de izquierda a derecha o  al rebes o por culumnas en vez de por filas...(y=0,x=0,y=1,x=0...)
@@ -262,12 +276,12 @@ namespace Gabriel.Cat.S.Extension
             bool found = false;
             int first = 0, last = list.Count - 1, mid = list.Count / 2;
 
-            list.SortByQuickSort();
+            list.SortByQuickSort(false);
             //for a sorted array with descending values
             while (!found && first <= last)
             {
                 mid = (first + last) / 2;
-                compareTo =ExtensionIComparable.CompareTo(list[mid],value);
+                compareTo = ExtensionIComparable.CompareTo(list[mid], value);
                 if (IGUALES < compareTo)
                 {
                     first = mid + 1;
@@ -288,7 +302,7 @@ namespace Gabriel.Cat.S.Extension
 
             return pos;
         }
-    
+
         /// <summary>
         /// Mira en la lista IEnumerable si contiene exactamente todos los elementos de la otra lista, no tiene en cuenta el orden
         /// </summary>
@@ -314,27 +328,28 @@ namespace Gabriel.Cat.S.Extension
             bool contains = false;
             for (int i = 0; i < list.Count && !contains; i++)
             {
-                contains = ExtensionIComparable.CompareTo(list[i],element) == IGUALS;
+                contains = ExtensionIComparable.CompareTo(list[i], element) == IGUALS;
             }
             return contains;
         }
-        public static List<T> SubList<T>(this IList<T> arrayB, int inicio)
+        public static T[] SubList<T>(this IList<T> arrayB, int inicio)
         {
             return arrayB.SubList(inicio, arrayB.Count - inicio);
         }
-        public static List<T> SubList<T>(this IList<T> arrayB, int inicio, int longitud)
+        public static T[] SubList<T>(this IList<T> arrayB, int inicio, int longitud)
         {
 
-            List<T> subArray;
+            T[] subArray;
 
             if (inicio < 0 || longitud <= 0)
                 throw new IndexOutOfRangeException();
             if (longitud + inicio > arrayB.Count)
                 throw new IndexOutOfRangeException();
-            subArray = new List<T>();
 
-            for (int i = inicio, fin = inicio + longitud; i < fin; i++)
-                subArray.Add(arrayB[i]);
+            subArray =new T[longitud];
+
+            for (int i = inicio, fin = inicio + longitud,j=0; i < fin; i++,j++)
+                subArray[j]=arrayB[i];
 
             return subArray;
 
@@ -348,19 +363,19 @@ namespace Gabriel.Cat.S.Extension
             for (int i = startIndexListToSet, j = startIndexSource; i < source.Count && (endIndexSource == -1 || j < endIndexSource); i++, j++)
                 listToSet[i] = source[j];
         }
-        public static bool AreEquals(this IList lstLeft, IList lstRight)
+        public static bool AreEqual(this IList lstLeft, IList lstRight)
         {
             bool equals = lstRight != null && lstLeft.Count == lstRight.Count;
             for (int i = 0; i < lstLeft.Count && equals; i++)
-                equals = Equals(lstLeft[i],lstRight[i]);
+                equals = Equals(lstLeft[i], lstRight[i]);
             return equals;
         }
         public static bool AreEquals<T>(this IList<T> lstLeft, IList<T> lstRight)
         {
- 
+
             bool equals = lstRight != null && lstLeft.Count == lstRight.Count;
             for (int i = 0; i < lstLeft.Count && equals; i++)
-                equals = Equals(lstLeft[i],lstRight[i]);
+                equals = Equals(lstLeft[i], lstRight[i]);
             return equals;
         }
         public static bool AreEquals<T>(this IList<T> lstLeft, IList<T?> lstRight) where T : struct

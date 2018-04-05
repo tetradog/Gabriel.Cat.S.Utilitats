@@ -63,6 +63,7 @@
     <Compile Include="Extension\testExtensionMatriu.cs" />
     <Compile Include="Extension\testExtensionInt.cs" />
     <Compile Include="Extension\testExtensionIList.cs" />
+    <Compile Include="Extension\testExtensionIListNullable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -40,7 +40,9 @@ namespace Gabriel.Cat.S.Extension
         /// <returns>devuelve una array ordenada</returns>
         public static T[] Sort<T>(this IEnumerable<T> list, SortMethod orden) where T : IComparable
         {
-            return (T[])list.ToArray().Sort(orden);
+            T[] sortedArray = (T[])list.ToArray();
+            sortedArray.Sort(orden);
+            return sortedArray;
         }
         public static Tvalue[,] ToMatriu<Tvalue>(this IEnumerable<Tvalue> llista, int numeroDimension, DimensionMatriz dimensionTamañoMax = DimensionMatriz.Fila)
         { return llista.ToArray().ToMatriu(numeroDimension, dimensionTamañoMax); }
@@ -84,11 +86,11 @@ namespace Gabriel.Cat.S.Extension
             return llista;
 
         }
-        public static List<T> SubList<T>(this IEnumerable<T> arrayB, int inicio)
+        public static T[] SubList<T>(this IEnumerable<T> arrayB, int inicio)
         {
             return arrayB.ToArray().SubList(inicio);
         }
-        public static List<T> SubList<T>(this IEnumerable<T> arrayB, int inicio, int longitud)
+        public static T[] SubList<T>(this IEnumerable<T> arrayB, int inicio, int longitud)
         {
             return arrayB.ToArray().SubList(inicio, longitud);
         }

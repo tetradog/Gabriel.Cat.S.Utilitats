@@ -6,45 +6,45 @@ namespace Gabriel.Cat.S.Extension
 {
     public static class ExtensionIListNullable
     {
-       internal static Type IListOfWhat<T>(IList<T?> list) where T : struct
-        {
-            return typeof(T?);
-        }
-        public static bool AreEquals<T>(this IList<T?> lstLeft, IList<T?> lstRight) where T : struct
-        {
-            bool equals = lstRight != null && lstLeft.Count == lstRight.Count;
-            for (int i = 0; i < lstLeft.Count && equals; i++)
-                equals = Equals(lstLeft[i], lstRight[i]);
-            return equals;
-        }
+
         public static bool AreEquals<T>(this IList<T?> lstLeft, IList<T> lstRight) where T : struct
         {
-            bool equals = lstRight != null && lstLeft.Count == lstRight.Count;
-            object left;
-            for (int i = 0; i < lstLeft.Count && equals; i++)
-            {
-                if (lstLeft[i].HasValue)
-                    left = lstLeft[i].Value;
-                else left = null; 
+            if (lstRight == null)
+                throw new ArgumentNullException("lstRight");
 
-                equals = Equals(left, lstRight[i]);
-            }
-            return equals;
+            return lstRight.AreEquals(lstLeft);
         }
-        public static IList<Nullable<T>> SortByQuickSort<T>(this IList<Nullable<T>> elements, bool ordenAscendente = true) where T : struct, IComparable
+
+        public static IList<T?> Sort<T>(this IList<T?> lst, SortMethod orden = SortMethod.QuickSort, bool ordenAscendente = true) where T : struct, IComparable
+        {
+            IList<T?> listSorted = null;
+            switch (orden)
+            {
+                case SortMethod.QuickSort:
+                    listSorted = lst.SortByQuickSort(ordenAscendente);
+                    break;
+                case SortMethod.Bubble:
+                    listSorted = lst.SortByBubble(ordenAscendente);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            return listSorted;
+        }
+        public static IList<T?> SortByQuickSort<T>(this IList<T?> elements, bool ordenAscendente = true) where T : struct, IComparable
         {
             int left = 0, right = elements.Count - 1;
             return ISortByQuickSort(elements, left, right, ordenAscendente);
         }
-        private static IList<Nullable<T>> ISortByQuickSort<T>(IList<Nullable<T>> elements, int left, int right, bool ordenAscendente) where T : struct, IComparable
+        private static IList<T?> ISortByQuickSort<T>(IList<T?> elements, int left, int right, bool ordenAscendente) where T : struct, IComparable
         {
-            //retocar para odenarlo al reves
+         
             //algoritmo sacado se internet
             //todos los derechos son de http://snipd.net/quicksort-in-c
 
             const int IGUALES = 0;
             int i = left, j = right;
-            Nullable<T> pivot;
+            T? pivot;
             if (ordenAscendente)
             {
 
@@ -98,35 +98,8 @@ namespace Gabriel.Cat.S.Extension
 
             return elements;
         }
-        public static void Invertir<T>(this IList<T?> lst) where T : struct
-        {
-            for (int i = 0, f = lst.Count / 2, j = lst.Count - 1; i < f; i++, j--)
-            {
-                lst.Swap(i, j);
-            }
-        }
-        public static void Swap<T>(this IList<Nullable<T>> lst, int posLeft, int posRight) where T : struct
-        {
-            Nullable<T> tmp = lst[posLeft];
-            lst[posLeft] = lst[posRight];
-            lst[posRight] = tmp;
-        }
-        public static IList<Nullable<T>> Sort<T>(this IList<Nullable<T>> lst, SortMethod orden = SortMethod.QuickSort, bool ordenAscendente = true) where T : struct, IComparable
-        {
-            IList<Nullable<T>> listSorted = null;
-            switch (orden)
-            {
-                case SortMethod.QuickSort:
-                    listSorted = lst.SortByQuickSort(ordenAscendente);
-                    break;
-                case SortMethod.Bubble:
-                    listSorted = lst.SortByBubble(ordenAscendente);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-            return listSorted;
-        }
+
+      
         public static IList<T?> SortByBubble<T>(this IList<T?> listaParaOrdenar, bool ordenAscendente = true) where T : struct, IComparable
         {
             //codigo de internet adaptado :)
@@ -140,13 +113,14 @@ namespace Gabriel.Cat.S.Extension
             for (int i = 1; (i <= (numLength - 1)) && flag; i++)
             {
                 flag = false;
-                for (int j = 0; j < (numLength - 1); j++)
+                for (int j = 0,k; j < (numLength - 1); j++)
                 {
-                    if (ExtensionIComparable.CompareTo(listaParaOrdenar[j + 1], listaParaOrdenar[j]) == orden)
+                    k = j + 1;
+                    if (ExtensionIComparable.CompareTo(listaParaOrdenar[k], listaParaOrdenar[j]) == orden)
                     {
                         temp = listaParaOrdenar[j];
-                        listaParaOrdenar[j] = listaParaOrdenar[j + 1];
-                        listaParaOrdenar[j + 1] = temp;
+                        listaParaOrdenar[j] = listaParaOrdenar[k];
+                        listaParaOrdenar[k] = temp;
                         flag = true;
                     }
                 }

@@ -7,6 +7,7 @@ using Gabriel.Cat.S.Utilitats;
 
 namespace UnitTestProjectgUtilitats.Extension
 {
+ 
     [TestClass]
     public class testExtensionIList
     {
@@ -15,11 +16,7 @@ namespace UnitTestProjectgUtilitats.Extension
         {
             Assert.AreEqual(typeof(int), (new List<int>()).ListOfWhat());
         }
-        [TestMethod]
-        public void TestExtensionIListListOfWhatFail()
-        {
-            Assert.AreNotEqual(typeof(string), (new List<int>()).ListOfWhat());
-        }
+
         [TestMethod]
         public void TestExtensionIListCastingSuccess()
         {
@@ -56,9 +53,9 @@ namespace UnitTestProjectgUtilitats.Extension
         void IListSortAscending(SortMethod sort)
         {
             int[] original = { 1, 2, 3, 4, 5, 6 };
-            int[] unsorted = { 6, 3, 4, 5, 2, 1 };
-            IList<int> sorted = unsorted.Sort(sort);
-            Assert.IsTrue(original.AreEquals(sorted));
+            int[] toCompare = { 6, 3, 4, 5, 2, 1 };
+            toCompare.Sort(sort);
+            Assert.IsTrue(original.AreEquals(toCompare));
         }
         [TestMethod]
         public void TestExtensionIListSortQuickSortDescending()
@@ -73,9 +70,9 @@ namespace UnitTestProjectgUtilitats.Extension
         void IListSortDescending(SortMethod sort)
         {
             int[] original = { 6,5,4,3,2,1 };
-            int[] unsorted = { 6, 3, 4, 5, 2, 1 };
-            IList<int> sorted = unsorted.Sort(sort,false);
-            Assert.IsTrue(original.AreEquals(sorted));
+            int[] toCompare = { 6, 3, 4, 5, 2, 1 };
+            toCompare.Sort(sort,false);
+            Assert.IsTrue(original.AreEquals(toCompare));
         }
         [TestMethod]
         public void TestExtensionIListSortQuickSortAscendingNull()
@@ -90,9 +87,53 @@ namespace UnitTestProjectgUtilitats.Extension
         void IListSortAscendingNull(SortMethod sort)
         {
             string[] original = {null, "a","b","c","d"};
-            string[] unsorted = { "b","d","a",null,"c" };
-            IList<string> sorted = unsorted.Sort(sort, true);
-            Assert.IsTrue(original.AreEquals(sorted));
+            string[] toCompare = { "b","d","a",null,"c" };
+            toCompare.Sort(sort, true);
+            Assert.IsTrue(original.AreEquals(toCompare));
+        }
+
+        [TestMethod]
+        public void TestExtensionIListGetElementAtConsecutiu()
+        {
+            const int POS = 2;
+            int[] ints = {0,1,2,3,4,5 };
+            Assert.AreEqual<int>(POS, ints.GetElementActual(Ordre.Consecutiu, POS));
+        }
+        [TestMethod]
+        public void TestExtensionIListGetElementAtConsecutiuLoop()
+        {
+            const int POS = 2;
+            int[] ints = { 0, 1, 2, 3, 4, 5 };
+            Assert.AreEqual<int>(POS, ints.GetElementActual(Ordre.Consecutiu, POS+ints.Length));
+        }
+        [TestMethod]
+        public void TestExtensionIListGetElementAtConsecutiuIAlInreves()
+        {
+            const int POS = 2;
+            int[] ints = { 0, 1, 2, 3, 4, 5 };
+            Assert.AreEqual<int>(POS, ints.GetElementActual(Ordre.ConsecutiuIAlInreves, POS));
+        }
+        [TestMethod]
+        public void TestExtensionIListGetElementAtConsecutiuIAlInrevesLoop()
+        {
+            const int POS = 2,VALOR=3;
+            int[] ints = { 0, 1, 2, 3, 4, 5 };
+            Assert.AreEqual<int>(VALOR, ints.GetElementActual(Ordre.ConsecutiuIAlInreves, POS + ints.Length));
+        }
+        [TestMethod]
+        public void TestExtensionIListSwapSuccess()
+        {
+            int[] ints = { 1, 2 };
+            ints.Swap(0, 1);
+            Assert.AreEqual(1, ints[1]);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestExtensionIListSwapFailOutOffRange()
+        {
+            int[] ints = { 1, 2 };
+            ints.Swap(0, 2);
+ 
         }
     }
 }
