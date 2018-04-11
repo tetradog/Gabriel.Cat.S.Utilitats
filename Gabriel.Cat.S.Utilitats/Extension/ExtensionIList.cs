@@ -16,10 +16,10 @@ namespace Gabriel.Cat.S.Extension
             return typeof(T);
         }
 
-        public static Type ListOfWhat(this IList list)
-        {
-            return IListOfWhat((dynamic)list);
-        }
+        //public static Type ListOfWhat(this IList list)
+        //{
+        //    return IListOfWhat((dynamic)list);
+        //}
 
         public static TCasting[] Casting<TCasting>(this IList lst, bool elementosNoCompatiblesDefault = true)
         {

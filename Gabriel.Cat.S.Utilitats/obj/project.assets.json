@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETStandard,Version=v2.0": {
-      "Microsoft.CSharp/4.5.0-preview1-26216-02": {
+      "Microsoft.CSharp/4.5.0-preview2-26406-04": {
         "type": "package",
         "compile": {
           "ref/netstandard2.0/Microsoft.CSharp.dll": {}
@@ -35,7 +35,7 @@
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
       },
-      "System.Drawing.Common/4.5.0-preview1-25914-04": {
+      "System.Drawing.Common/4.5.0-preview2-26406-04": {
         "type": "package",
         "compile": {
           "ref/netstandard2.0/System.Drawing.Common.dll": {}
@@ -47,10 +47,10 @@
     }
   },
   "libraries": {
-    "Microsoft.CSharp/4.5.0-preview1-26216-02": {
-      "sha512": "/ftJnETqUtjRGwxgXt9oB7GHoANb0wZZDyWtk2OtAi6N5P/UENj1N4c2wfHHHCAQHhYozVYvJ2E77v5ftrUPWw==",
+    "Microsoft.CSharp/4.5.0-preview2-26406-04": {
+      "sha512": "HqDNj4Ss5dtmJc7MySxTCYUGytJ4DTEEnR6WWcjDJqNF9YzH7kLZbKnA1jEj1cuG994gMP2orTL3UmDQsYtT6g==",
       "type": "package",
-      "path": "microsoft.csharp/4.5.0-preview1-26216-02",
+      "path": "microsoft.csharp/4.5.0-preview2-26406-04",
       "files": [
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
@@ -62,7 +62,7 @@
         "lib/netstandard1.3/Microsoft.CSharp.dll",
         "lib/netstandard2.0/Microsoft.CSharp.dll",
         "lib/portable-net45+win8+wp8+wpa81/_._",
-        "lib/uap10.0.16300/_._",
+        "lib/uap10.0.16299/_._",
         "lib/win8/_._",
         "lib/wp80/_._",
         "lib/wpa81/_._",
@@ -70,7 +70,7 @@
         "lib/xamarinmac20/_._",
         "lib/xamarintvos10/_._",
         "lib/xamarinwatchos10/_._",
-        "microsoft.csharp.4.5.0-preview1-26216-02.nupkg.sha512",
+        "microsoft.csharp.4.5.0-preview2-26406-04.nupkg.sha512",
         "microsoft.csharp.nuspec",
         "ref/MonoAndroid10/_._",
         "ref/MonoTouch10/_._",
@@ -101,7 +101,7 @@
         "ref/netstandard2.0/Microsoft.CSharp.dll",
         "ref/netstandard2.0/Microsoft.CSharp.xml",
         "ref/portable-net45+win8+wp8+wpa81/_._",
-        "ref/uap10.0.16300/_._",
+        "ref/uap10.0.16299/_._",
         "ref/win8/_._",
         "ref/wp80/_._",
         "ref/wpa81/_._",
@@ -254,10 +254,10 @@
         "netstandard.library.nuspec"
       ]
     },
-    "System.Drawing.Common/4.5.0-preview1-25914-04": {
-      "sha512": "xe9fRaplCuFFkqa2FNSuhZrux4ENP6b1sKxcGIqI0en4aEDMHsHQxtIwwkMsvlKDHoFlLcPkvpUefUnttajA8w==",
+    "System.Drawing.Common/4.5.0-preview2-26406-04": {
+      "sha512": "iARUNp8vfB1uWJmmpNg4NnhBJ70F/gbveBzhPVBctrZMm8NyMnYGdamuuleN9H3j8j2UHdmhT0Put5wtiX4C4w==",
       "type": "package",
-      "path": "system.drawing.common/4.5.0-preview1-25914-04",
+      "path": "system.drawing.common/4.5.0-preview2-26406-04",
       "files": [
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
@@ -279,7 +279,7 @@
         "ref/xamarinwatchos10/_._",
         "runtimes/unix/lib/netcoreapp2.0/System.Drawing.Common.dll",
         "runtimes/win/lib/netcoreapp2.0/System.Drawing.Common.dll",
-        "system.drawing.common.4.5.0-preview1-25914-04.nupkg.sha512",
+        "system.drawing.common.4.5.0-preview2-26406-04.nupkg.sha512",
         "system.drawing.common.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"
@@ -288,30 +288,33 @@
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
-      "Microsoft.CSharp >= 4.5.0-preview1-26216-02",
+      "Microsoft.CSharp >= 4.5.0-preview2-26406-04",
       "NETStandard.Library >= 2.0.1",
-      "System.Drawing.Common >= 4.5.0-preview1-25914-04"
+      "System.Drawing.Common >= 4.5.0-preview2-26406-04"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\pc\\.nuget\\packages\\": {},
+    "C:\\Users\\tetra\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.4.1",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pc\\MisProgramas\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats.csproj",
+      "projectUniqueName": "C:\\Users\\tetra\\Programas\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats.csproj",
       "projectName": "Gabriel.Cat.S.Utilitats",
-      "projectPath": "C:\\Users\\pc\\MisProgramas\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats.csproj",
-      "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\pc\\MisProgramas\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats\\obj\\",
+      "projectPath": "C:\\Users\\tetra\\Programas\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats.csproj",
+      "packagesPath": "C:\\Users\\tetra\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\tetra\\Programas\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\tetra\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.Fallback.config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.0"
@@ -336,7 +339,7 @@
         "dependencies": {
           "Microsoft.CSharp": {
             "target": "Package",
-            "version": "[4.5.0-preview1-26216-02, )"
+            "version": "[4.5.0-preview2-26406-04, )"
           },
           "NETStandard.Library": {
             "suppressParent": "All",
@@ -346,7 +349,7 @@
           },
           "System.Drawing.Common": {
             "target": "Package",
-            "version": "[4.5.0-preview1-25914-04, )"
+            "version": "[4.5.0-preview2-26406-04, )"
           }
         },
         "imports": [
