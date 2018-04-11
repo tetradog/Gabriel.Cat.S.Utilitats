@@ -14,11 +14,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Gabriel.Cat.Developer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyCopyrightAttribute("GNU v3")]
-[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.4.1")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.4.1")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.4.2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.4.2-preview")]
 [assembly: System.Reflection.AssemblyProductAttribute("Gabriel.Cat.S.Utilitats")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Gabriel.Cat.S.Utilitats")]
-[assembly: System.Reflection.AssemblyVersionAttribute("1.0.4.1")]
+[assembly: System.Reflection.AssemblyVersionAttribute("1.0.4.2")]
 
 // Generado por la clase WriteCodeFragment de MSBuild.
 

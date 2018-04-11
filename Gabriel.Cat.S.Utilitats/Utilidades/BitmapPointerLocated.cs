@@ -1,5 +1,4 @@
 ﻿using Gabriel.Cat.S.Extension;
-using Gabriel.Cat.S.Utilitats;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -7,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gabriel.Cat.Wpf
+namespace Gabriel.Cat.S.Utilitats
 {
     public class BitmapPointerLocated 
     {
