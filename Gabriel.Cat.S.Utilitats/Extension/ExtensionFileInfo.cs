@@ -1,4 +1,5 @@
-﻿using Gabriel.Cat.S.Utilitats.ClasesDeInternet;
+﻿using Gabriel.Cat.S.Extension;
+using Gabriel.Cat.S.Utilitats.ClasesDeInternet;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -7,11 +8,10 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-[assembly: Dependency(typeof(ExtensionFileInfo.SaveAndLoad_WinApp))]
-[assembly: Dependency(typeof(ExtensionFileInfo.SaveAndLoad))]
+
 namespace Gabriel.Cat.S.Extension
 {
-    
+
 
     public static class ExtensionFileInfo
     {
@@ -84,8 +84,8 @@ namespace Gabriel.Cat.S.Extension
         }
         public static string RutaRelativa(this FileInfo file, DirectoryInfo dir)
         {
-            StringBuilder ruta =new StringBuilder (file.FullName);
-            ruta.Replace(dir.FullName,"");
+            StringBuilder ruta = new StringBuilder(file.FullName);
+            ruta.Replace(dir.FullName, "");
             return ruta.ToString();
         }
         public static byte[] GetBytes(this FileInfo file)
@@ -97,7 +97,7 @@ namespace Gabriel.Cat.S.Extension
             System.Diagnostics.Process.Start(file.FullName);
         }
 
-     
+
         /// <summary>
         /// Calcula el Hash del archivo
         /// </summary>
@@ -143,77 +143,13 @@ namespace Gabriel.Cat.S.Extension
 
             return bEqual;
         }
-        //public static void GetAccess(this FileInfo file)
-        //{
-        //    StorageFile storageFile;
-        //    storageFile = StorageFile.GetFileFromPathAsync(file.FullName).Wait();
-        //    if (!StorageApplicationPermissions.FutureAccessList.CheckAccess(storageFile))
-        //        StorageApplicationPermissions.FutureAccessList.Add(storageFile);
-        //}
-        public static void WriteAllBytes(this FileInfo file, Stream str)
+        public static void WriteAllBytes(this FileInfo file, Stream strData)
         {
-            byte[] array;
-            array = new byte[str.Length];
-            str.Read(array, 0, array.Length);
-            WriteAllBytes(file, array);
+            file.WriteAllBytes(strData.GetAllBytes());
         }
-        public static async Task WriteAllBytes(this FileInfo file, byte[] bytes)
+        public static void WriteAllBytes(this FileInfo file, byte[] data)
         {
-
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-            {
-                SaveAndLoad_WinApp.SaveBytesAsync(file.FullName, bytes);
-            }
-            else
-            {
-                SaveAndLoad.SaveBytesAsync(file.FullName, bytes);
-            }
-        }
-        public static async Task<byte[]> ReadAllBytes(this FileInfo file)
-        {
-            Task<byte[]> result;
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-            {
-                result = SaveAndLoad_WinApp.LoadTextAsync(file.FullName);
-            }
-            else
-            {
-                result = SaveAndLoad.LoadBytesAsync(file.FullName);
-            }
-            return await result;
-        }
-        //sacado de https://docs.microsoft.com/en-us/xamarin/xamarin-forms/app-fundamentals/files?tabs=vswin
-        internal static class SaveAndLoad_WinApp : ISaveAndLoad
-        {
-            public static async Task SaveBytesAsync(string filename, byte[] bytes)
-            {
-                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-                StorageFile sampleFile = await localFolder.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
-                await FileIO.WriteBytesAsync(sampleFile, bytes);
-            }
-            public static async Task<byte[]> LoadTextAsync(string filename)
-            {
-                StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-                StorageFile sampleFile = await storageFolder.GetFileAsync(filename);
-                byte[] bytes = (await Windows.Storage.FileIO.ReadBufferAsync(sampleFile));
-                return bytes;
-            }
-        }
-        //sacado de https://docs.microsoft.com/en-us/xamarin/xamarin-forms/app-fundamentals/files?tabs=vswin
-        internal static class SaveAndLoad : ISaveAndLoad
-        {
-            public static async Task SaveBytesAsync(string filename, byte[] bytes)
-            {
-                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                string filePath = Path.Combine(documentsPath, filename);
-                System.IO.File.WriteAllBytes(filePath, bytes);
-            }
-            public static async Task<byte[]> LoadBytesAsync(string filename)
-            {
-                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                string filePath = Path.Combine(documentsPath, filename);
-                return System.IO.File.ReadAllBytes(filePath);
-            }
+            File.WriteAllBytes(file.FullName, data);
         }
 
     }
