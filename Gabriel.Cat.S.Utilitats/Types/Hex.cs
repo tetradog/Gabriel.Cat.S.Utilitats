@@ -36,6 +36,10 @@ namespace Gabriel.Cat.S.Utilitats
                 "E",
                 "F"
             };
+        static readonly int[] HexValue = new int[] { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05,
+                0x06, 0x07, 0x08, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F
+            };
         string numberHex;
         static Hex()
         {
@@ -74,7 +78,7 @@ namespace Gabriel.Cat.S.Utilitats
             }
         }
 
-      
+
         #region Equals and GetHashCode implementation
         // The code in this region is useful if you want to use this structure in collections.
         // If you don't need it, you can just remove the region and the ": IEquatable<Hex>" declaration.
@@ -233,15 +237,15 @@ namespace Gabriel.Cat.S.Utilitats
         public static implicit operator Hex(string numero)
         {
             const int BASEHEX = 16;
-            return (Hex)Convert.ToUInt64(numero,BASEHEX);
+            return (Hex)Convert.ToUInt64(numero, BASEHEX);
         }
         public static implicit operator Hex(int numero)
         {
-            return (Hex)Serializar.GetBytes(numero);
+            return (Hex)Serializar.GetBytes(numero).InvertirClone();
         }
         public static implicit operator Hex(byte numero)
         {
-            return (Hex)Serializar.GetBytes(numero);
+            return (Hex)Serializar.GetBytes(numero).InvertirClone();
         }
         public static explicit operator Hex(byte[] numero)
         {
@@ -266,7 +270,7 @@ namespace Gabriel.Cat.S.Utilitats
         }
         public static implicit operator Hex(uint numero)
         {
-            return (Hex)Serializar.GetBytes(numero);
+            return (Hex)Serializar.GetBytes(numero).InvertirClone();
         }
 
         public static implicit operator Hex(long numero)
@@ -280,7 +284,7 @@ namespace Gabriel.Cat.S.Utilitats
         static string QuitaCerosInutiles(string numero)
         {
             StringBuilder num = new StringBuilder(numero);
-            while (num.Length > 0 && num[0] == '0')num.Remove(0, 1);
+            while (num.Length > 0 && num[0] == '0') num.Remove(0, 1);
             if (num.Length == 0)
                 num = new StringBuilder("0");
             return num.ToString();
@@ -297,18 +301,24 @@ namespace Gabriel.Cat.S.Utilitats
         public static explicit operator uint(Hex numero)
         {
             const int LENGHT = 4;
-            return Serializar.ToUInt(DameArray(numero,LENGHT));
+            return Serializar.ToUInt(DameArray(numero, LENGHT));
         }
         static byte[] DameArray(byte[] bytes, int lenght)
         {
+            bytes.Invertir();
             if (bytes.Length < lenght)
-                bytes = bytes.AddArray(new byte[lenght - bytes.Length]);
-            return bytes.InvertirClone();
+                bytes = bytes.AddArray( new byte[lenght - bytes.Length]);
+            return bytes;
         }
         public static explicit operator ushort(Hex numero)
         {
             const int LENGHT = 2;
             return Serializar.ToUShort(DameArray(numero, LENGHT));
+        }
+        public static explicit operator short(Hex numero)
+        {
+            const int LENGHT = 2;
+            return Serializar.ToShort(DameArray(numero, LENGHT));
         }
         public static explicit operator byte(Hex numero)
         {
@@ -327,16 +337,18 @@ namespace Gabriel.Cat.S.Utilitats
         }
         public static implicit operator byte[] (Hex numero)
         {//sacado de internet
-            byte[] bytes = new byte[numero.numberHex.Length / 2];
-            int[] hexValue = new int[] { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05,
-                0x06, 0x07, 0x08, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F
-            };
 
-            for (int x = 0, i = 0; i < numero.numberHex.Length; i += 2, x += 1)
+            StringBuilder numeroString = new StringBuilder(numero.ToString());
+            byte[] bytes;
+            if (numeroString.Length % 2 != 0)
+                numeroString.Insert(0, '0');
+            bytes = new byte[numeroString.Length / 2];
+
+
+            for (int x = 0, i = 0; i < numeroString.Length; i += 2, x += 1)
             {
-                bytes[x] = (byte)(hexValue[Char.ToUpper(numero.numberHex[i + 0]) - '0'] << 4 |
-                hexValue[Char.ToUpper(numero.numberHex[i + 1]) - '0']);
+                bytes[x] = (byte)(HexValue[Char.ToUpper(numeroString[i + 0]) - '0'] << 4 |
+                HexValue[Char.ToUpper(numeroString[i + 1]) - '0']);
             }
 
 
