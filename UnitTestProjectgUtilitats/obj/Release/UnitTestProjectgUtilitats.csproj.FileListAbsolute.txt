@@ -57,8 +57,8 @@ C:\Users\tetra\Programas\Gabriel.Cat.S.Utilitats\UnitTestProjectgUtilitats\bin\R
 C:\Users\tetra\Programas\Gabriel.Cat.S.Utilitats\UnitTestProjectgUtilitats\bin\Release\Gabriel.Cat.S.Utilitats.pdb
 C:\Users\tetra\Programas\Gabriel.Cat.S.Utilitats\UnitTestProjectgUtilitats\bin\Release\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
 C:\Users\tetra\Programas\Gabriel.Cat.S.Utilitats\UnitTestProjectgUtilitats\bin\Release\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
-C:\Users\tetra\Programas\Gabriel.Cat.S.Utilitats\UnitTestProjectgUtilitats\obj\Release\UnitTestProjectgUtilitats.csprojResolveAssemblyReference.cache
 C:\Users\tetra\Programas\Gabriel.Cat.S.Utilitats\UnitTestProjectgUtilitats\obj\Release\UnitTestProjectgUtilitats.csproj.CoreCompileInputs.cache
 C:\Users\tetra\Programas\Gabriel.Cat.S.Utilitats\UnitTestProjectgUtilitats\obj\Release\UnitTestProjectgUtilitats.csproj.CopyComplete
 C:\Users\tetra\Programas\Gabriel.Cat.S.Utilitats\UnitTestProjectgUtilitats\obj\Release\UnitTestProjectgUtilitats.dll
 C:\Users\tetra\Programas\Gabriel.Cat.S.Utilitats\UnitTestProjectgUtilitats\obj\Release\UnitTestProjectgUtilitats.pdb
+C:\Users\tetra\Programas\Gabriel.Cat.S.Utilitats\UnitTestProjectgUtilitats\obj\Release\UnitTestProjectgUtilitats.csprojAssemblyReference.cache
