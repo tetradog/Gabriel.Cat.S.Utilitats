@@ -63,7 +63,7 @@ namespace Gabriel.Cat.S.Utilitats
 
         public bool IsSynchronized => false;
 
-        public object SyncRoot => false;
+        public object SyncRoot =>null;
 
         public object this[object key]
         {
@@ -379,7 +379,10 @@ namespace Gabriel.Cat.S.Utilitats
         public void Add(object key, object value)
         {
             if (!(key is TwoKeys<TKey1, TKey2>))
-                throw new Exception(nameof(TwoKeys<TKey1, TKey2>));
+                throw new Exception(typeof(TwoKeys<TKey1, TKey2>).Name);
+            if (!(value is TValue))
+                throw new Exception(typeof(TValue).Name);
+            Add(new KeyValuePair<TwoKeys<TKey1, TKey2>, TValue>((TwoKeys<TKey1, TKey2>)key, (TValue)value));
         }
 
         public bool Contains(object key)
@@ -401,9 +404,11 @@ namespace Gabriel.Cat.S.Utilitats
         public void Remove(object key)
         {
             if (key is TKey1)
-                Remove((TKey1)key);
+                Remove1((TKey1)key);
             else if (key is TKey2)
-                Remove((TKey2)key);
+                Remove2((TKey2)key);
+            else if(key is TwoKeys<TKey1,TKey2>)
+                Remove1(((TwoKeys<TKey1,TKey2>)key).Key1);
             else throw new Exception(String.Format("key most be {0} or {1}", typeof(TKey1), typeof(TKey2)));
         }
 
