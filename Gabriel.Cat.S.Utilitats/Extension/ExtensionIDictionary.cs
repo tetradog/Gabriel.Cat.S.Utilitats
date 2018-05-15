@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,6 +7,14 @@ namespace Gabriel.Cat.S.Extension
 {
    public static class ExtensionIDictionary
     {
+        public static Type DicOfWhat(this IDictionary dic)
+        {
+            return IDicOfWhat((dynamic)dic);
+        }
+        static Type IDicOfWhat<TKey,TValue>(this IDictionary<TKey,TValue> dic)
+        {
+            return typeof(KeyValuePair<TKey, TValue>);
+        }
         public static TValue[] GetValues<TKey, TValue>(this IDictionary<TKey, TValue> dic)
         {
             TValue[] values = new TValue[dic.Count];
