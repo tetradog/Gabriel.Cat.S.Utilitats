@@ -11,7 +11,7 @@ namespace Gabriel.Cat.S.Utilitats
     /// <summary>
     /// Description of TwoKeysList.
     /// </summary>
-    public class TwoKeysList<TKey1, TKey2, TValue> : IDictionary<TwoKeys<TKey1, TKey2>, TValue>, IEnumerable<KeyValuePair<TwoKeys<TKey1, TKey2>, TValue>>, IList<KeyValuePair<TwoKeys<TKey1, TKey2>, TValue>>, IReadOnlyList<KeyValuePair<TwoKeys<TKey1, TKey2>, TValue>>, ICollection<KeyValuePair<TwoKeys<TKey1, TKey2>, TValue>>
+    public class TwoKeysList<TKey1, TKey2, TValue> : DictionaryBase, IDictionary, IDictionary<TwoKeys<TKey1, TKey2>, TValue>, IEnumerable<KeyValuePair<TwoKeys<TKey1, TKey2>, TValue>>, IList<KeyValuePair<TwoKeys<TKey1, TKey2>, TValue>>, IReadOnlyList<KeyValuePair<TwoKeys<TKey1, TKey2>, TValue>>, ICollection<KeyValuePair<TwoKeys<TKey1, TKey2>, TValue>>
                                                         where TKey1 : IComparable<TKey1>
                                                         where TKey2 : IComparable<TKey2>
     {
@@ -55,18 +55,50 @@ namespace Gabriel.Cat.S.Utilitats
             }
         }
 
+        public bool IsFixedSize => false;
 
+        ICollection IDictionary.Keys => Keys.ToArray();
+
+        ICollection IDictionary.Values => Values.ToArray();
+
+        public bool IsSynchronized => false;
+
+        public object SyncRoot => false;
+
+        public object this[object key]
+        {
+            get
+            {
+                object obj;
+                if (key is TKey1)
+                    obj = this[(TKey1)key];
+                else if (key is TKey2)
+                    obj = this[(TKey2)key];
+                else throw new Exception("el tipo no es ningun TKey");
+                return obj;
+            }
+            set
+            {
+                if (key is TKey1)
+                    this[(TKey1)key] = (TValue)value;
+                else if (key is TKey2)
+                    this[(TKey2)key] = (TValue)value;
+                else throw new Exception("el tipo no es ningun TKey");
+            }
+        }
 
         public KeyValuePair<TwoKeys<TKey1, TKey2>, TValue> this[int index]
         {
             get
             {
-                throw new NotImplementedException();
+                KeyValuePair<TKey1, TValue> pair = llista1[index];
+                return new KeyValuePair<TwoKeys<TKey1, TKey2>, TValue>(new TwoKeys<TKey1, TKey2>(pair.Key, GetTkey2WhithTkey1(pair.Key)), pair.Value);
             }
 
             set
             {
-                throw new NotImplementedException();
+                Remove(value.Key);
+                Add(value);
             }
         }
 
@@ -344,8 +376,41 @@ namespace Gabriel.Cat.S.Utilitats
             CopyTo(array, arrayIndex);
         }
 
+        public void Add(object key, object value)
+        {
+            if (!(key is TwoKeys<TKey1, TKey2>))
+                throw new Exception(nameof(TwoKeys<TKey1, TKey2>));
+        }
 
+        public bool Contains(object key)
+        {
+            bool contains;
+            if (key is TKey1)
+                contains = ContainsKey1((TKey1)key);
+            else if (key is TKey2)
+                contains = ContainsKey2((TKey2)key);
+            else throw new Exception(String.Format("key most be {0} or {1}", typeof(TKey1), typeof(TKey2)));
+            return contains;
+        }
 
+        IDictionaryEnumerator IDictionary.GetEnumerator()
+        {
+            return base.GetEnumerator();
+        }
+
+        public void Remove(object key)
+        {
+            if (key is TKey1)
+                Remove((TKey1)key);
+            else if (key is TKey2)
+                Remove((TKey2)key);
+            else throw new Exception(String.Format("key most be {0} or {1}", typeof(TKey1), typeof(TKey2)));
+        }
+
+        public void CopyTo(Array array, int index)
+        {
+            base.CopyTo(array, index);
+        }
     }
     public struct TwoKeys<Tkey1, Tkey2>
     {

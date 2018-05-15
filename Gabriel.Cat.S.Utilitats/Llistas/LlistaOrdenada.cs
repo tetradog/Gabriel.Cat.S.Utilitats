@@ -1,6 +1,8 @@
 ﻿using Gabriel.Cat.S.Extension;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
@@ -14,7 +16,7 @@ namespace Gabriel.Cat.S.Utilitats
     /// <summary>
     /// Is a SortedList multitheread compatible (use Monitor on class)
     /// </summary>
-    public class LlistaOrdenada<TKey, TValue> :  IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue>, IList<KeyValuePair<TKey, TValue>>, IReadOnlyList<KeyValuePair<TKey, TValue>>, ICollection<KeyValuePair<TKey, TValue>>
+    public class LlistaOrdenada<TKey, TValue> :DictionaryBase,IDictionary,IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue>, IList<KeyValuePair<TKey, TValue>>, IReadOnlyList<KeyValuePair<TKey, TValue>>, ICollection<KeyValuePair<TKey, TValue>>
     {
         protected Dictionary<TKey, TValue> llistaOrdenada;
         internal List<TKey> llista;
@@ -115,6 +117,22 @@ namespace Gabriel.Cat.S.Utilitats
                 return Values;
             }
         }
+
+        bool IDictionary.IsFixedSize => false;
+
+        bool IDictionary.IsReadOnly => IsReadOnly;
+
+        ICollection IDictionary.Keys => Keys.ToArray();
+
+        ICollection IDictionary.Values => Values.ToArray();
+
+        int ICollection.Count => Count;
+
+        bool ICollection.IsSynchronized => false;
+
+        object ICollection.SyncRoot => false;
+
+        object IDictionary.this[object key] { get => this[(TKey)key]; set => this[(TKey)key]=(TValue)value; }
 
         public KeyValuePair<TKey, TValue> this[int index]
         {
@@ -614,6 +632,44 @@ namespace Gabriel.Cat.S.Utilitats
             return Remove(item.Key);
         }
 
+        void IDictionary.Add(object key, object value)
+        {
+            if (!(key is TKey))
+                throw new Exception(String.Format("key must be {0}",typeof(TKey)));
+            if (!(value is TValue))
+                throw new Exception(String.Format("value must be {0}", typeof(TValue)));
+            Add((TKey)key, (TValue)value);
+        }
+
+        void IDictionary.Clear()
+        {
+            Clear();
+        }
+
+        bool IDictionary.Contains(object key)
+        {
+            if (!(key is TKey))
+                throw new Exception(String.Format("key must be {0}", typeof(TKey)));
+
+            return ContainsKey((TKey)key);
+        }
+
+        IDictionaryEnumerator IDictionary.GetEnumerator()
+        {
+            return base.GetEnumerator();
+        }
+
+        void IDictionary.Remove(object key)
+        {
+            if (!(key is TKey))
+                throw new Exception(String.Format("key must be {0}", typeof(TKey)));
+            Remove((TKey)key);
+        }
+
+        void ICollection.CopyTo(Array array, int index)
+        {
+            base.CopyTo(array, index);
+        }
     }
     public class LlistaOrdenada<T> : LlistaOrdenada<IComparable, T> where T : IComparable
     {
