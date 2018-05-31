@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Gabriel.Cat.S.Utilitats
 {
-    public class Propiedad
+    public class Propiedad:IComparable<Propiedad>
     {
         private PropiedadTipo info;
         private object objeto;
@@ -30,6 +30,15 @@ namespace Gabriel.Cat.S.Utilitats
                 return objeto;
             }
 
+        }
+
+        int IComparable<Propiedad>.CompareTo(Propiedad other)
+        {
+            int compareTo;
+            if (other != null)
+                compareTo = ((IComparable<PropiedadTipo>)Info).CompareTo(other.Info);
+            else compareTo = (int)Gabriel.Cat.S.Utilitats.CompareTo.Inferior;
+            return compareTo;
         }
     }
 }

@@ -3,11 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using System.Linq;
 
 namespace Gabriel.Cat.S.Utilitats
 {
-    public class PropiedadTipo
+    public class PropiedadTipo:IComparable<PropiedadTipo>
     {
+        AtributoOrden orden;
         string nombre;
         IList<System.Attribute> atributos;
         Type tipo;
@@ -55,6 +57,50 @@ namespace Gabriel.Cat.S.Utilitats
             {
                 return tipo;
             }
+        }
+        public AtributoOrden Orden
+        {
+            get
+            {
+                if(orden==null)
+                {
+                    orden = Atributos.Filtra((atributo) => atributo is AtributoOrden).FirstOrDefault() as AtributoOrden;
+                }
+                return orden;
+            }
+        }
+
+        int IComparable<PropiedadTipo>.CompareTo(PropiedadTipo other)
+        {
+            int compareTo;
+            if (other != null)
+            {
+                if (Orden == null && other.Orden != null)
+                    compareTo = (int)Gabriel.Cat.S.Utilitats.CompareTo.Inferior;
+                else if (Orden != null && other.Orden == null)
+                    compareTo = (int)Gabriel.Cat.S.Utilitats.CompareTo.Superior;
+                else compareTo = Orden.CompareTo(other.Orden);
+            }
+            else compareTo = (int)Gabriel.Cat.S.Utilitats.CompareTo.Inferior;
+            return compareTo;
+        }
+    }
+    public class AtributoOrden:System.Attribute,IComparable<AtributoOrden>
+    {
+        public AtributoOrden(int orden)
+        {
+            Orden = orden;
+        }
+
+        public int Orden { get; private set; }
+
+        public int CompareTo(AtributoOrden other)
+        {
+            int compareTo;
+            if (other != null)
+                compareTo = Orden.CompareTo(other.Orden);
+            else compareTo = (int)Gabriel.Cat.S.Utilitats.CompareTo.Inferior;
+            return compareTo;
         }
     }
 }
