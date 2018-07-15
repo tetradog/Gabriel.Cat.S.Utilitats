@@ -393,6 +393,17 @@ namespace Gabriel.Cat.S.Extension
             }
             return equals;
         }
-
+        public static void Desordena<T>(this IList<T> lst)
+        {
+            T[] lstDesordenada = new T[lst.Count];
+            for (int i = 0, posRandom; i < lstDesordenada.Length; i++)
+            {
+                posRandom = MiRandom.Next(0, lst.Count);
+                lstDesordenada[i] = lst[posRandom];
+                lst.RemoveAt(posRandom);
+            }
+            for (int i = 0; i < lstDesordenada.Length; i++)
+                lst.Add(lstDesordenada[i]);
+        }
     }
 }

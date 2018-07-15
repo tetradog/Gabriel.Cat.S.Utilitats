@@ -15,3 +15,4 @@ C:\Users\tetra\Programas\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\obj\Rel
 C:\Users\tetra\Programas\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\obj\Release\netstandard2.0\Gabriel.Cat.S.Utilitats.AssemblyInfo.cs
 C:\Users\tetra\Programas\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\obj\Release\netstandard2.0\Gabriel.Cat.S.Utilitats.dll
 C:\Users\tetra\Programas\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\obj\Release\netstandard2.0\Gabriel.Cat.S.Utilitats.pdb
+C:\Users\tetra\Programas\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\obj\Release\netstandard2.0\Gabriel.Cat.S.Utilitats.csprojAssemblyReference.cache
