@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyCopyrightAttribute("GNU v3")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.4.3")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.4.3-preview1.0.10")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.4.3-preview1.0.11")]
 [assembly: System.Reflection.AssemblyProductAttribute("Gabriel.Cat.S.Utilitats")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Gabriel.Cat.S.Utilitats")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.4.3")]
