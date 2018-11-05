@@ -20,7 +20,7 @@
           "lib/netstandard1.0/_._": {}
         }
       },
-      "NETStandard.Library/2.0.1": {
+      "NETStandard.Library/2.0.3": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0"
@@ -48,7 +48,7 @@
   },
   "libraries": {
     "Microsoft.CSharp/4.5.0-rc1": {
-      "sha512": "ZHQLb01QJvLRyqjt5ega6QIpz1BvCoTSa/dL9Ne/JfJzgyj5+zDMQHUTb9BfJege3yavV2FFdKIH2PQRqGCoHQ==",
+      "sha512": "0hD+OWWY79+iMM8tHfF9VNpymDIX81sRa348aqU3t3rZuPh40wVdFt1MeOhp93UYbM8hL2WiIu/NWplZuZAMTQ==",
       "type": "package",
       "path": "microsoft.csharp/4.5.0-rc1",
       "files": [
@@ -127,14 +127,13 @@
         "runtime.json"
       ]
     },
-    "NETStandard.Library/2.0.1": {
-      "sha512": "oA6nwv9MhEKYvLpjZ0ggSpb1g4CQViDVQjLUcDWg598jtvJbpfeP2reqwI1GLW2TbxC/Ml7xL6BBR1HmKPXlTg==",
+    "NETStandard.Library/2.0.3": {
+      "sha512": "st47PosZSHrjECdjeIzZQbzivYBJFv6P2nv4cj2ypdI204DO+vZ7l5raGMiX4eXMJ53RfOIg+/s4DHVZ54Nu2A==",
       "type": "package",
-      "path": "netstandard.library/2.0.1",
+      "path": "netstandard.library/2.0.3",
       "files": [
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
-        "build/NETStandard.Library.targets",
         "build/netstandard2.0/NETStandard.Library.targets",
         "build/netstandard2.0/ref/Microsoft.Win32.Primitives.dll",
         "build/netstandard2.0/ref/System.AppContext.dll",
@@ -251,12 +250,12 @@
         "build/netstandard2.0/ref/netstandard.dll",
         "build/netstandard2.0/ref/netstandard.xml",
         "lib/netstandard1.0/_._",
-        "netstandard.library.2.0.1.nupkg.sha512",
+        "netstandard.library.2.0.3.nupkg.sha512",
         "netstandard.library.nuspec"
       ]
     },
     "System.Drawing.Common/4.5.0-rc1": {
-      "sha512": "G7UU+j2Le7+LomBKCs8tYU8UHo2FKFcsiet92YhtK9/nU0tArYHQGvMSpWG+xZD/lvCX/dPgc3M6D4SnJifnFg==",
+      "sha512": "l94uZPXNVlRWqnM16ySL8M+1j7ai+ykFONfIKlTcaW1+2Ct1UlQk70UJKossjzT86mKQElSENQeuIGCcI1Z/LQ==",
       "type": "package",
       "path": "system.drawing.common/4.5.0-rc1",
       "files": [
@@ -291,7 +290,7 @@
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
       "Microsoft.CSharp >= 4.5.0-rc1",
-      "NETStandard.Library >= 2.0.1",
+      "NETStandard.Library >= 2.0.3",
       "System.Drawing.Common >= 4.5.0-rc1"
     ]
   },
@@ -300,13 +299,13 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.0.4.3-preview1.0.10",
+    "version": "1.0.4.3-preview1.0.12",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tetra\\Programas\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats.csproj",
+      "projectUniqueName": "C:\\Users\\tetra\\Documents\\SharpDevelop Projects\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats.csproj",
       "projectName": "Gabriel.Cat.S.Utilitats",
-      "projectPath": "C:\\Users\\tetra\\Programas\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats.csproj",
+      "projectPath": "C:\\Users\\tetra\\Documents\\SharpDevelop Projects\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats.csproj",
       "packagesPath": "C:\\Users\\tetra\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\tetra\\Programas\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats\\obj\\",
+      "outputPath": "C:\\Users\\tetra\\Documents\\SharpDevelop Projects\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -343,7 +342,7 @@
           "NETStandard.Library": {
             "suppressParent": "All",
             "target": "Package",
-            "version": "[2.0.1, )",
+            "version": "[2.0.3, )",
             "autoReferenced": true
           },
           "System.Drawing.Common": {
