@@ -45,14 +45,15 @@ namespace Gabriel.Cat.S.Utilitats
                 {
                     semaphore.WaitOne();
                     list[index] = value;
-                    if (Updated != null)
-                        Updated(this, new ListEventArgs<T>(this, value));
+               
 
                 }
                 catch { throw; }
                 finally
                 {
                     semaphore.Release();
+                    if (Updated != null)
+                        Updated(this, new ListEventArgs<T>(this, value));
                 }
             }
         }
@@ -134,13 +135,14 @@ namespace Gabriel.Cat.S.Utilitats
            
                 for (int i = 0; i < items.Count; i++)
                     list.Add(items[i]);
-                if (Updated != null)
-                    Updated(this, new ListEventArgs<T>(this, items));
+    
             }
             catch { throw; }
             finally
             {
                 semaphore.Release();
+                if (Updated != null)
+                    Updated(this, new ListEventArgs<T>(this, items));
             }
         }
         public void Add(T item)
@@ -149,13 +151,14 @@ namespace Gabriel.Cat.S.Utilitats
             {
                 semaphore.WaitOne();
                 list.Add(item);
-                if (Updated != null)
-                    Updated(this, new ListEventArgs<T>(this, item));
+             
             }
             catch { throw; }
             finally
             {
                 semaphore.Release();
+                if (Updated != null)
+                    Updated(this, new ListEventArgs<T>(this, item));
             }
         }
 
@@ -165,13 +168,14 @@ namespace Gabriel.Cat.S.Utilitats
             {
                 semaphore.WaitOne();
                 list.Clear();
-                if (Updated != null)
-                    Updated(this, new ListEventArgs<T>(this));
+                
             }
             catch { throw; }
             finally
             {
                 semaphore.Release();
+                if (Updated != null)
+                    Updated(this, new ListEventArgs<T>(this));
             }
         }
 
