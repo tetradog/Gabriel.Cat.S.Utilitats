@@ -30,9 +30,10 @@ namespace Gabriel.Cat.S.Utilitats
         public static readonly string UIntAssemblyName = typeof(uint).AssemblyQualifiedName;
         public static readonly string PointAssemblyName = typeof(Point).AssemblyQualifiedName;
         public static readonly string ColorAssemblyName = typeof(Color).AssemblyQualifiedName;
-
-        //por comprovar
         public static readonly string TimeSpanAssemblyName = typeof(TimeSpan).AssemblyQualifiedName;
+        public static readonly string SizeAssemblyName = typeof(Size).AssemblyQualifiedName;
+        public static readonly string SizeFAssemblyName = typeof(SizeF).AssemblyQualifiedName;
+
         /// <summary>
         /// Necesitaba tener uno para que la lista de AsseblyQualifiedNameTiposMicrosoft coincida con la enumeracion
         /// </summary>
@@ -63,7 +64,9 @@ namespace Gabriel.Cat.S.Utilitats
             PointAssemblyName,
             PointZAssemblyName,
             ColorAssemblyName,
-            TimeSpanAssemblyName
+            TimeSpanAssemblyName,
+            SizeAssemblyName,
+            SizeFAssemblyName
         };
         #endregion
         //Si se añaden mas se tiene que dar de alta aqui :D y en el metodo ToTipoAceptado y GetBytes(TipoAceptado,Object)
@@ -89,7 +92,9 @@ namespace Gabriel.Cat.S.Utilitats
             Point,
             PointZ,
             Color,
-            TimeSpan
+            TimeSpan,
+            Size,
+            SizeF
         }
 
         static readonly TwoKeysList<string, string, string> dicTiposAceptadoAssembly;
@@ -114,7 +119,7 @@ namespace Gabriel.Cat.S.Utilitats
         public static TiposAceptados AssemblyToEnumTipoAceptado(string assemblyName)
         {
             if (!dicTiposAceptadoAssembly.ContainsKey2(assemblyName))
-                throw new ArgumentException("assembltName");
+                throw new ArgumentException("assemblyName");
 
             return (TiposAceptados)Enum.Parse(typeof(TiposAceptados), dicTiposAceptadoAssembly.GetTkey1WhithTkey2(assemblyName));
         }
@@ -122,14 +127,17 @@ namespace Gabriel.Cat.S.Utilitats
 
         //la clase es para convertir a byte[] los objetos
         #region GetBytes
-        public static byte[] GetBytes(IEnumerable<Object> objsTipoAceptado, bool ignoreObjNotSerializable = false)
+        public static byte[] GetBytes(IList<Object> objsTipoAceptado, bool ignoreObjNotSerializable = false)
         {
-            List<byte> bytesList = new List<byte>();
-            foreach (Object obj in objsTipoAceptado)
+            List<byte[]> bytesList = new List<byte[]>();
+            for (int i = 0; i < objsTipoAceptado.Count; i++)
             {
                 try
                 {
-                    bytesList.AddRange(GetBytes(obj));
+                    if (dicTiposAceptadoAssembly.ContainsKey2(objsTipoAceptado[i].GetType().AssemblyQualifiedName))
+                        bytesList.Add(GetBytes(objsTipoAceptado[i]));
+                    else if (!ignoreObjNotSerializable)
+                        throw new TypeNotSerializableException(objsTipoAceptado[i].GetType().AssemblyQualifiedName);
                 }
                 catch
                 {
@@ -137,7 +145,8 @@ namespace Gabriel.Cat.S.Utilitats
                         throw;
                 }
             }
-            return bytesList.ToArray();
+
+            return new byte[0].AddArray(bytesList.ToArray());
         }
         public static byte[] GetBytes(Object objTipoAceptado)
         {
@@ -207,6 +216,12 @@ namespace Gabriel.Cat.S.Utilitats
                     case TiposAceptados.TimeSpan:
                         bytes = GetBytes((TimeSpan)objTipoAceptado);
                         break;
+                    case TiposAceptados.Size:
+                        bytes = GetBytes((Size)objTipoAceptado);
+                        break;
+                    case TiposAceptados.SizeF:
+                        bytes = GetBytes((SizeF)objTipoAceptado);
+                        break;
                 }
             }
             catch
@@ -222,7 +237,15 @@ namespace Gabriel.Cat.S.Utilitats
         {
             return GetBytes(point.X).AddArray(GetBytes(point.Y), GetBytes(point.Z));
         }
-        /*    public static byte[] GetBytes(System.Drawing.Color color)
+        public static byte[] GetBytes(Size size)
+        {
+            return GetBytes(size.Height).AddArray(GetBytes(size.Width));
+        }
+        public static byte[] GetBytes(SizeF size)
+        {
+            return GetBytes(size.Height).AddArray(GetBytes(size.Width));
+        }
+         public static byte[] GetBytes(System.Drawing.Color color)
             {
                 return new byte[] { color.A, color.R, color.G, color.B };
             }
@@ -240,7 +263,7 @@ namespace Gabriel.Cat.S.Utilitats
             {
                 return img.ToStream(formato).GetAllBytes();
             }
-    */
+
         public static byte[] GetBytes(string str)
         {
             byte[] bytes = new byte[str.Length * sizeof(char)];
@@ -406,6 +429,12 @@ namespace Gabriel.Cat.S.Utilitats
                 case TiposAceptados.TimeSpan:
                     obj = ToTimeSpan(ms.Read(sizeof(long)));
                     break;
+                case TiposAceptados.Size:
+                    obj = ToSize(ms.Read(sizeof(int) * 2));
+                    break;
+                case TiposAceptados.SizeF:
+                    obj = ToSizeF(ms.Read(sizeof(float) * 2));
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -444,7 +473,14 @@ namespace Gabriel.Cat.S.Utilitats
             return System.Drawing.Color.FromArgb(bytesObj[0], bytesObj[1], bytesObj[2], bytesObj[3]);
         }
 
-
+        public static Size ToSize(byte[] bytesObj)
+        {
+            return new Size(ToInt(bytesObj), ToInt(bytesObj.SubArray(4)));
+        }
+        public static SizeF ToSizeF(byte[] bytesObj)
+        {
+            return new SizeF(ToFloat(bytesObj), ToFloat(bytesObj.SubArray(sizeof(float))));
+        }
         public static Point ToPoint(byte[] bytesObj)
         {
             return new Point(ToInt(bytesObj), ToInt(bytesObj.SubArray(4)));
@@ -554,7 +590,7 @@ namespace Gabriel.Cat.S.Utilitats
         public class TypeNotSerializableException : Exception
         {
             public TypeNotSerializableException(object obj) : this(obj.GetType().AssemblyQualifiedName) { }
-            public TypeNotSerializableException(string assemblyQualifiedName) : base(String.Format("the object type of \"{ 0}\" can not be serialitzed by Serializar class because miss serialitzacion method ", assemblyQualifiedName)) { }
+            public TypeNotSerializableException(string assemblyQualifiedName) : base(String.Format("the object type of \"{0}\" can not be serialitzed by Serializar class because miss serialitzacion method ", assemblyQualifiedName)) { }
         }
     }
 }
