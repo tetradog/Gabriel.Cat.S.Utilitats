@@ -15,5 +15,13 @@ namespace Gabriel.Cat.S.Extension
         {
             return matriu.GetLength((int)dimension);
         }
+        public static Type GetGenericType<T>(this T[,] matriu)
+        {
+            return typeof(T);
+        }
+        public static Type GetGenericType<T>(this T[,,] matriu)
+        {
+            return typeof(T);
+        }
     }
 }
