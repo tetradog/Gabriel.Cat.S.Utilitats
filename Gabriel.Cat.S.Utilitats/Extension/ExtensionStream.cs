@@ -10,7 +10,8 @@ namespace Gabriel.Cat.S.Extension
         public static byte[] Read(this Stream str,int lenght)
         {
             byte[] bytesToRead = new byte[lenght];
-            str.Read(bytesToRead, (int)str.Position, lenght);
+            str.Read(bytesToRead, 0, lenght);
+          
             return bytesToRead;
         }
         public static bool EndOfStream(this Stream str)
