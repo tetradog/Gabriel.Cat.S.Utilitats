@@ -13,7 +13,7 @@ namespace Gabriel.Cat.S.Extension
            List<Propiedad> propiedades=new List<Propiedad>();
             foreach (PropertyInfo propertie in obj.GetType().GetRuntimeProperties())
             {
-                propiedades.Add(new Propiedad(new PropiedadTipo(propertie), obj));
+                propiedades.Add(new Propiedad(new PropiedadTipo(propertie),propertie.GetValue( obj)));
             }
             return propiedades;
         }

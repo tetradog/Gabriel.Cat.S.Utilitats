@@ -44,7 +44,7 @@ namespace Gabriel.Cat.S.Extension
                             fixed (byte* ptBytes = arraysToAdd[j])
                             {
                                 ptrBytes = ptBytes;
-                                for (int i = 0; i < array.Length; i++)
+                                for (int i = 0; i < arraysToAdd[j].Length; i++)
                                 {
                                     *ptrBytesFinal = *ptrBytes;
                                     ptrBytesFinal++;
