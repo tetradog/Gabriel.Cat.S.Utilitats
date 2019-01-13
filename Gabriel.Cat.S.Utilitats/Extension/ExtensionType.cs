@@ -8,9 +8,18 @@ namespace Gabriel.Cat.S.Extension
 {
     public static class ExtensionType
     {
+        public static Type GetArrayType(this Type tipoObj)
+        {
+            if (!tipoObj.Name.Contains("["))
+                throw new ArgumentException("No es un tipo Array");
+
+            string auxTipo = tipoObj.AssemblyQualifiedName.Remove(tipoObj.AssemblyQualifiedName.IndexOf('['), tipoObj.AssemblyQualifiedName.IndexOf(']') + 1 - tipoObj.AssemblyQualifiedName.IndexOf('['));
+
+            return Type.GetType(auxTipo);
+        }
         public static bool IsNullableType(this Type type)
         {
-            return type.IsClass||type.IsInterface||type.IsGenericType && type.GetGenericTypeDefinition()==typeof(Nullable<>);
+            return type.IsClass || type.IsInterface || type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
         public static bool IsStruct(this Type type)
         { return !type.IsNullableType(); }
@@ -21,8 +30,8 @@ namespace Gabriel.Cat.S.Extension
             if (!interficieType.IsInterface)
                 throw new ArgumentException("Se esperaba una interficie");
 
-            bool implemented=false;
-            Type[] interficiesTipo= type.GetInterfaces();
+            bool implemented = false;
+            Type[] interficiesTipo = type.GetInterfaces();
 
             for (int i = 0; i < interficiesTipo.Length && !implemented; i++)
                 implemented = Equals(interficiesTipo[i], interficieType);
@@ -32,7 +41,7 @@ namespace Gabriel.Cat.S.Extension
         }
         public static IList<PropiedadTipo> GetPropiedadesTipos(this Type tipo)
         {
-            List<PropiedadTipo> lstPropiedades=new List<PropiedadTipo>();
+            List<PropiedadTipo> lstPropiedades = new List<PropiedadTipo>();
             foreach (PropertyInfo propertyInfo in tipo.GetRuntimeProperties())
             {
                 lstPropiedades.Add(new PropiedadTipo(propertyInfo));
