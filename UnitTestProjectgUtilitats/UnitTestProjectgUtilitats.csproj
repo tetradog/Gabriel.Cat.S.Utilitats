@@ -53,6 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extension\testExtensionArray.cs" />
     <Compile Include="Extension\testExtensionPropertyInfo.cs" />
     <Compile Include="Extension\testExtensionType.cs" />
     <Compile Include="Extension\testExtensionStream.cs" />
