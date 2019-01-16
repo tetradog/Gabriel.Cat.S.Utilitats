@@ -20,5 +20,12 @@ namespace Gabriel.Cat.S.Extension
                 num++;
             return num;
         }
+        public static int SumaAsta(this int[] array,int indexFin)
+        {
+            int total = 0;
+            for (int i = 0; i <= indexFin; i++)
+                total += array[i];
+            return total;
+        }
     }
 }

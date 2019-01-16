@@ -10,12 +10,7 @@ namespace Gabriel.Cat.S.Extension
     {
         public static Type GetArrayType(this Type tipoObj)
         {
-            if (!tipoObj.Name.Contains("["))
-                throw new ArgumentException("No es un tipo Array");
-
-            string auxTipo = tipoObj.AssemblyQualifiedName.Remove(tipoObj.AssemblyQualifiedName.IndexOf('['), tipoObj.AssemblyQualifiedName.IndexOf(']') + 1 - tipoObj.AssemblyQualifiedName.IndexOf('['));
-
-            return Type.GetType(auxTipo);
+            return tipoObj.GetElementType();
         }
         public static bool IsNullableType(this Type type)
         {
