@@ -10,7 +10,7 @@ namespace Gabriel.Cat.S.Utilitats
         public const int LENGHT = sizeof(long) + 100;
         const int MAXTIMERANDOMGEN =100;
         static Semaphore semaphoreRandom;
-        static readonly Random r;
+        static Random r;
 
          byte[] idUnico;
 
@@ -54,7 +54,13 @@ namespace Gabriel.Cat.S.Utilitats
         }
         #endregion
 
-        private byte[] GenIdAuto()
+
+        public byte[] GetId()
+        {
+            return (byte[])idUnico.Clone();
+        }
+
+        private static byte[] GenIdAuto()
         {
             byte[] id = new byte[LENGHT];
             semaphoreRandom.WaitOne();
@@ -62,10 +68,6 @@ namespace Gabriel.Cat.S.Utilitats
             semaphoreRandom.Release();
             id.SetArray(0, Serializar.GetBytes(DateTime.Now.Ticks));
             return id;
-        }
-        public byte[] GetId()
-        {
-            return (byte[])idUnico.Clone();
         }
     }
 }
