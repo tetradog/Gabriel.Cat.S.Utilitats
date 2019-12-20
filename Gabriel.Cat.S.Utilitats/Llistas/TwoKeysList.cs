@@ -334,10 +334,10 @@ namespace Gabriel.Cat.S.Utilitats
         {
             try
             {
-                llistaClau1.For((i, tkey1, tkey2) =>
+                llistaClau1.For(((i, tkey1, tkey2) =>
                 {
                     return methodInnerFor(i, tkey1, tkey2, llista1[tkey1]);
-                });
+                }),leftToRight);
             }
             catch { throw; }
 
