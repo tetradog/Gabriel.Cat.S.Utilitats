@@ -5,16 +5,19 @@ public static class PointerExtension{
 public static unsafe byte[] ReadLine(this byte*[] ptrs,bool ptrNext=true){
 
 byte[] bytesLine=new byte[ptrs.Length];
-
+byte* ptrBytes;
+fixed(byte* ptBytes=bytesLine){
+ptrBytes=ptBytes;
 for(int i=0;i<ptrs.Length;i++)
 {
-bytes[i]=*ptrs[i];
+*ptrBytes=*ptrs[i];
+ptrBytes++;
 if(ptrNext)
 ptrs[i]++;
 
 
-}
-return bytes;
+}}
+return bytesLine;
 
 
 
@@ -33,7 +36,7 @@ public static unsafe void WriteLine(this byte*[] ptrs,byte* ptrData,bool ptrNext
 for(int i=0;i<ptrs.Length;i++)
 {
 *ptrs[i]=*ptrData;
-data++;
+ptrData++;
 if(ptrNext)
 ptrs[i]++;
 
