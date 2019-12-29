@@ -43,7 +43,15 @@ ptrs[i]++;
 
 }
 
+public static unsafe byte*[] ToArray(this byte* ptrData,int lengthPart,int parts){
 
+byte*[] partes=new byte*[parts];
+for(int i=0;i<parts;i++){
+parts[i]=ptr;
+ptr+=lengthPart;
+}
+return partes;
+}
 
 
 
