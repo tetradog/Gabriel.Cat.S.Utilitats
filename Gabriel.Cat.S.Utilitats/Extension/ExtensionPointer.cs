@@ -53,7 +53,11 @@ ptr+=lengthPart;
 return partes;
 }
 
+public static unsafe void Seek(this byte*[] ptrs,int toAdd=1){
+for(int i=0;i<ptrs.Length;i++)
+ptrs[i]+=toAdd;
 
+}
 
 }
 
