@@ -1,8 +1,7 @@
-namespace Gabriel.Cat.S.Extension{
+namespace Gabriel.Cat.S.Utilitats{
+public static class PointerUtils{
 
-public static class PointerExtension{
-
-public static unsafe byte[] ReadLine(this byte*[] ptrs,bool ptrNext=true){
+public static unsafe byte[] ReadLine( byte*[] ptrs,bool ptrNext=true){
 
 byte[] bytesLine=new byte[ptrs.Length];
 byte* ptrBytes;
@@ -22,13 +21,13 @@ ptrs[i]++;
 return bytesLine;
 
 }
-public static unsafe void WriteLine(this byte*[] ptrs,byte[] data,bool ptrNext=true){
+public static unsafe void WriteLine(byte*[] ptrs,byte[] data,bool ptrNext=true){
 
 fixed(byte* ptData=data)
-     ptrs.WriteLine(ptData,ptrNext);
+     WriteLine(ptrs,ptData,ptrNext);
 
 }
-public static unsafe void WriteLine(this byte*[] ptrs,byte* ptrData,bool ptrNext=true){
+public static unsafe void WriteLine(byte*[] ptrs,byte* ptrData,bool ptrNext=true){
 
 
 
@@ -42,7 +41,7 @@ ptrs[i]++;
 
 }
 
-public static unsafe byte*[] ToArray(this byte* ptrData,int lengthPart,int parts){
+public static unsafe byte*[] ToArray(byte* ptrData,int lengthPart,int parts){
 
 byte*[] partes=new byte*[parts];
 for(int i=0;i<parts;i++){
@@ -52,7 +51,7 @@ ptr+=lengthPart;
 return partes;
 }
 
-public static unsafe void Seek(this byte*[] ptrs,int toAdd=1){
+public static unsafe void Seek(byte*[] ptrs,int toAdd=1){
 for(int i=0;i<ptrs.Length;i++)
 ptrs[i]+=toAdd;
 
