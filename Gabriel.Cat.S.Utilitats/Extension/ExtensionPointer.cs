@@ -16,11 +16,10 @@ if(ptrNext)
 ptrs[i]++;
 
 
-}}
+}
+
+}
 return bytesLine;
-
-
-
 
 }
 public static unsafe void WriteLine(this byte*[] ptrs,byte[] data,bool ptrNext=true){
@@ -39,7 +38,7 @@ for(int i=0;i<ptrs.Length;i++)
 ptrData++;
 if(ptrNext)
 ptrs[i]++;
-
+}
 
 }
 
@@ -63,7 +62,7 @@ ptrs[i]+=toAdd;
 
 
 
-}
+
 
 
 
