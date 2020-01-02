@@ -19,5 +19,10 @@ namespace Gabriel.Cat.S.Utilitats
         {
             return llavor.Next(maxValue);
         }
+        public static byte[] NextBytes(int length){
+         byte[] randomArray=new byte[length];
+            llavor.NextBytes(randomArray);
+            return randomArray;
+        }
     }
 }
