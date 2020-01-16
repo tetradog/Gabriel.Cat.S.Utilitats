@@ -1,63 +1,72 @@
-namespace Gabriel.Cat.S.Utilitats{
-public static class PointerUtils{
-
-public static unsafe byte[] ReadLine( byte*[] ptrs,bool ptrNext=true){
-
-byte[] bytesLine=new byte[ptrs.Length];
-byte* ptrBytes;
-fixed(byte* ptBytes=bytesLine){
-ptrBytes=ptBytes;
-for(int i=0;i<ptrs.Length;i++)
+namespace Gabriel.Cat.S.Utilitats
 {
-*ptrBytes=*ptrs[i];
-ptrBytes++;
-if(ptrNext)
-ptrs[i]++;
+    public static class PointerUtils
+    {
+
+        public static unsafe byte[] ReadLine(byte*[] ptrs, bool ptrNext = true)
+        {
+
+            byte[] bytesLine = new byte[ptrs.Length];
+            byte* ptrBytes;
+            fixed (byte* ptBytes = bytesLine)
+            {
+                ptrBytes = ptBytes;
+                for (int i = 0; i < ptrs.Length; i++)
+                {
+                    *ptrBytes = *ptrs[i];
+                    ptrBytes++;
+                    if (ptrNext)
+                        ptrs[i]++;
 
 
-}
+                }
 
-}
-return bytesLine;
+            }
+            return bytesLine;
 
-}
-public static unsafe void WriteLine(byte*[] ptrs,byte[] data,bool ptrNext=true){
+        }
+        public static unsafe void WriteLine(byte*[] ptrs, byte[] data, bool ptrNext = true)
+        {
 
-fixed(byte* ptData=data)
-     WriteLine(ptrs,ptData,ptrNext);
+            fixed (byte* ptData = data)
+                WriteLine(ptrs, ptData, ptrNext);
 
-}
-public static unsafe void WriteLine(byte*[] ptrs,byte* ptrData,bool ptrNext=true){
+        }
+        public static unsafe void WriteLine(byte*[] ptrs, byte* ptrData, bool ptrNext = true)
+        {
 
 
 
-for(int i=0;i<ptrs.Length;i++)
-{
-*ptrs[i]=*ptrData;
-ptrData++;
-if(ptrNext)
-ptrs[i]++;
-}
+            for (int i = 0; i < ptrs.Length; i++)
+            {
+                *ptrs[i] = *ptrData;
+                ptrData++;
+                if (ptrNext)
+                    ptrs[i]++;
+            }
 
-}
+        }
 
-public static unsafe byte*[] ToArray(byte* ptrData,int lengthPart,int parts){
+        public static unsafe byte*[] ToArray(byte* ptrData, int lengthPart, int parts)
+        {
 
-byte*[] partes=new byte*[parts];
-for(int i=0;i<parts;i++){
-parts[i]=ptr;
-ptr+=lengthPart;
-}
-return partes;
-}
+            byte*[] partes = new byte*[parts];
+            for (int i = 0; i < parts; i++)
+            {
+                partes[i] = ptrData;
+                ptrData += lengthPart;
+            }
+            return partes;
+        }
 
-public static unsafe void Seek(byte*[] ptrs,int toAdd=1){
-for(int i=0;i<ptrs.Length;i++)
-ptrs[i]+=toAdd;
+        public static unsafe void Seek(byte*[] ptrs, int toAdd = 1)
+        {
+            for (int i = 0; i < ptrs.Length; i++)
+                ptrs[i] += toAdd;
 
-}
+        }
 
-}
+    }
 
 
 
