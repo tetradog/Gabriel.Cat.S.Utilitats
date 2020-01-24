@@ -9,7 +9,7 @@
     <Copyright>GNU v3</Copyright>
     <Authors>Gabriel.Cat.Developer</Authors>
     <SignAssembly>false</SignAssembly>
-    <Version>1.0.4.4-preview1.0.5</Version>
+    <Version>1.0.4.4-preview1.0.6</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Company>Gabriel.Cat.Developer</Company>
@@ -31,8 +31,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.5.0-rc1" />
-    <PackageReference Include="System.Drawing.Common" Version="4.6.0-preview.18571.3" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
   </ItemGroup>
 
 </Project>
