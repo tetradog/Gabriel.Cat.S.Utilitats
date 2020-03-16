@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2002
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gabriel.Cat.S.Utilitats", "Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats.csproj", "{F2FCA697-D47D-488C-B6F8-0BC7ABD1BD20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProjectgUtilitats", "UnitTestProjectgUtilitats\UnitTestProjectgUtilitats.csproj", "{0C5E5E8A-0F57-4931-8544-95507C1259A0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestUtilitats", "TestUtilitats\TestUtilitats.csproj", "{D86408FD-B4E9-4C88-B15D-A44B3C79DD43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{F2FCA697-D47D-488C-B6F8-0BC7ABD1BD20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2FCA697-D47D-488C-B6F8-0BC7ABD1BD20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2FCA697-D47D-488C-B6F8-0BC7ABD1BD20}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0C5E5E8A-0F57-4931-8544-95507C1259A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C5E5E8A-0F57-4931-8544-95507C1259A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C5E5E8A-0F57-4931-8544-95507C1259A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C5E5E8A-0F57-4931-8544-95507C1259A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D86408FD-B4E9-4C88-B15D-A44B3C79DD43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D86408FD-B4E9-4C88-B15D-A44B3C79DD43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D86408FD-B4E9-4C88-B15D-A44B3C79DD43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D86408FD-B4E9-4C88-B15D-A44B3C79DD43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
