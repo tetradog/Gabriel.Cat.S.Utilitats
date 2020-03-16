@@ -36,10 +36,9 @@ namespace Gabriel.Cat.S.Extension
             }
             return values;
         }
-        public static void SetValues<T>(this IDictionary<long, T> dic, IDictionary<long, T> values)
+        public static void SetValues<TKey,TValue>(this IDictionary<TKey, TValue> dic, IDictionary<TKey,TValue> values)
         {
-            long[] ids;
-            ids = dic.GetKeys();
+            TKey[] ids= dic.GetKeys();
             for (int i = 0; i < ids.Length; i++)
                 if (values.ContainsKey(ids[i]))
                     dic[ids[i]] = values[ids[i]];

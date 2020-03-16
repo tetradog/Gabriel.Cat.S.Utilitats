@@ -13,7 +13,7 @@ namespace Gabriel.Cat.S.Extension
         }
         public static void SetValue(this Array array, int[] dimensiones, int indexTotal, object objValue)
         {
-
+            //no funciona...
             array.SetValue(objValue, array.GetIndex(dimensiones, indexTotal));
         }
         public static object GetValue(this Array array, int indexTotal)
@@ -23,7 +23,7 @@ namespace Gabriel.Cat.S.Extension
         }
         public static object GetValue(this Array array, int[] dimensiones, int indexTotal)
         {
-
+            //funciona
             return array.GetValue(array.GetIndex(dimensiones, indexTotal));
         }
 
