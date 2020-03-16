@@ -35,5 +35,6 @@ namespace Gabriel.Cat.S.Extension
             }
             return values;
         }
+
     }
 }

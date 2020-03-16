@@ -211,12 +211,18 @@ namespace Gabriel.Cat.S.Extension
             T tmp = lst[posElementAToB];
             lst[posElementAToB] = lst[posElementBToA];
             lst[posElementBToA] = tmp;
-        }      
+        }
 
         #endregion
 
 
-
+        public static object[] ToArray(this IList lst)
+        {
+            object[] objs = new object[lst.Count];
+            for (int i = 0; i < objs.Length; i++)
+                objs[i] = lst[i];
+            return objs;
+        }
 
 
         public static void Invertir<T>(this IList<T> lst)

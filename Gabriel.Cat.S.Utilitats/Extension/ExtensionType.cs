@@ -8,6 +8,14 @@ namespace Gabriel.Cat.S.Extension
 {
     public static class ExtensionType
     {
+        public static object GetObj(this Type type, params object[] partes)
+        {
+            return Activator.CreateInstance(type, partes);
+        }
+        public static Type SetTypes(this Type type, params Type[] types)
+        {
+            return type.MakeGenericType(types);
+        }
         public static Type GetArrayType(this Type tipoObj)
         {
             return tipoObj.GetElementType();

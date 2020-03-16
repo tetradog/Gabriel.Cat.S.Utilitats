@@ -60,6 +60,10 @@ namespace Gabriel.Cat.S.Utilitats
             return (byte[])idUnico.Clone();
         }
 
+        public override bool Equals(object obj)
+        {
+            return CompareTo(obj as IdUnico) == 0;
+        }
         private static byte[] GenIdAuto()
         {
             byte[] id = new byte[LENGHT];
