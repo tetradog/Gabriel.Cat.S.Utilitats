@@ -43,14 +43,12 @@ namespace Gabriel.Cat.S.Extension
         {//por probar
             int[] index = new int[dimensiones.Length];
             int aux;
-            for (int i = 0, j = index.Length - 1; i < dimensiones.Length; i++, j--)
+            //tengo que sacar el indice en dimensiones
+            for (int i = 0; i < dimensiones.Length&&indexTotal>0; i++)
             {
-                aux = dimensiones.SumaAsta(j);
-                if (indexTotal > aux)
-                {
-                    index[j] = indexTotal / aux;
-                    indexTotal -= index[j] * aux;
-                }
+                aux = indexTotal / dimensiones[i];
+                index[i] = indexTotal % dimensiones[i];
+                indexTotal = aux;
 
             }
             return index;
