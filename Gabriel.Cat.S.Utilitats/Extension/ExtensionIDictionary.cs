@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gabriel.Cat.S.Utilitats;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -34,6 +35,21 @@ namespace Gabriel.Cat.S.Extension
                 values[pos++] = elemento.Key;
             }
             return values;
+        }
+        public static void SetValues<T>(this IDictionary<long, T> dic, IDictionary<long, T> values)
+        {
+            long[] ids;
+            ids = dic.GetKeys();
+            for (int i = 0; i < ids.Length; i++)
+                if (values.ContainsKey(ids[i]))
+                    dic[ids[i]] = values[ids[i]];
+        }
+        public static IDictionary<TKey, TValue> Clone<TKey, TValue>(this IDictionary<TKey, TValue> dic)
+        {
+            IDictionary<TKey, TValue> clon =(IDictionary<TKey, TValue>) dic.GetType().GetObj(); 
+            foreach (var item in dic)
+                clon.Add(item.Key, item.Value);
+            return clon;
         }
 
     }

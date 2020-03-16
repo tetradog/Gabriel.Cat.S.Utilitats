@@ -215,7 +215,10 @@ namespace Gabriel.Cat.S.Extension
 
         #endregion
 
-
+        public static T LastOrDefault<T>(this IList<T> lst)
+        {
+            return lst.Count > 0 ? lst[lst.Count - 1] : default;
+        }
         public static object[] ToArray(this IList lst)
         {
             object[] objs = new object[lst.Count];
