@@ -8,6 +8,24 @@ namespace Gabriel.Cat.S.Extension
 {
    public static class ExtensionObject
     {
+        public static Type GetPropertyType(this object obj, string property, bool ifNullableGetValue = true)
+        {
+
+            Type type = obj.GetType().GetProperty(property).PropertyType;
+
+            if (ifNullableGetValue && type.Name.Contains("Nullable"))
+                type = Nullable.GetUnderlyingType(type);
+
+            return type;
+
+        }
+        public static bool IsNullableProperty(this object obj, string property)
+        {
+            Type type = obj.GetType().GetProperty(property).PropertyType;
+
+            return type.Name.Contains("Nullable");
+        }
+   
         public static List<Propiedad> GetPropiedades(this object obj)
         {
            List<Propiedad> propiedades=new List<Propiedad>();
