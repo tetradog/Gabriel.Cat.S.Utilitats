@@ -21,49 +21,86 @@ namespace Gabriel.Cat.S.Extension
             const int OPCIONCONSIN = 2;
             //por acabar
             int totalPixelesLinea;
-            int lineas = alturaBmpTotal - posicionFragmento.Y;//pensar en las posiciones negativas
+            int lineas;
             byte*[] ptrsBmpTotal;
             byte*[] ptrsBmpFragmento;
             int bytesPixelBmpTotal = bmpTotalIsArgb ? 4 : 3;
             int bytesPixelBmpFragmento = bmpFragmentoIsArgb ? 4 : 3;
             int opcion;
             //tener en cuenta las posiciones negativas del fragmento...
-            if (lineas > 0)
-            {//si no esta dentro de la imagen no hace falta hacer nada :D
-                if (lineas < alturaBmpFragmento)
-                    lineas = alturaBmpFragmento;
-                totalPixelesLinea = anchuraBmpTotal - posicionFragmento.X;
-                if (totalPixelesLinea < anchuraBmpFragmento)
-                    totalPixelesLinea = anchuraBmpFragmento;
+            if (posicionFragmento.Y > 0 && posicionFragmento.Y < alturaBmpTotal || posicionFragmento.Y + alturaBmpFragmento > 0 && posicionFragmento.Y < 0)
+            {
+                if (posicionFragmento.X > 0 && posicionFragmento.X < anchuraBmpTotal || posicionFragmento.X + anchuraBmpFragmento > 0 && posicionFragmento.X < 0)
+                {//si no esta dentro de la imagen no hace falta hacer nada :D
+      
+              
+                    if (posicionFragmento.Y < 0)
+                    {
+                        if (alturaBmpTotal > posicionFragmento.Y + alturaBmpFragmento)
+                        {
+                            lineas = posicionFragmento.Y + alturaBmpFragmento;
+                        }
+                        else lineas = alturaBmpTotal;
 
-                ptrsBmpFragmento = new byte*[lineas];
-                ptrsBmpTotal = new byte*[lineas];
-                //posiciono todos los punteros
-                    //POR HACER...
-                //pongo  la opcion aqui asi solo se escoge una vez y no en cada linea como estaba antes :)
-                opcion = bmpTotalIsArgb.Equals(bmpFragmentoIsArgb) ? OPCIONIGUALES : bmpTotalIsArgb ? OPCIONCONSIN : OPCIONSINCON;
+                    }
+                    else if (posicionFragmento.Y + alturaBmpFragmento > alturaBmpTotal)
+                    {
+                        lineas = alturaBmpTotal - posicionFragmento.Y;
+                    }
+                    else
+                    {
+                        lineas = alturaBmpFragmento;
+                    }
+                    //totalPixelesLinea = anchuraBmpTotal - posicionFragmento.X;
+                    //if (totalPixelesLinea < anchuraBmpFragmento)
+                    //    totalPixelesLinea = anchuraBmpFragmento;
+                    if (posicionFragmento.X < 0)
+                    {
+                        if (anchuraBmpTotal > posicionFragmento.X + anchuraBmpFragmento)
+                        {
+                            totalPixelesLinea = posicionFragmento.X + anchuraBmpFragmento;
+                        }
+                        else totalPixelesLinea = anchuraBmpTotal;
 
-                switch (opcion)
-                {
-                    //pongo las lineas
-                    case OPCIONIGUALES:
-                        for (int i = 0; i < lineas; i++)
-                        {
-                            SetLinea(ptrsBmpTotal[i], bytesPixelBmpTotal, ptrsBmpFragmento[i], totalPixelesLinea);
-                        }
-                        break;
-                    case OPCIONCONSIN:
-                        for (int i = 0; i < lineas; i++)
-                        {
-                            SetLineaCS(ptrsBmpTotal[i], ptrsBmpFragmento[i], totalPixelesLinea);
-                        }
-                        break;
-                    case OPCIONSINCON:
-                        for (int i = 0; i < lineas; i++)
-                        {
-                            SetLineaCS(ptrsBmpTotal[i], ptrsBmpFragmento[i], totalPixelesLinea);
-                        }
-                        break;
+                    }
+                    else if (posicionFragmento.X + anchuraBmpFragmento > anchuraBmpTotal)
+                    {
+                        totalPixelesLinea = anchuraBmpTotal - posicionFragmento.X;
+                    }
+                    else
+                    {
+                        totalPixelesLinea = anchuraBmpFragmento;
+                    }
+
+                    ptrsBmpFragmento = new byte*[lineas];
+                    ptrsBmpTotal = new byte*[lineas];
+                    //posiciono todos los punteros
+                    //POR HACER...tener en cuenta si son argb en cada caso
+                    //pongo  la opcion aqui asi solo se escoge una vez y no en cada linea como estaba antes :)
+                    opcion = bmpTotalIsArgb.Equals(bmpFragmentoIsArgb) ? OPCIONIGUALES : bmpTotalIsArgb ? OPCIONCONSIN : OPCIONSINCON;
+
+                    switch (opcion)
+                    {
+                        //pongo las lineas
+                        case OPCIONIGUALES:
+                            for (int i = 0; i < lineas; i++)
+                            {
+                                SetLinea(ptrsBmpTotal[i], bytesPixelBmpTotal, ptrsBmpFragmento[i], totalPixelesLinea);
+                            }
+                            break;
+                        case OPCIONCONSIN:
+                            for (int i = 0; i < lineas; i++)
+                            {
+                                SetLineaCS(ptrsBmpTotal[i], ptrsBmpFragmento[i], totalPixelesLinea);
+                            }
+                            break;
+                        case OPCIONSINCON:
+                            for (int i = 0; i < lineas; i++)
+                            {
+                                SetLineaSC(ptrsBmpTotal[i], ptrsBmpFragmento[i], totalPixelesLinea);
+                            }
+                            break;
+                    }
                 }
             }
         }
