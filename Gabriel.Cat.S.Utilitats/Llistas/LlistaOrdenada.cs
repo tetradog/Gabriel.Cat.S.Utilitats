@@ -18,7 +18,7 @@ namespace Gabriel.Cat.S.Utilitats
     /// </summary>
     public class LlistaOrdenada<TKey, TValue> :DictionaryBase,IDictionary,IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue>, IList<KeyValuePair<TKey, TValue>>, IReadOnlyList<KeyValuePair<TKey, TValue>>, ICollection<KeyValuePair<TKey, TValue>>
     {
-        protected Dictionary<TKey, TValue> llistaOrdenada;
+        protected SortedList<TKey, TValue> llistaOrdenada;
         internal List<TKey> llista;
         public event EventHandler<DicEventArgs<TKey, TValue>> Updated;
         ConfirmacionEventHandler<LlistaOrdenada<TKey, TValue>, TKey, TValue> AddConfirmation;
@@ -30,7 +30,7 @@ namespace Gabriel.Cat.S.Utilitats
         public event EventHandler<DicEventArgs<TKey, TValue>> Removed;
         public LlistaOrdenada()
         {
-            llistaOrdenada = new Dictionary<TKey, TValue>();
+            llistaOrdenada = new SortedList<TKey, TValue>();
             llista = new List<TKey>();
 
         }
