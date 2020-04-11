@@ -34,9 +34,9 @@ namespace Gabriel.Cat.S.Extension
             int bytesLineaBmpFragmento = bytesPixelBmpFragmento * alturaBmpFragmento;
             #endregion
             //tener en cuenta las posiciones negativas del fragmento...
-            if (posicionFragmento.Y > 0 && posicionFragmento.Y < alturaBmpTotal || posicionFragmento.Y + alturaBmpFragmento > 0 && posicionFragmento.Y < 0)
+            if (posicionFragmento.Y >= 0 && posicionFragmento.Y < alturaBmpTotal || posicionFragmento.Y + alturaBmpFragmento > 0 && posicionFragmento.Y < 0)
             {
-                if (posicionFragmento.X > 0 && posicionFragmento.X < anchuraBmpTotal || posicionFragmento.X + anchuraBmpFragmento > 0 && posicionFragmento.X < 0)
+                if (posicionFragmento.X >= 0 && posicionFragmento.X < anchuraBmpTotal || posicionFragmento.X + anchuraBmpFragmento > 0 && posicionFragmento.X < 0)
                 {//si no esta dentro de la imagen no hace falta hacer nada :D
                  #region Medidas Parte a poner
 
