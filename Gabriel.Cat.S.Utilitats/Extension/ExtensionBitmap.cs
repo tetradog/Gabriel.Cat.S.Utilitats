@@ -30,8 +30,8 @@ namespace Gabriel.Cat.S.Extension
             byte*[] ptrsBmpFragmento;
             int bytesPixelBmpTotal = bmpTotalIsArgb ? 4 : 3;
             int bytesPixelBmpFragmento = bmpFragmentoIsArgb ? 4 : 3;
-            int bytesLineaBmpTotal = bytesPixelBmpTotal * alturaBmpTotal;
-            int bytesLineaBmpFragmento = bytesPixelBmpFragmento * alturaBmpFragmento;
+            int bytesLineaBmpTotal = bytesPixelBmpTotal * anchuraBmpTotal;
+            int bytesLineaBmpFragmento = bytesPixelBmpFragmento * anchuraBmpFragmento;
             #endregion
             //tener en cuenta las posiciones negativas del fragmento...
             if (posicionFragmento.Y >= 0 && posicionFragmento.Y < alturaBmpTotal || posicionFragmento.Y + alturaBmpFragmento > 0 && posicionFragmento.Y < 0)
