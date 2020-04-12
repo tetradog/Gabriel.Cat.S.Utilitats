@@ -2,6 +2,7 @@
 using Gabriel.Cat.S.Utilitats.ClasesDeInternet;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -92,12 +93,19 @@ namespace Gabriel.Cat.S.Extension
         {
             return File.ReadAllBytes(file.FullName);
         }
-        public static void Abrir(this FileInfo file)
+        public static Process Abrir(this FileInfo file)
         {
-            System.Diagnostics.Process.Start(file.FullName);
+            //source https://github.com/dotnet/wpf/issues/2566
+            return Process.Start(new ProcessStartInfo
+            {
+                FileName = "cmd",
+                WindowStyle = ProcessWindowStyle.Hidden,
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                Arguments = $"/c start {file.FullName}"
+            });
+
         }
-
-
         /// <summary>
         /// Calcula el Hash del archivo
         /// </summary>

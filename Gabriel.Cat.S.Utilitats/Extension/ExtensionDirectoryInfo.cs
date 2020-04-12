@@ -1,6 +1,7 @@
 ﻿using Gabriel.Cat.S.Utilitats;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 
@@ -319,9 +320,17 @@ namespace Gabriel.Cat.S.Extension
 
         }
         /*Lo demas ya esta revisado :)  */
-        public static void Abrir(this DirectoryInfo dir)
-        {
-            System.Diagnostics.Process.Start(dir.FullName + Path.DirectorySeparatorChar);//sino pongo la separacion me puede abrir un archivo con el nombre de la carpeta...
+        public static Process Abrir(this DirectoryInfo dir)
+        {//source https://github.com/dotnet/wpf/issues/2566
+            return Process.Start(new ProcessStartInfo
+            {
+                FileName = "cmd",
+                WindowStyle = ProcessWindowStyle.Hidden,
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                Arguments = $"/c start {dir.FullName + Path.DirectorySeparatorChar}"
+            });
+            //sino pongo la separacion me puede abrir un archivo con el nombre de la carpeta...
         }
         public static bool CanWrite(this DirectoryInfo dir)
         {
