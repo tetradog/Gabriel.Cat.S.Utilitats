@@ -13,220 +13,6 @@ namespace Gabriel.Cat.S.Extension
     {
         delegate byte[] MetodoColor(byte[] colorValue, byte[] colorKey);
 
-        #region SetFragment por acabar
-        public static unsafe void SetFragment(byte* bmpTotalInicio, int alturaBmpTotal, int anchuraBmpTotal, bool bmpTotalIsArgb, byte* bmpFragmentoInicio, int alturaBmpFragmento, int anchuraBmpFragmento, bool bmpFragmentoIsArgb, System.Drawing.Point posicionFragmento)
-        {
-            #region Variables
-            const int OPCIONIGUALES = 0;
-            const int OPCIONSINCON = 1;
-            const int OPCIONCONSIN = 2;
-            //por acabar
-            int opcion;
-            int totalPixelesLinea;
-            int lineas;
-            int inicioParteFragmentoLinea;
-            int inicioParteTotalLinea;
-            byte*[] ptrsBmpTotal;
-            byte*[] ptrsBmpFragmento;
-            int bytesPixelBmpTotal = bmpTotalIsArgb ? 4 : 3;
-            int bytesPixelBmpFragmento = bmpFragmentoIsArgb ? 4 : 3;
-            int bytesLineaBmpTotal = bytesPixelBmpTotal * anchuraBmpTotal;
-            int bytesLineaBmpFragmento = bytesPixelBmpFragmento * anchuraBmpFragmento;
-            #endregion
-            //tener en cuenta las posiciones negativas del fragmento...
-            if (posicionFragmento.Y >= 0 && posicionFragmento.Y < alturaBmpTotal || posicionFragmento.Y + alturaBmpFragmento > 0 && posicionFragmento.Y < 0)
-            {
-                if (posicionFragmento.X >= 0 && posicionFragmento.X < anchuraBmpTotal || posicionFragmento.X + anchuraBmpFragmento > 0 && posicionFragmento.X < 0)
-                {//si no esta dentro de la imagen no hace falta hacer nada :D
-                 #region Medidas Parte a poner
-
-                    if (posicionFragmento.Y < 0)
-                    {
-                        if (alturaBmpTotal > posicionFragmento.Y + alturaBmpFragmento)
-                        {
-                            lineas = posicionFragmento.Y + alturaBmpFragmento;
-                        }
-                        else lineas = alturaBmpTotal;
-
-                    }
-                    else if (posicionFragmento.Y + alturaBmpFragmento > alturaBmpTotal)
-                    {
-                        lineas = alturaBmpTotal - posicionFragmento.Y;
-                    }
-                    else
-                    {
-                        lineas = alturaBmpFragmento;
-                    }
-
-                    if (posicionFragmento.X < 0)
-                    {
-                        if (anchuraBmpTotal > posicionFragmento.X + anchuraBmpFragmento)
-                        {
-                            totalPixelesLinea = posicionFragmento.X + anchuraBmpFragmento;
-                        }
-                        else totalPixelesLinea = anchuraBmpTotal;
-
-                    }
-                    else if (posicionFragmento.X + anchuraBmpFragmento > anchuraBmpTotal)
-                    {
-                        totalPixelesLinea = anchuraBmpTotal - posicionFragmento.X;
-                    }
-                    else
-                    {
-                        totalPixelesLinea = anchuraBmpFragmento;
-                    }
-
-                    ptrsBmpFragmento = new byte*[lineas];
-                    ptrsBmpTotal = new byte*[lineas];
-                    #endregion
-                 #region Posiciono Ptrs
-                    //posiciono ptrs hasta la linea donde empieza
-                    if (posicionFragmento.Y < 0)
-                    {
-                        //posiciono el fragmento
-                          bmpFragmentoInicio += (bytesLineaBmpFragmento * posicionFragmento.Y);
-                        
-                    }
-                    else
-                    {
-                        //posiciono el grande
-                         bmpTotalInicio +=(bytesLineaBmpTotal * posicionFragmento.Y);
-                        
-                    }
-                    //pongo los inicios tener en cuenta los bytes por pixel
-                    if (posicionFragmento.X < 0)
-                    {
-                        inicioParteFragmentoLinea = posicionFragmento.X * (-1) * bytesPixelBmpFragmento;
-                        inicioParteTotalLinea = 0;
-                    }
-                    else
-                    {
-                        inicioParteTotalLinea = posicionFragmento.X * bytesPixelBmpTotal;
-                        inicioParteFragmentoLinea = 0;
-                    }
-
-                 for(int i = 0; i < lineas; i++)
-                    {
-                        ptrsBmpFragmento[i] = bmpFragmentoInicio + inicioParteFragmentoLinea;
-                        bmpFragmentoInicio += bytesLineaBmpFragmento;
-                        ptrsBmpTotal[i] =bmpTotalInicio+ inicioParteTotalLinea;
-                        bmpTotalInicio += bytesLineaBmpTotal;
-                    }
-                    #endregion
-                 #region Poner Lineas
-                    opcion = bmpTotalIsArgb.Equals(bmpFragmentoIsArgb) ? OPCIONIGUALES : bmpTotalIsArgb ? OPCIONCONSIN : OPCIONSINCON;
-
-                    switch (opcion)
-                    {
-                        //pongo las lineas
-                        case OPCIONIGUALES:
-                            for (int i = 0; i < lineas; i++)
-                            {
-                                SetLinea(ptrsBmpTotal[i], bytesPixelBmpTotal, ptrsBmpFragmento[i], totalPixelesLinea);
-                            }
-                            break;
-                        case OPCIONCONSIN:
-                            for (int i = 0; i < lineas; i++)
-                            {
-                                SetLineaCS(ptrsBmpTotal[i], ptrsBmpFragmento[i], totalPixelesLinea);
-                            }
-                            break;
-                        case OPCIONSINCON:
-                            for (int i = 0; i < lineas; i++)
-                            {
-                                SetLineaSC(ptrsBmpTotal[i], ptrsBmpFragmento[i], totalPixelesLinea);
-                            }
-                            break;
-                    }
-                    #endregion
-                }
-            }
-        }
-        static unsafe void SetLineaSC(byte* ptrBmpTotal, byte* ptrBmpFragmento, int totalPixelesLinea)
-        {
-            const int RGB = 3;
-            const int ARGB = RGB + 1;
-            byte TRANSPARENTE = Color.Transparent.A;
-            
-            for (int j = 0; j < totalPixelesLinea; j++)
-            {
-                //pongo cada pixel
-                if (*ptrBmpFragmento != TRANSPARENTE)
-                {
-                    ptrBmpFragmento++;//me salto el byte de la transparencia porque la imagenTotal no tiene
-                    for (int k = 0; k < RGB; k++)
-                    {
-                        *ptrBmpTotal = *ptrBmpFragmento;
-                        ptrBmpTotal++;
-                        ptrBmpFragmento++;
-                    }
-                }
-                else { ptrBmpFragmento += ARGB; ptrBmpTotal += ARGB; }
-            }
-
-        }
-        static unsafe void SetLineaCS(byte* ptrBmpTotal, byte* ptrBmpFragmento, int totalPixelesLinea)
-        {
-            const byte SINTRANSPARENCIA = 0xFF;
-            const int RGB = 3;
-            for (int j = 0; j < totalPixelesLinea; j++)
-            {
-                //pongo cada pixel
-                *ptrBmpTotal = SINTRANSPARENCIA;//como no tiene transparencia pongo el byte de la transparencia a sin
-                ptrBmpTotal++;
-                for (int k = 0; k < RGB; k++)
-                {
-                    *ptrBmpTotal = *ptrBmpFragmento;
-                    ptrBmpTotal++;
-                    ptrBmpFragmento++;
-                }
-
-            }
-        }
-        static unsafe void SetLinea(byte* ptrBmpTotal, int bytesPixel, byte* ptrBmpFragmento, int totalPixelesLinea)
-        {
-            const int ARGB = 4;
-            bool isArgb = bytesPixel == ARGB;
-            byte TRANSPARENTE = Color.Transparent.A;
-            //pongo cada pixel
-            for (int j = 0; j < totalPixelesLinea; j++)
-            {
-                if (!isArgb||*ptrBmpFragmento != TRANSPARENTE)
-                {
-                    //pongo cada byte
-                    for (int k = 0; k < bytesPixel; k++)
-                    {
-                        *ptrBmpTotal = *ptrBmpFragmento;
-                        ptrBmpTotal++;
-                        ptrBmpFragmento++;
-                    }
-                }
-                else { ptrBmpTotal += ARGB;ptrBmpFragmento += ARGB; }
-            }
-
-
-
-        }
-        public static void SetFragment(this Bitmap bmpTotal, Bitmap bmpFragmento, Point posicionFragmento)
-        {
-            unsafe
-            {
-
-                bmpTotal.TrataBytes((ptrBmpTotal) => {
-                    fixed (byte* ptrBmpFragmento = bmpFragmento.GetBytes())
-                    {
-
-                        SetFragment(ptrBmpTotal, bmpTotal.Height, bmpTotal.Width, bmpTotal.IsArgb(), ptrBmpFragmento, bmpFragmento.Height, bmpFragmento.Width, bmpFragmento.IsArgb(), posicionFragmento);
-
-                    }
-
-                });
-
-
-            }
-        }
-        #endregion
-
         public static BitmapAnimated ToAnimatedBitmap(this IList<Bitmap> bmpsToAnimate, bool repetirSiempre = true)
         {
             return bmpsToAnimate.ToAnimatedBitmap(repetirSiempre, 500);
@@ -554,11 +340,12 @@ namespace Gabriel.Cat.S.Extension
         }
         public static void EfectoPixel(this Bitmap bmp, Color aMezclarConTodos, bool saltarsePixelsTransparentes = true)
         {
+            const byte TRANSPARENTE = 0x00;
             const int TOTALARGBBYTES = 4;
             int incremento = bmp.IsArgb() ? 4 : 3;
             int aux;
             bool mezclar = true;
-            const byte TRANSPARENTE = 0x00;
+          
             unsafe
             {
                 bmp.TrataBytes(((MetodoTratarBytePointer)((ptrbyteArray) =>
@@ -645,11 +432,12 @@ namespace Gabriel.Cat.S.Extension
         }
         static void ICambiaPixel(Bitmap bmp, IList<KeyValuePair<Color, Color>> colorsKeyValue, MetodoColor metodo)
         {
+            const byte AOPACA = 0xFF;
             const int TOTALBYTESCOLOR = 4;
             DiccionarioColor2 diccionario = new DiccionarioColor2(colorsKeyValue);
             byte[] colorLeido;
             byte[] colorObtenido;
-            const byte AOPACA = 0xFF;
+           
             int incremento = bmp.IsArgb() ? 4 : 3;
             unsafe
             {
