@@ -84,18 +84,14 @@ namespace Gabriel.Cat.S.Extension
                     if (posicionFragmento.Y < 0)
                     {
                         //posiciono el fragmento
-                        for(int i=0;i>posicionFragmento.Y;i--)
-                        {
-                            bmpFragmentoInicio += bytesLineaBmpFragmento;
-                        }
+                          bmpFragmentoInicio += (bytesLineaBmpFragmento * posicionFragmento.Y);
+                        
                     }
                     else
                     {
                         //posiciono el grande
-                        for (int i = 0; i < posicionFragmento.Y; i++)
-                        {
-                            bmpTotalInicio += bytesLineaBmpTotal;
-                        }
+                         bmpTotalInicio +=(bytesLineaBmpTotal * posicionFragmento.Y);
+                        
                     }
                     //pongo los inicios tener en cuenta los bytes por pixel
                     if (posicionFragmento.X < 0)

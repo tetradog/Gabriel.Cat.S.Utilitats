@@ -7,9 +7,9 @@ namespace Gabriel.Cat.S.Extension
 {
    public static class ExtensionRectangle
     {
-        public static Point GetRelativePoint(this Rectangle rect, Point point)
+        public static Point RelativeToAbsolute(this Rectangle rect, Point point)
         {
-            return new Point(point.X-rect.Left, point.Y-rect.Top);
+            return new Point(point.X+rect.X, point.Y+rect.Y);
         }
     }
 }
