@@ -37,16 +37,21 @@ namespace Gabriel.Cat.S.Extension
 
         public static int[] GetIndex( int[] dimensiones, int indexTotal)
         {//por probar
+
+            int totalDim;
             int[] index = new int[dimensiones.Length];
-            int aux;
+            int aux=0;
+
             //tengo que sacar el indice en dimensiones
-            for (int i = 0; i < dimensiones.Length&&indexTotal>0; i++)
+            for (int i = dimensiones.Length-1; i>=1&&indexTotal>0; i--)
             {
-                aux = indexTotal / dimensiones[i];
-                index[i] = indexTotal % dimensiones[i];
+                totalDim= dimensiones.MultiplicaHasta(i-1);
+                aux = indexTotal %totalDim;
+                index[i] = indexTotal / totalDim;
                 indexTotal = aux;
 
             }
+            index[0] = aux;
             return index;
         }
     }

@@ -111,7 +111,7 @@ namespace Gabriel.Cat.S.Extension
         {
             return Split(caracteres, caracteresSplit.ToCharArray());
         }
-        public static List<char[]> Split(this char[] caracteres, char[] caracteresSplit)
+        public static List<char[]> Split(this char[] caracteres,params char[] caracteresSplit)
         {//falta testing
             const int FIN = -1;
             List<char[]> lstPartes = new List<char[]>();
@@ -120,15 +120,18 @@ namespace Gabriel.Cat.S.Extension
             do
             {
                 posicionAnt = posicionCaracteresSplit;
-                posicionCaracteresSplit = caracteres.SearchArray(posicionCaracteresSplit, caracteresSplit);
+                posicionCaracteresSplit = -1;
+                for(int i=0;i<caracteresSplit.Length&&posicionCaracteresSplit==-1;i++)
+                   posicionCaracteresSplit = caracteres.SearchArray(posicionAnt, new char[] { caracteresSplit[i] });
                 if(posicionCaracteresSplit!=FIN&& posicionCaracteresSplit + caracteresSplit.Length < caracteres.Length)
                 {
-                    lstPartes.Add(caracteres.SubArray(posicionCaracteresSplit + caracteresSplit.Length,posicionCaracteresSplit-posicionAnt));
+                    lstPartes.Add(caracteres.SubArray(posicionAnt,posicionCaracteresSplit-posicionAnt));
+                    posicionCaracteresSplit++;
                 }
-
+               
             } while (posicionCaracteresSplit != FIN);
-            if (posicionCaracteresSplit + caracteresSplit.Length < caracteres.Length)
-                lstPartes.Add(caracteres.SubArray(posicionCaracteresSplit + caracteresSplit.Length,caracteres.Length- posicionCaracteresSplit + caracteres.Length));
+            if (posicionAnt + caracteresSplit.Length < caracteres.Length)
+                lstPartes.Add(caracteres.SubArray(posicionAnt,caracteres.Length- posicionAnt));
             return lstPartes;
         }
     }

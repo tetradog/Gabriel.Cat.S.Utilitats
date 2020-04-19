@@ -425,7 +425,6 @@ namespace Gabriel.Cat.S.Extension
 
         public static void Invertir(this byte[] array)
         {
-            //por testear!!
             byte aux;
             unsafe
             {

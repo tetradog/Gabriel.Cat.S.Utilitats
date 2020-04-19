@@ -54,8 +54,10 @@ namespace Gabriel.Cat.S.Extension
             return TratarCaracteresXML(textoHaDesescapar, caracteresXmlSustitutos);
         }
         #endregion
-        public static string[] Split(this string txt,string caracteresSplitSeguidos)
-        {//falta testing
+        public static string[] Divide(this string txt,string caracteresSplitSeguidos)
+        {
+            if (string.IsNullOrEmpty(caracteresSplitSeguidos))
+                throw new ArgumentException("Se requieren caracteres para realizar el Split!");
             IList<char[]> filasChar = txt.ToCharArray().Split(caracteresSplitSeguidos.ToCharArray());
             string[] filas = new string[filasChar.Count];
             for (int i = 0; i < filas.Length; i++)

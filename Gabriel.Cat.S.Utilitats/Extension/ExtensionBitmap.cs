@@ -21,64 +21,67 @@ namespace Gabriel.Cat.S.Extension
         {
             return new BitmapAnimated(bmpsToAnimate, delay) { AnimarCiclicamente = repetirSiempre };
         }
-        public static Bitmap RandomPixels(this Bitmap imgRandom)
-        {
-            const int MAXPRIMERO = 19;
-            return imgRandom.RandomPixels(Convert.ToInt32(Math.Sqrt(imgRandom.Width) % MAXPRIMERO));
-        }
-        public static Bitmap RandomPixels(this Bitmap imgRandom, int cuadradosPorLinea)
-        {
-            //hay un bug y no lo veo... no hace cuadrados...
-            unsafe
-            {
-                imgRandom.TrataBytes((MetodoTratarBytePointer)((bytesImg) =>
-                {
-                    const int PRIMERODEFAULT = 13;//al ser un numero Primo no hay problemas
-                    System.Drawing.Color[] cuadrados;
-                    System.Drawing.Color colorActual;
-                    int a = 3, r = 0, g = 1, b = 2;
-                    int lenght = imgRandom.LengthBytes();
-                    int pixel = imgRandom.IsArgb() ? 4 : 3;
-                    int pixelsLineasHechas;
-                    int sumaX;
-                    int numPixeles;
-                    int posicionCuadrado = 0;
-                    if (cuadradosPorLinea < 1)
-                        cuadradosPorLinea = PRIMERODEFAULT;
-                    else
-                        cuadradosPorLinea = cuadradosPorLinea.DamePrimeroCercano();
-                    numPixeles = imgRandom.Width / cuadradosPorLinea;
-                    numPixeles = numPixeles.DamePrimeroCercano();
-                    cuadrados = DamePixelesRandom(cuadradosPorLinea);
-                    colorActual = cuadrados[posicionCuadrado];
-                    for (int y = 0, xMax = imgRandom.Width * pixel; y < imgRandom.Height; y++)
-                    {
-                        pixelsLineasHechas = y * xMax;
-                        if (y % numPixeles == 0)
-                        {
-                            cuadrados = DamePixelesRandom(cuadradosPorLinea);
-                        }
-                        for (int x = 0; x < xMax; x += pixel)
-                        {
-                            if (x % numPixeles == 0)
-                            {
-                                colorActual = cuadrados[++posicionCuadrado % cuadrados.Length];
-                            }
-                            sumaX = pixelsLineasHechas + x;
-                            if (pixel == 4)
-                            {
-                                bytesImg[sumaX + a] = byte.MaxValue;
-                            }
-                            bytesImg[sumaX + r] = colorActual.R;
-                            bytesImg[sumaX + g] = colorActual.G;
-                            bytesImg[sumaX + b] = colorActual.B;
-                        }
-                    }
-                })
-                                    );
-            }
-            return imgRandom;
-        }
+        #region Por acabar más adelante(cuando lo necesite)
+        //public static Bitmap RandomPixels(this Bitmap imgRandom)
+        //{
+        //    const int MAXPRIMERO = 19;
+        //    return imgRandom.RandomPixels(Convert.ToInt32(Math.Sqrt(imgRandom.Width) % MAXPRIMERO));
+        //}
+        //public static Bitmap RandomPixels(this Bitmap imgRandom, int cuadradosPorLinea)
+        //{
+        //    //hay un bug y no lo veo... no hace cuadrados...
+        //    unsafe
+        //    {
+        //        imgRandom.TrataBytes((MetodoTratarBytePointer)((bytesImg) =>
+        //        {
+        //            const int PRIMERODEFAULT = 13;//al ser un numero Primo no hay problemas
+        //            System.Drawing.Color[] cuadrados;
+        //            System.Drawing.Color colorActual;
+        //            int a = 3, r = 0, g = 1, b = 2;
+        //            int lenght = imgRandom.LengthBytes();
+        //            int pixel = imgRandom.IsArgb() ? 4 : 3;
+        //            int pixelsLineasHechas;
+        //            int sumaX;
+        //            int numPixeles;
+        //            int posicionCuadrado = 0;
+        //            if (cuadradosPorLinea < 1)
+        //                cuadradosPorLinea = PRIMERODEFAULT;
+        //            else
+        //                cuadradosPorLinea = cuadradosPorLinea.DamePrimeroCercano();
+        //            numPixeles = imgRandom.Width / cuadradosPorLinea;
+        //            numPixeles = numPixeles.DamePrimeroCercano();
+        //            cuadrados = DamePixelesRandom(cuadradosPorLinea);
+        //            colorActual = cuadrados[posicionCuadrado];
+        //            for (int y = 0, xMax = imgRandom.Width * pixel; y < imgRandom.Height; y++)
+        //            {
+        //                pixelsLineasHechas = y * xMax;
+        //                if (y % numPixeles == 0)
+        //                {
+        //                    cuadrados = DamePixelesRandom(cuadradosPorLinea);
+        //                }
+        //                for (int x = 0; x < xMax; x += pixel)
+        //                {
+        //                    if (x % numPixeles == 0)
+        //                    {
+        //                        colorActual = cuadrados[++posicionCuadrado % cuadrados.Length];
+        //                    }
+        //                    sumaX = pixelsLineasHechas + x;
+        //                    if (pixel == 4)
+        //                    {
+        //                        bytesImg[sumaX + a] = byte.MaxValue;
+        //                    }
+        //                    bytesImg[sumaX + r] = colorActual.R;
+        //                    bytesImg[sumaX + g] = colorActual.G;
+        //                    bytesImg[sumaX + b] = colorActual.B;
+        //                }
+        //            }
+        //        })
+        //                            );
+        //    }
+        //    return imgRandom;
+        //}
+
+        #endregion
         private static System.Drawing.Color[] DamePixelesRandom(int numPixeles)
         {
             System.Drawing.Color[] pixeles = new System.Drawing.Color[numPixeles];

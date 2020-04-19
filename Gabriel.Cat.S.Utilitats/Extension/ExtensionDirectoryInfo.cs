@@ -50,12 +50,13 @@ namespace Gabriel.Cat.S.Extension
         }
         static List<FileInfo> IBuscoConHash(this DirectoryInfo dir, IList<string> hashes, bool recursivo)
         {
-            //por probar :)
+            FileInfo[] files;
+            string hashArchivo;
+
             List<DirectoryInfo> dirs = new List<DirectoryInfo>();
             SortedList<string, string> llista = hashes.ToSortedList();
             List<FileInfo> filesEncontrados = new List<FileInfo>();
-            FileInfo[] files = null;
-            string hashArchivo = null;
+
 
             dirs.Add(dir);
             if (recursivo)
@@ -189,20 +190,18 @@ namespace Gabriel.Cat.S.Extension
         }
         /*Por mirar, revisar que sea optimo y necesario y este bien escrito ;) */
         /// <summary>
-        /// Copia el archivo si no esta en la carpeta (mira el nombre)
+        /// Mueve el archivo si existe a una nueva dirección
         /// </summary>
-        /// <param name="dir"></param>
-        /// <param name="pathArchivo">direccion del archivo en memoria</param>
+        /// <param name="dir">directorio a poner el archivo</param>
+        /// <param name="pathArchivo">direccion del archivo en el disco</param>
         /// <returns>devuelve la ruta final del archivo en caso de no existir el archivo devuelve null</returns>
         public static string HazSitio(this DirectoryInfo dir, string pathArchivoHaCopiar)
         {
-            string direccionArchivoFinal = null;
+            string direccionArchivoFinal = default;
             if (File.Exists(pathArchivoHaCopiar))
             {
-
-                direccionArchivoFinal = dir.DamePathSinUsar(pathArchivoHaCopiar);
+                direccionArchivoFinal = dir.GetPathSinUsar(pathArchivoHaCopiar);
                 File.Copy(pathArchivoHaCopiar, direccionArchivoFinal);
-
             }
 
             return direccionArchivoFinal;
@@ -213,7 +212,7 @@ namespace Gabriel.Cat.S.Extension
         /// <param name="dir"></param>
         /// <param name="pathArchivoHaCopiar"></param>
         /// <returns></returns>
-        public static string DamePathSinUsar(this DirectoryInfo dir, string pathArchivoHaCopiar)
+        public static string GetPathSinUsar(this DirectoryInfo dir, string pathArchivoHaCopiar)
         {
             int contadorIguales = 1;
             string nombreArchivo = Path.GetFileNameWithoutExtension(pathArchivoHaCopiar);
@@ -234,15 +233,14 @@ namespace Gabriel.Cat.S.Extension
         /// <returns>devuelve la ruta final del archivo, si encuentra el archivo no lo copia i devuelve su ruta,devuelve null si no existe el archivo</returns>
         public static string HazSitioSiNoEsta(this DirectoryInfo dir, string pathArchivo)
         {
-            string direccionArchivoFinal = null;
+            string direccionArchivoFinal = default;
             bool encontrado = false;
-            string nombreArchivo;
-            string extension;
-            int contadorIguales = 1;
+            string hashArchivo;
+            FileInfo[] archivos;
             if (File.Exists(pathArchivo))
             {
-                string hashArchivo = new FileInfo(pathArchivo).Hash();
-                FileInfo[] archivos = dir.GetFiles();
+                hashArchivo = new FileInfo(pathArchivo).Hash();
+                archivos = dir.GetFiles();
                 for (int i = 0; i < archivos.Length && !encontrado; i++)
                 {
                     encontrado = archivos[i].HashEquals(hashArchivo);
@@ -251,15 +249,7 @@ namespace Gabriel.Cat.S.Extension
                 }
                 if (!encontrado)
                 {
-                    nombreArchivo = Path.GetFileNameWithoutExtension(pathArchivo);
-                    extension = Path.GetExtension(pathArchivo);
-                    direccionArchivoFinal = dir.FullName + Path.DirectorySeparatorChar + nombreArchivo + extension;
-                    while (File.Exists(direccionArchivoFinal))
-                    {
-                        direccionArchivoFinal = dir.FullName + Path.DirectorySeparatorChar + nombreArchivo + "(" + contadorIguales + ")" + extension;
-                        contadorIguales++;
-
-                    }
+                    direccionArchivoFinal = dir.GetPathSinUsar(direccionArchivoFinal);
                     File.Copy(pathArchivo, direccionArchivoFinal);
                 }
 

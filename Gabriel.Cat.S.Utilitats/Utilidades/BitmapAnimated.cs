@@ -18,6 +18,7 @@ namespace Gabriel.Cat.S.Utilitats
 
         #region Variables
         int numeroDeRepeticiones = 0;
+        private int numeroDeRepeticionesFijas;
 
 
         #endregion
@@ -25,22 +26,23 @@ namespace Gabriel.Cat.S.Utilitats
         public event BitmapAnimatedFrameChangedEventHanlder FrameChanged;
         public BitmapAnimated(IList<Bitmap> bmps, params int[] delays)
         {
-         
+            SaltarFramePrimerCiclo = false;
+            FrameASaltarAnimacionCiclica = -1;
             NumeroDeRepeticionesFijas = 1;
-            frameAlAcabar = 0;
+            frameAlAcabar = -1;
             AnimarCiclicamente = true;
             frames = new Llista<KeyValuePair<Bitmap, int>>();
             if (bmps != null)
-                for(int i=0,j=0;i<bmps.Count;i++)
+                for (int i = 0, j = 0; i < bmps.Count; i++)
                 {
                     frames.Add(new KeyValuePair<Bitmap, int>(bmps[i], delays[j]));
-                    if (delays.Length > i)
+                    if (j < delays.Length - 1)
                         j++;
                 }
             timer = new System.Timers.Timer();
             timer.Elapsed += ChangeFrame;
 
-
+            Reset();
 
 
         }
@@ -81,7 +83,9 @@ namespace Gabriel.Cat.S.Utilitats
         {
             get; set;
         }
-        public int NumeroDeRepeticionesFijas { get; set; }
+        public int NumeroDeRepeticionesFijas { get => numeroDeRepeticionesFijas; set { numeroDeRepeticionesFijas = value+1; AnimarCiclicamente = numeroDeRepeticionesFijas <= 0; } }
+
+        public bool SaltarFramePrimerCiclo { get;  set; }
 
         public KeyValuePair<Bitmap, int> this[int index]
         {
@@ -102,23 +106,26 @@ namespace Gabriel.Cat.S.Utilitats
 
         public void RemoveFrame(int index)
         {
-            if (frames.Count <= index + 1||index<0)
+            if (frames.Count <= index + 1 || index < 0)
                 throw new ArgumentOutOfRangeException();
             frames.RemoveAt(index);
         }
         private void ChangeFrame(object sender, ElapsedEventArgs e)
         {
-            FrameChanged(this, frames[ActualFrameIndex].Key);
-            ActualFrameIndex++;
-            if (numeroDeRepeticiones > 0)
-                if (ActualFrameIndex == FrameASaltarAnimacionCiclica)
-                    ActualFrameIndex++;
-
-            if (ActualFrameIndex==0)
-                numeroDeRepeticiones++;
-        
-            if(numeroDeRepeticiones == NumeroDeRepeticionesFijas && !AnimarCiclicamente)
+            if (AnimarCiclicamente || numeroDeRepeticiones < NumeroDeRepeticionesFijas)
+            {
+                if (numeroDeRepeticiones==1&&!SaltarFramePrimerCiclo||ActualFrameIndex != FrameASaltarAnimacionCiclica)
+                    FrameChanged(this, frames[ActualFrameIndex].Key);
+                ActualFrameIndex++;
+            }
+            else
+            {
+                if(FrameAlAcabar>=0)
                 FrameChanged(this, frames[FrameAlAcabar].Key);
+                Stop();
+            }
+            if (ActualFrameIndex == 0)
+                numeroDeRepeticiones++;
 
             timer.Interval = frames[ActualFrameIndex].Value;
         }
@@ -140,9 +147,9 @@ namespace Gabriel.Cat.S.Utilitats
         public void Reset()
         {
             Stop();
-            numeroDeRepeticiones = 0;
+            numeroDeRepeticiones = 1;//lo pongo así para evitar poner en el if IndexActual<frames.Count-1 para la ultima vuelta...
             ActualFrameIndex = 0;
-            
+
         }
 
 

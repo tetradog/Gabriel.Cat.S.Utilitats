@@ -24,15 +24,15 @@ namespace UnitTestProjectgUtilitats.Extension
         [TestMethod]
         public void TestSetAndGetValue()
         {
-            const int LADO = 3;
+            const int LADO = 5;
             int[,] matriz = new int[LADO, LADO];
             int[] dimensiones = { LADO, LADO };
             bool correcto = true;
-            for (int i = 0, x = 0, xF = LADO, yF = LADO; x < xF && correcto; x++)
-                for (int y = 0; y < yF && correcto; y++)
+            for (int i = 0, y = 0, yF = LADO, xF = LADO; y < yF && correcto; y++)
+                for (int x = 0; x < xF && correcto; x++,i++)
                 {
-                    Gabriel.Cat.S.Extension.ExtensionArray.SetValue(matriz, dimensiones, i, MiRandom.Next(1, 200));
-                    correcto = matriz[x, y] == (int)Gabriel.Cat.S.Extension.ExtensionArray.GetValue(matriz, dimensiones, i++);
+                    Gabriel.Cat.S.Extension.ExtensionArray.SetValue(matriz, dimensiones, i, MiRandom.Next(int.MaxValue));
+                    correcto = matriz[x,y] == (int)Gabriel.Cat.S.Extension.ExtensionArray.GetValue(matriz, dimensiones, i);
 
 
 
