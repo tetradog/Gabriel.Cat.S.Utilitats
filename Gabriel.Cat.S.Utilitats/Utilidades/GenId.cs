@@ -13,50 +13,25 @@ namespace Gabriel.Cat.S.Utilitats
     {
         public MetodoGeneradorID MetodoSiguiente;
         public MetodoGeneradorID MetodoAnterior;
-        private TValue numero;
-        protected TValue inicio;
-        protected TValue fin;
+
         Semaphore semaphore = new Semaphore(1, 1);
         public TValue Inicio
         {
-            get
-            {
-                return inicio;
-            }
-            set
-            {
-                inicio = value;
-            }
+            get;
+            set;
         }
 
         public TValue Fin
         {
-            get
-            {
-                return fin;
-            }
-            set
-            {
-                fin = value;
-            }
+            get;
+            set;
         }
 
-        public TValue Numero
-        {
-            get
-            {
-                return numero;
-            }
-
-            set
-            {
-                numero = value;
-            }
-        }
+        public TValue Numero { get; set; }
 
         public TValue Actual()
         {
-            return numero;
+            return Numero;
         }
         public TValue Siguiente()
         {
@@ -68,13 +43,13 @@ namespace Gabriel.Cat.S.Utilitats
                 {
                     MetodoSiguiente();
                 }
-                catch { numero = Inicio; }
+                catch { Numero = Inicio; }
                 finally
                 {
                     semaphore.Release();
                 }
             }
-            return numero;
+            return Numero;
         }
         public TValue Siguiente(long numeroDeVeces)
         {
@@ -82,7 +57,7 @@ namespace Gabriel.Cat.S.Utilitats
             for (long i = 0; i < numeroDeVeces; i++)
                 Siguiente();
 
-            return numero;
+            return Numero;
         }
         public TValue Anterior()
         {
@@ -93,27 +68,27 @@ namespace Gabriel.Cat.S.Utilitats
                 {
                     MetodoAnterior();
                 }
-                catch { numero = Inicio; }
+                catch { Numero = Inicio; }
                 finally
                 {
                     semaphore.Release();
                 }
             }
-            return numero;
+            return Numero;
         }
         public TValue Anterior(long numeroDeVeces)
         {
             for (long i = 0; i < numeroDeVeces; i++)
                 Anterior();
-            return numero;
+            return Numero;
         }
         public void Reset()
         {
-            numero = inicio;
+            Numero = Inicio;
         }
         public void Reset(TValue inicio)
         {
-            this.numero = inicio;
+            this.Numero = inicio;
         }
         public static GenId<TValue> operator --(GenId<TValue> gen)
         {

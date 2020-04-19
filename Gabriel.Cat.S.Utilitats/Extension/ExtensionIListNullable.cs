@@ -9,7 +9,7 @@ namespace Gabriel.Cat.S.Extension
 
         public static bool AreEquals<T>(this IList<T?> lstLeft, IList<T> lstRight) where T : struct
         {
-            if (lstRight == null)
+            if (lstRight == default)
                 throw new ArgumentNullException("lstRight");
 
             return lstRight.AreEquals(lstLeft);
@@ -17,7 +17,7 @@ namespace Gabriel.Cat.S.Extension
 
         public static IList<T?> Sort<T>(this IList<T?> lst, SortMethod orden = SortMethod.QuickSort, bool ordenAscendente = true) where T : struct, IComparable
         {
-            IList<T?> listSorted = null;
+            IList<T?> listSorted = default;
             switch (orden)
             {
                 case SortMethod.QuickSort:

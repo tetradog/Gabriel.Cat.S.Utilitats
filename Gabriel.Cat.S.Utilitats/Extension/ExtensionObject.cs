@@ -38,7 +38,7 @@ namespace Gabriel.Cat.S.Extension
         public static void SetProperty(this object obj, string nameProperty, object value)
         {
             PropertyInfo property = obj.Property(nameProperty);
-            if (value == null && !property.GetGetMethod().ReturnType.IsNullableType())
+            if (value == default && !property.GetGetMethod().ReturnType.IsNullableType())
                 throw new ArgumentNullException("El tipo no admite null como valor");
             property.SetValue(obj, value);
         }

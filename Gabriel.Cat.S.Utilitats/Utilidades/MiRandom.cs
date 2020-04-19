@@ -24,5 +24,10 @@ namespace Gabriel.Cat.S.Utilitats
             llavor.NextBytes(randomArray);
             return randomArray;
         }
+        public static void SetRandom(Random r) {
+
+            if (r != default) 
+                llavor = r; 
+        }
     }
 }

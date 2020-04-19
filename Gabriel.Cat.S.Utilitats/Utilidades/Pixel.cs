@@ -6,6 +6,8 @@
         public const int G = 1;
         public const int B = 0;
         public const int A = 3;
+        public const int RGB = 3;
+        public const int ARGB = RGB + 1;
     }
 
 }

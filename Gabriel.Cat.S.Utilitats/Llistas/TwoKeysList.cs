@@ -28,7 +28,7 @@ namespace Gabriel.Cat.S.Utilitats
             llistaClau2 = new LlistaOrdenada<TKey2, TKey1>();
 
         }
-        public int Count
+        public new int Count
         { get { return llistaClau1.Count; } }
 
         public ICollection<TwoKeys<TKey1, TKey2>> Keys
@@ -220,7 +220,7 @@ namespace Gabriel.Cat.S.Utilitats
             }
         }
 
-        public void Clear()
+        public new void Clear()
         {
             llistaClau1.Clear();
             llista2.Clear();
@@ -265,7 +265,7 @@ namespace Gabriel.Cat.S.Utilitats
         {
             return llistaClau2.ContainsKey(key2);
         }
-        public IEnumerator<KeyValuePair<TwoKeys<TKey1, TKey2>, TValue>> GetEnumerator()
+        public new IEnumerator<KeyValuePair<TwoKeys<TKey1, TKey2>, TValue>> GetEnumerator()
         {
             KeyValuePair<TwoKeys<TKey1, TKey2>, TValue>[] enumerator = new KeyValuePair<TwoKeys<TKey1, TKey2>, TValue>[llista1.Count];
             ForContinue nextStep = new ForContinue();
@@ -412,7 +412,7 @@ namespace Gabriel.Cat.S.Utilitats
             else throw new Exception(String.Format("key most be {0} or {1}", typeof(TKey1), typeof(TKey2)));
         }
 
-        public void CopyTo(Array array, int index)
+        public new void CopyTo(Array array, int index)
         {
             base.CopyTo(array, index);
         }

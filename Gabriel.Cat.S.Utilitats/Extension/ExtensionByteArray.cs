@@ -218,8 +218,10 @@ namespace Gabriel.Cat.S.Extension
         public static bool[] ToBits(this byte[] byteToBits)
         {
             const int BITSBYTE = 8;
-            bool[] bits = new bool[byteToBits.Length * BITSBYTE];
+
             bool[] bitsAuxByte;
+            bool[] bits = new bool[byteToBits.Length * BITSBYTE];
+            
             //opero
             unsafe
             {
@@ -257,8 +259,10 @@ namespace Gabriel.Cat.S.Extension
         {
             const int IGUALES = (int)Gabriel.Cat.S.Utilitats.CompareTo.Iguals;
             const int INFERIOR= (int)Gabriel.Cat.S.Utilitats.CompareTo.Inferior;
-            int compareTo =arrayRight!=null? arrayLeft.Length.CompareTo(arrayRight.Length):INFERIOR;
+
             int pos;
+            int compareTo =arrayRight!=null? arrayLeft.Length.CompareTo(arrayRight.Length):INFERIOR;
+            
             if (compareTo == IGUALES)
             {
 

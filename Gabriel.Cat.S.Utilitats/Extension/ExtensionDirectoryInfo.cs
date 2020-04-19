@@ -9,10 +9,10 @@ namespace Gabriel.Cat.S.Extension
 {
    public static class ExtensionDirectoryInfo
     {
-        public static IReadOnlyList<KeyValuePair<DirectoryInfo, FileInfo[]>> GetFiles(this DirectoryInfo dir, bool recursive = false)
+        public static List<KeyValuePair<DirectoryInfo, FileInfo[]>> GetFiles(this DirectoryInfo dir, bool recursive = false)
         {//windows si da error no se puede omit por lo tanto te quedas sin los archivos que puedes coger...es por eso que hago mi metodo...
             List<KeyValuePair<DirectoryInfo, FileInfo[]>> carpetasConSusArchivos = new List<KeyValuePair<DirectoryInfo, FileInfo[]>>();
-            IReadOnlyList<DirectoryInfo> subDirs;
+            List<DirectoryInfo> subDirs;
             bool canRead = dir.CanRead();
             if (canRead)
             {
@@ -35,7 +35,7 @@ namespace Gabriel.Cat.S.Extension
         public static FileInfo BuscaConHash(this DirectoryInfo dir, string fileHash, bool recursivo = false)
         {
 
-            IReadOnlyList<FileInfo> files = BuscaConHash(dir, new string[] { fileHash }, recursivo);
+            List<FileInfo> files = BuscaConHash(dir, new string[] { fileHash }, recursivo);
             FileInfo file;
             if (files.Count > 0)
                 file = files[0];
@@ -81,7 +81,7 @@ namespace Gabriel.Cat.S.Extension
             return filesEncontrados;
         }
         #endregion
-        public static IReadOnlyList<FileInfo> GetAllFiles(this DirectoryInfo dir)
+        public static List<FileInfo> GetAllFiles(this DirectoryInfo dir)
         {
             List<DirectoryInfo> dirs = new List<DirectoryInfo>();
             List<FileInfo> files = new List<FileInfo>();
@@ -92,7 +92,7 @@ namespace Gabriel.Cat.S.Extension
                     files.AddRange(dirs[i].GetFiles());
             return files;
         }
-        public static IReadOnlyList<FileInfo> GetFiles(this DirectoryInfo dir, params string[] formatsAdmessos)
+        public static List<FileInfo> GetFiles(this DirectoryInfo dir, params string[] formatsAdmessos)
         {
             List<FileInfo> files = new List<FileInfo>();
             FileInfo[] filesDir;
@@ -124,10 +124,10 @@ namespace Gabriel.Cat.S.Extension
             return formato;
         }
 
-        public static IReadOnlyList<FileInfo> GetFiles(this DirectoryInfo dir, bool recursivo, params string[] formatsAdmessos)
+        public static List<FileInfo> GetFiles(this DirectoryInfo dir, bool recursivo, params string[] formatsAdmessos)
         {
             List<FileInfo> files = new List<FileInfo>();
-            IReadOnlyList<DirectoryInfo> subDirs;
+            List<DirectoryInfo> subDirs;
             if (dir.CanRead())
             {
                 files.AddRange(dir.GetFiles(formatsAdmessos));
@@ -142,32 +142,32 @@ namespace Gabriel.Cat.S.Extension
             return files;
 
         }
-        public static IReadOnlyList<KeyValuePair<DirectoryInfo, IReadOnlyList<FileInfo>>> GetFilesWithDirectory(this DirectoryInfo dir)
+        public static List<KeyValuePair<DirectoryInfo, List<FileInfo>>> GetFilesWithDirectory(this DirectoryInfo dir)
         {
             return dir.GetFilesWithDirectory("*");
         }
-        public static IReadOnlyList<KeyValuePair<DirectoryInfo, IReadOnlyList<FileInfo>>> GetFilesWithDirectory(this DirectoryInfo dir, params string[] formatsAdmessos)
+        public static List<KeyValuePair<DirectoryInfo, List<FileInfo>>> GetFilesWithDirectory(this DirectoryInfo dir, params string[] formatsAdmessos)
         {
-            return dir.GetFilesWithDirectory(false, "*");
+            return dir.GetFilesWithDirectory(false, formatsAdmessos);
         }
-        public static IReadOnlyList<KeyValuePair<DirectoryInfo, IReadOnlyList<FileInfo>>> GetFilesWithDirectory(this DirectoryInfo dir, bool recursive, params string[] formatsAdmessos)
+        public static List<KeyValuePair<DirectoryInfo, List<FileInfo>>> GetFilesWithDirectory(this DirectoryInfo dir, bool recursive, params string[] formatsAdmessos)
         {
-            List<KeyValuePair<DirectoryInfo, IReadOnlyList<FileInfo>>> llistaArxiusPerCarpeta = new List<KeyValuePair<DirectoryInfo, IReadOnlyList<FileInfo>>>();
-            IReadOnlyList<DirectoryInfo> subDirs;
+            List<KeyValuePair<DirectoryInfo, List<FileInfo>>> llistaArxiusPerCarpeta = new List<KeyValuePair<DirectoryInfo, List<FileInfo>>>();
+            List<DirectoryInfo> subDirs;
             if (dir.CanRead())
             {
-                llistaArxiusPerCarpeta.Add(new KeyValuePair<DirectoryInfo, IReadOnlyList<FileInfo>>(dir, dir.GetFiles(formatsAdmessos)));
+                llistaArxiusPerCarpeta.Add(new KeyValuePair<DirectoryInfo, List<FileInfo>>(dir, dir.GetFiles(formatsAdmessos)));
                 if (recursive)
                 {
                     subDirs = dir.SubDirectoris();
                     for (int i = 0; i < subDirs.Count; i++)
                         if (subDirs[i].CanRead())
-                            llistaArxiusPerCarpeta.Add(new KeyValuePair<DirectoryInfo, IReadOnlyList<FileInfo>>(subDirs[i], subDirs[i].GetFiles(formatsAdmessos)));
+                            llistaArxiusPerCarpeta.Add(new KeyValuePair<DirectoryInfo,List<FileInfo>>(subDirs[i], subDirs[i].GetFiles(formatsAdmessos)));
                 }
             }
             return llistaArxiusPerCarpeta;
         }
-        public static IReadOnlyList<DirectoryInfo> SubDirectoris(this DirectoryInfo dirPare)
+        public static List<DirectoryInfo> SubDirectoris(this DirectoryInfo dirPare)
         {
             return dirPare.ISubDirectoris();
         }
@@ -207,10 +207,14 @@ namespace Gabriel.Cat.S.Extension
 
             return direccionArchivoFinal;
         }
+        /// <summary>
+        /// Genera los tipicos NombreArchivo(NumeroNoOcupadoYa).extensión
+        /// </summary>
+        /// <param name="dir"></param>
+        /// <param name="pathArchivoHaCopiar"></param>
+        /// <returns></returns>
         public static string DamePathSinUsar(this DirectoryInfo dir, string pathArchivoHaCopiar)
         {
-            FileInfo fitxerAFerLloc = new FileInfo(pathArchivoHaCopiar);
-
             int contadorIguales = 1;
             string nombreArchivo = Path.GetFileNameWithoutExtension(pathArchivoHaCopiar);
             string extension = Path.GetExtension(pathArchivoHaCopiar);
@@ -270,7 +274,7 @@ namespace Gabriel.Cat.S.Extension
         /// <param name="dir"></param>
         /// <param name="pathsArxius">lista de path de archivos</param>
         /// <returns>key=path final archivo, value= archivo a copiar(solo devuelve los archivos existentes los demas no estan en la lista)</returns>
-        public static IReadOnlyList<KeyValuePair<string, FileInfo>> HazSitioSiNoEsta(this DirectoryInfo dir, IEnumerable<string> pathsArxius)
+        public static List<KeyValuePair<string, FileInfo>> HazSitioSiNoEsta(this DirectoryInfo dir, IList<string> pathsArxius)
         {//por provar con idRapido :) no es un hash que mira el archivo pero puede ser fiable...
             SortedList<string, FileInfo> idArxiusPerCopiar = new SortedList<string, FileInfo>();
             FileInfo fitxer;
@@ -283,10 +287,10 @@ namespace Gabriel.Cat.S.Extension
             string direccioFinalArxiu;
             int contador;
             if (pathsArxius != null)
-                foreach (string path in pathsArxius)
-                    if (File.Exists(path))
+                for(int i=0;i<pathsArxius.Count;i++)
+                    if (File.Exists(pathsArxius[i]))
                     {
-                        fitxer = new FileInfo(path);
+                        fitxer = new FileInfo(pathsArxius[i]);
                         if (!idArxiusPerCopiar.ContainsKey(fitxer.IdUnicoRapido()))
                             idArxiusPerCopiar.Add(fitxer.IdUnicoRapido(), fitxer);
                         else

@@ -43,7 +43,7 @@ namespace Gabriel.Cat.S.Extension
                 if (values.ContainsKey(ids[i]))
                     dic[ids[i]] = values[ids[i]];
         }
-        public static IDictionary<TKey, TValue> Clone<TKey, TValue>(this IDictionary<TKey, TValue> dic)
+        public static IDictionary<TKey, TValue> Clon<TKey, TValue>(this IDictionary<TKey, TValue> dic)
         {
             IDictionary<TKey, TValue> clon =(IDictionary<TKey, TValue>) dic.GetType().GetObj(); 
             foreach (var item in dic)

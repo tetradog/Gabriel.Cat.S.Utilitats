@@ -64,6 +64,10 @@ namespace Gabriel.Cat.S.Utilitats
         {
             return CompareTo(obj as IdUnico) == 0;
         }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
         private static byte[] GenIdAuto()
         {
             byte[] id = new byte[LENGHT];

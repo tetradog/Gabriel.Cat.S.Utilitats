@@ -27,8 +27,10 @@ namespace Gabriel.Cat.S.Utilitats
         public int Count()
         {
             int total = 0;
-            foreach (var item in diccionari)
-                total += item.Value.Count;
+
+            for(int i=0;i<diccionari.Count;i++)
+                total += diccionari.GetValueAt(i).Count;
+
             return total;
         }
         public int Count(TKey key)
@@ -146,8 +148,10 @@ namespace Gabriel.Cat.S.Utilitats
 
         public IEnumerator<KeyValuePair<TKey, TValue[]>> GetEnumerator()
         {
-            foreach (KeyValuePair<TKey,LlistaOrdenada<IComparable,TValue>> item in diccionari)
-                yield return new KeyValuePair<TKey, TValue[]>(item.Key, item.Value.Values.ToArray());
+            for (int i = 0; i < diccionari.Count; i++)
+            {
+                yield return new KeyValuePair<TKey, TValue[]>(diccionari.GetKey(i), diccionari.GetValueAt(i).Values.ToArray());
+            }
         }
 
         #endregion

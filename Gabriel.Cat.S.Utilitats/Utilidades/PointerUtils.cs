@@ -5,7 +5,6 @@ namespace Gabriel.Cat.S.Utilitats
 
         public static unsafe byte[] ReadLine(byte*[] ptrs, bool ptrNext = true)
         {
-
             byte[] bytesLine = new byte[ptrs.Length];
             byte* ptrBytes;
             fixed (byte* ptBytes = bytesLine)
@@ -23,20 +22,14 @@ namespace Gabriel.Cat.S.Utilitats
 
             }
             return bytesLine;
-
         }
         public static unsafe void WriteLine(byte*[] ptrs, byte[] data, bool ptrNext = true)
         {
-
             fixed (byte* ptData = data)
                 WriteLine(ptrs, ptData, ptrNext);
-
         }
         public static unsafe void WriteLine(byte*[] ptrs, byte* ptrData, bool ptrNext = true)
         {
-
-
-
             for (int i = 0; i < ptrs.Length; i++)
             {
                 *ptrs[i] = *ptrData;
@@ -44,12 +37,10 @@ namespace Gabriel.Cat.S.Utilitats
                 if (ptrNext)
                     ptrs[i]++;
             }
-
         }
 
         public static unsafe byte*[] ToArray(byte* ptrData, int lengthPart, int parts)
         {
-
             byte*[] partes = new byte*[parts];
             for (int i = 0; i < parts; i++)
             {
@@ -63,7 +54,6 @@ namespace Gabriel.Cat.S.Utilitats
         {
             for (int i = 0; i < ptrs.Length; i++)
                 ptrs[i] += toAdd;
-
         }
 
     }

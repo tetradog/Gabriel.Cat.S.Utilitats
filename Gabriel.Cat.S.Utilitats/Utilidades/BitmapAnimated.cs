@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.Threading;
+using System.Timers;
 
 namespace Gabriel.Cat.S.Utilitats
 {
@@ -11,18 +12,23 @@ namespace Gabriel.Cat.S.Utilitats
     public class BitmapAnimated : ObjectAutoId
     {
         Llista<KeyValuePair<Bitmap, int>> frames;
-        bool animarCiclicamente;
         int frameAlAcabar;
         int index;
-        int numeroDeRepeticionesFijas;
-        Thread hiloAnimacion;
+        System.Timers.Timer timer;
+
+        #region Variables
+        int numeroDeRepeticiones = 0;
+
+
+        #endregion
+
         public event BitmapAnimatedFrameChangedEventHanlder FrameChanged;
         public BitmapAnimated(IList<Bitmap> bmps, params int[] delays)
         {
          
-            numeroDeRepeticionesFijas = 1;
+            NumeroDeRepeticionesFijas = 1;
             frameAlAcabar = 0;
-            animarCiclicamente = true;
+            AnimarCiclicamente = true;
             frames = new Llista<KeyValuePair<Bitmap, int>>();
             if (bmps != null)
                 for(int i=0,j=0;i<bmps.Count;i++)
@@ -31,20 +37,17 @@ namespace Gabriel.Cat.S.Utilitats
                     if (delays.Length > i)
                         j++;
                 }
+            timer = new System.Timers.Timer();
+            timer.Elapsed += ChangeFrame;
+
+
+
 
         }
-        public bool AnimarCiclicamente
-        {
-            get
-            {
-                return animarCiclicamente;
-            }
 
-            set
-            {
-                animarCiclicamente = value;
-            }
-        }
+
+
+        public bool AnimarCiclicamente { get; set; }
         public int FrameAlAcabar
         {
             get { return frameAlAcabar; }
@@ -78,18 +81,7 @@ namespace Gabriel.Cat.S.Utilitats
         {
             get; set;
         }
-        public int NumeroDeRepeticionesFijas
-        {
-            get
-            {
-                return numeroDeRepeticionesFijas;
-            }
-
-            set
-            {
-                numeroDeRepeticionesFijas = value;
-            }
-        }
+        public int NumeroDeRepeticionesFijas { get; set; }
 
         public KeyValuePair<Bitmap, int> this[int index]
         {
@@ -110,47 +102,47 @@ namespace Gabriel.Cat.S.Utilitats
 
         public void RemoveFrame(int index)
         {
-            if (frames.Count < index + 1)
+            if (frames.Count <= index + 1||index<0)
                 throw new ArgumentOutOfRangeException();
             frames.RemoveAt(index);
         }
-        public void Start()
+        private void ChangeFrame(object sender, ElapsedEventArgs e)
         {
-            if (FrameChanged == null)
-                throw new Exception("FrameChanged doesn't asigned ");
-            if (hiloAnimacion != null && hiloAnimacion.IsAlive)
-                hiloAnimacion.Abort();
-            hiloAnimacion = new Thread(() => {
-                int numeroDeRepeticiones = 0;
-                do
-                {
-                    for (int i = 0; i < frames.Count; i++)
-                    {
-                        FrameChanged(this, frames[ActualFrameIndex].Key);
-                        Thread.Sleep(frames[ActualFrameIndex].Value);
-                        ActualFrameIndex++;
-                        if (numeroDeRepeticiones > 0)
-                            if (ActualFrameIndex == FrameASaltarAnimacionCiclica)
-                                ActualFrameIndex++;
-                    }
-                    numeroDeRepeticiones++;
-                } while (numeroDeRepeticiones < numeroDeRepeticionesFijas || animarCiclicamente);
+            FrameChanged(this, frames[ActualFrameIndex].Key);
+            ActualFrameIndex++;
+            if (numeroDeRepeticiones > 0)
+                if (ActualFrameIndex == FrameASaltarAnimacionCiclica)
+                    ActualFrameIndex++;
 
+            if (ActualFrameIndex==0)
+                numeroDeRepeticiones++;
+        
+            if(numeroDeRepeticiones == NumeroDeRepeticionesFijas && !AnimarCiclicamente)
                 FrameChanged(this, frames[FrameAlAcabar].Key);
 
+            timer.Interval = frames[ActualFrameIndex].Value;
+        }
+        public void Start()
+        {
+            if (FrameChanged == default)
+                throw new Exception("FrameChanged doesn't asigned ");
+            timer.Interval = frames[ActualFrameIndex].Value;
+            timer.Start();
 
-            });
-            hiloAnimacion.Start();
         }
         public void Stop()
         {
-            if (hiloAnimacion != null && hiloAnimacion.IsAlive)
-                hiloAnimacion.Suspend();
+            timer.Stop();
         }
-        public void Finsh()
+        /// <summary>
+        /// Stop and init animation
+        /// </summary>
+        public void Reset()
         {
-            if (hiloAnimacion != null && hiloAnimacion.IsAlive)
-                hiloAnimacion.Abort();
+            Stop();
+            numeroDeRepeticiones = 0;
+            ActualFrameIndex = 0;
+            
         }
 
 

@@ -21,14 +21,14 @@ namespace Gabriel.Cat.S.Utilitats
         {
             get
             {
-                if (file == null)
-                    file = (byte[])claseRecurso.GetProperty(nombreRecurso).GetValue(null);
+                if (file == default)
+                    file = (byte[])claseRecurso.GetProperty(nombreRecurso).GetValue(default);
                 return file;
             }
         }
         public virtual void Dispose()
         {
-            file = null;
+            file = default;
         }
     }
     public class ResourceImage : ResourceFile
@@ -37,11 +37,12 @@ namespace Gabriel.Cat.S.Utilitats
         public ResourceImage(Type claseRecurso, string nombreRecurso) : base(claseRecurso, nombreRecurso)
         {
         }
+        ~ResourceImage() => Dispose();
         public Bitmap Image
         {
             get
             {
-                if (img == null)
+                if (img == default)
                 {
                     img = (Bitmap)Bitmap.FromStream(new System.IO.MemoryStream(File));
                     base.Dispose();
@@ -51,8 +52,8 @@ namespace Gabriel.Cat.S.Utilitats
         }
         public override void Dispose()
         {
-            base.Dispose();
-            img = null;
+            img = default;
+            base.Dispose();   
         }
     }
 }

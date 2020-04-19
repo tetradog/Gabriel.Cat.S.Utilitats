@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Gabriel.Cat.S.Extension;
-using Gabriel.Cat.S.Extension;
+
 
 namespace Gabriel.Cat.S.Utilitats
 {

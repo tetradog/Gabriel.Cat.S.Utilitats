@@ -56,7 +56,7 @@ namespace Gabriel.Cat.S.Utilitats
         {
             AddRange(llistaOrdenada);
         }
-        public int Count
+        public new int Count
         {
             get
             {
@@ -276,7 +276,7 @@ namespace Gabriel.Cat.S.Utilitats
             return seHaPodidoHacer;
         }
 
-        public void Clear()
+        public new void Clear()
         {
             IList<KeyValuePair<TKey, TValue>> items = null;
             if (Removed == null || ClearConfirmation(this))
@@ -390,7 +390,7 @@ namespace Gabriel.Cat.S.Utilitats
 
         #region IEnumerable implementation
 
-        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+        public new IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
         {
             Llista<KeyValuePair<TKey, TValue>> parelles = new Llista<KeyValuePair<TKey, TValue>>();
             Monitor.Enter(llistaOrdenada);

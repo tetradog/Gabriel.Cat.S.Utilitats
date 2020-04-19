@@ -35,7 +35,7 @@ namespace Gabriel.Cat.S.Utilitats
         int IComparable<Propiedad>.CompareTo(Propiedad other)
         {
             int compareTo;
-            if (other != null)
+            if (other != default)
                 compareTo = ((IComparable<PropiedadTipo>)Info).CompareTo(other.Info);
             else compareTo = (int)Gabriel.Cat.S.Utilitats.CompareTo.Inferior;
             return compareTo;

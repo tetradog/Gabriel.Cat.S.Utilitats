@@ -15,8 +15,8 @@ namespace Gabriel.Cat.S.Utilitats
         }
         public GenIdInt(int inicio, int fin)
         {
-            this.inicio = inicio;
-            this.fin = fin;
+            Inicio = inicio;
+            Fin = fin;
             MetodoSiguiente = ISiguiente;
             MetodoAnterior = IAnterior;
         }
@@ -25,15 +25,15 @@ namespace Gabriel.Cat.S.Utilitats
        void ISiguiente()
         {
             Numero++;
-            if (Numero > fin)
-                Numero = inicio;
+            if (Numero > Fin)
+                Numero = Inicio;
         }
 
         void IAnterior()
         {
             Numero--;
-            if (Numero < inicio)
-                Numero = fin;
+            if (Numero < Inicio)
+                Numero = Fin;
         }
 
         #endregion

@@ -73,11 +73,11 @@ namespace Gabriel.Cat.S.Utilitats
         int IComparable<PropiedadTipo>.CompareTo(PropiedadTipo other)
         {
             int compareTo;
-            if (other != null)
+            if (other != default)
             {
-                if (Orden == null && other.Orden != null)
+                if (Orden == default && other.Orden != default)
                     compareTo = (int)Gabriel.Cat.S.Utilitats.CompareTo.Inferior;
-                else if (Orden != null && other.Orden == null)
+                else if (Orden != default && other.Orden == default)
                     compareTo = (int)Gabriel.Cat.S.Utilitats.CompareTo.Superior;
                 else compareTo = Orden.CompareTo(other.Orden);
             }

@@ -12,22 +12,22 @@ namespace Gabriel.Cat.S.Utilitats.V2
     /// </summary>
     public struct Color : IComparable
     {
-        [FieldOffset(0)]
+        [FieldOffset(Pixel.A)]
         byte a;
-        [FieldOffset(1)]
+        [FieldOffset(Pixel.R)]
         byte r;
-        [FieldOffset(2)]
+        [FieldOffset(Pixel.G)]
         byte g;
-        [FieldOffset(3)]
+        [FieldOffset(Pixel.B)]
         byte b;
 
         public Color(int argb = 0)
         {
             byte[] argbBytes = Serializar.GetBytes(argb);
-            a = argbBytes[0];
-            r = argbBytes[1];
-            g = argbBytes[2];
-            b = argbBytes[3];
+            a = argbBytes[Pixel.A];
+            r = argbBytes[Pixel.R];
+            g = argbBytes[Pixel.G];
+            b = argbBytes[Pixel.B];
 
         }
 
@@ -43,11 +43,11 @@ namespace Gabriel.Cat.S.Utilitats.V2
         {
             get
             {
-                return a;
+                return A;
             }
             set
             {
-                a = value;
+                A = value;
             }
         }
 
@@ -55,11 +55,11 @@ namespace Gabriel.Cat.S.Utilitats.V2
         {
             get
             {
-                return r;
+                return R;
             }
             set
             {
-                r = value;
+                R = value;
             }
         }
 
@@ -67,11 +67,11 @@ namespace Gabriel.Cat.S.Utilitats.V2
         {
             get
             {
-                return g;
+                return G;
             }
             set
             {
-                g = value;
+                G = value;
             }
         }
 
@@ -79,16 +79,22 @@ namespace Gabriel.Cat.S.Utilitats.V2
         {
             get
             {
-                return b;
+                return B;
             }
             set
             {
-                b = value;
+                B = value;
             }
         }
+
+        public byte A { get => a; set => a = value; }
+        public byte R { get => r; set => r = value; }
+        public byte G { get => g; set => g = value; }
+        public byte B { get => b; set => b = value; }
+
         public int ToArgb()
         {
-            return Serializar.ToInt(new byte[] { a, r, g, b });
+            return Serializar.ToInt(new byte[] { A, R, G, B });
         }
 
         #region IComparable implementation
@@ -112,7 +118,7 @@ namespace Gabriel.Cat.S.Utilitats.V2
         #endregion
         public static implicit operator System.Drawing.Color(Color color)
         {
-            return System.Drawing.Color.FromArgb(color.a,color.r,color.g,color.b);
+            return System.Drawing.Color.FromArgb(color.A,color.R,color.G,color.B);
         }
         public static implicit operator Color(System.Drawing.Color color)
         {

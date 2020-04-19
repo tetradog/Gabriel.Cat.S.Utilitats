@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -82,6 +83,11 @@ namespace Gabriel.Cat.S.Utilitats
 
 
         #endregion
+
+        public static explicit operator Point(PointZ point)
+        {
+            return new Point(point.X,point.Y);
+        }
     }
 }
 

@@ -46,9 +46,9 @@ namespace Gabriel.Cat.S.Utilitats
         }
         public static void Usar(byte[] array, MetodoUnsafeArray metodo)
         {
-            if (array == null || metodo == null)
+            if (array == default || metodo == default)
                 throw new ArgumentNullException();
-            Exception exAux = null;
+            Exception exAux = default;
             unsafe
             {
                 fixed (byte* ptrArray = array)
@@ -63,7 +63,7 @@ namespace Gabriel.Cat.S.Utilitats
                     }
                 }
                 //lanzo la excepcion en un contexto seguro :D asi no hay problemas con los pointers
-                if (exAux != null)
+                if (exAux != default)
                     throw exAux;
             }
         }

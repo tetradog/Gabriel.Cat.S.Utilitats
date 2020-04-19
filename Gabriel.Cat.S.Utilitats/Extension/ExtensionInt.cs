@@ -22,6 +22,8 @@ namespace Gabriel.Cat.S.Extension
         }
         public static int SumaHasta(this int[] array,int indexFin)
         {
+            if (indexFin >= array.Length|| indexFin<0)
+                throw new ArgumentOutOfRangeException();
             int total = 0;
             for (int i = 0; i <= indexFin; i++)
                 total += array[i];
@@ -29,6 +31,8 @@ namespace Gabriel.Cat.S.Extension
         }
         public static int MultiplicaHasta(this int[] array, int indexFin)
         {
+            if (indexFin >= array.Length || indexFin < 0)
+                throw new ArgumentOutOfRangeException();
             int total = 1;
             for (int i = 0; i <= indexFin; i++)
                 total *= array[i];

@@ -9,7 +9,7 @@ namespace Gabriel.Cat.S.Extension
     {
         public static bool IsArgb(this PixelFormat format)
         {
-            bool isArgb = false;
+            bool isArgb;
             switch (format)
             {
                 case PixelFormat.Format16bppArgb1555:
@@ -18,6 +18,9 @@ namespace Gabriel.Cat.S.Extension
                 case PixelFormat.Format64bppArgb:
                 case PixelFormat.Format64bppPArgb:
                     isArgb = true;
+                    break;
+                default:
+                    isArgb = false;
                     break;
             }
             return isArgb;

@@ -49,14 +49,14 @@ namespace Gabriel.Cat.S.Extension
                         cuadradosPorLinea = cuadradosPorLinea.DamePrimeroCercano();
                     numPixeles = imgRandom.Width / cuadradosPorLinea;
                     numPixeles = numPixeles.DamePrimeroCercano();
-                    cuadrados = DamePixeles(cuadradosPorLinea);
+                    cuadrados = DamePixelesRandom(cuadradosPorLinea);
                     colorActual = cuadrados[posicionCuadrado];
                     for (int y = 0, xMax = imgRandom.Width * pixel; y < imgRandom.Height; y++)
                     {
                         pixelsLineasHechas = y * xMax;
                         if (y % numPixeles == 0)
                         {
-                            cuadrados = DamePixeles(cuadradosPorLinea);
+                            cuadrados = DamePixelesRandom(cuadradosPorLinea);
                         }
                         for (int x = 0; x < xMax; x += pixel)
                         {
@@ -79,7 +79,7 @@ namespace Gabriel.Cat.S.Extension
             }
             return imgRandom;
         }
-        private static System.Drawing.Color[] DamePixeles(int numPixeles)
+        private static System.Drawing.Color[] DamePixelesRandom(int numPixeles)
         {
             System.Drawing.Color[] pixeles = new System.Drawing.Color[numPixeles];
             for (int i = 0; i < pixeles.Length; i++)
@@ -142,7 +142,7 @@ namespace Gabriel.Cat.S.Extension
             {
                 new Bitmap(bmp).Save(stream, format);
             }
-            catch (Exception ex)
+            catch
             {
                 path = System.IO.Path.GetRandomFileName();
                 format = bmp.IsArgb() ? ImageFormat.Png : ImageFormat.Jpeg;
@@ -220,7 +220,7 @@ namespace Gabriel.Cat.S.Extension
             return cropped;
 
         }
-        public static Bitmap Escala(this Bitmap imgAEscalar, decimal escala)
+        public static Bitmap Escala(this Bitmap imgAEscalar, float escala)
         {
             return Resize(imgAEscalar, new Size(Convert.ToInt32(imgAEscalar.Size.Width * escala), Convert.ToInt32(imgAEscalar.Size.Height * escala)));
         }
@@ -303,8 +303,8 @@ namespace Gabriel.Cat.S.Extension
                 bmp.TrataBytes(((MetodoTratarBytePointer)((ptrBytesBmp) =>
                 {
                     byte* ptBytesBmp = ptrBytesBmp;
-                    for (long y = 0, yFinal = matriuBytes.GetLongLength((int)DimensionMatriz.Y); y < yFinal; y++)
-                        for (long x = 0, xFinal = matriuBytes.GetLongLength((int)DimensionMatriz.X); x < xFinal; x++)
+                    for (long y = 0, yFinal = matriuBytes.GetLongLength((int)DimensionMatriz.Y), xFinal = matriuBytes.GetLongLength((int)DimensionMatriz.X); y < yFinal; y++)
+                        for (long x = 0; x < xFinal; x++)
                         {
                             *ptBytesBmp = matriuBytes[x, y];
                             ptBytesBmp++;
@@ -316,13 +316,13 @@ namespace Gabriel.Cat.S.Extension
         }
 
 
-        public static Bitmap Clone(this Bitmap bmp, PixelFormat format)
+        public static Bitmap Clon(this Bitmap bmp, PixelFormat format=PixelFormat.Format32bppArgb)
         {
             return bmp.Clone(bmp.GetRectangle(), format);
         }
-        public static Rectangle GetRectangle(this Bitmap bmp)
+        public static Rectangle GetRectangle(this Bitmap bmp,Point location=default)
         {
-            return new Rectangle(new Point(), bmp.Size);
+            return new Rectangle(location, bmp.Size);
         }
         #endregion
 
@@ -388,48 +388,7 @@ namespace Gabriel.Cat.S.Extension
                 })));
             }
         }
-        public static void MezclaPixel(this Bitmap bmp, Color aEnontrar, Color aDefinir)
-        {
-            bmp.MezclaPixel(new KeyValuePair<Color, Color>[] { new KeyValuePair<Color, Color>(aEnontrar, aDefinir) });
-        }
-        public static void MezclaPixel(this Bitmap bmp, IList<KeyValuePair<Color, Color>> colorsKeyValue)
-        {
-            MetodoColor metodo = (colorValue, arrayKey) =>
-            {
-                const int TOTALBYTESCOLOR = 4;
-                byte[] colorMezclado = null;
-                int aux;
-                if (colorValue != null && arrayKey != null)
-                {
-                    unsafe
-                    {
-                        colorMezclado = new byte[TOTALBYTESCOLOR];
-                        fixed (byte* ptrColorMezclado = colorMezclado, ptrArrayKey = arrayKey)
-                        {
-                            byte* ptColorMezclado = ptrColorMezclado, ptArrayKey = ptrArrayKey;
-                            for (int i = 0; i < TOTALBYTESCOLOR; i++)
-                            {
 
-                                aux = colorValue[i] + *ptArrayKey;
-                                aux /= 2;
-                                *ptColorMezclado = (byte)aux;
-                                //if (aux[i] > 255) aux[i] = 255;
-                                ptColorMezclado++;
-                                ptArrayKey++;
-
-                            }
-                        }
-                    }
-
-                }
-                /*   else if (colorValue != null)
-                       colorMezclado = colorValue;
-                   else
-                       colorMezclado =Color.FromArgb(Serializar.ToInt( arrayKey));*/
-                return colorMezclado;
-            };
-            ICambiaPixel(bmp, colorsKeyValue, metodo);
-        }
         static void ICambiaPixel(Bitmap bmp, IList<KeyValuePair<Color, Color>> colorsKeyValue, MetodoColor metodo)
         {
             const byte AOPACA = 0xFF;

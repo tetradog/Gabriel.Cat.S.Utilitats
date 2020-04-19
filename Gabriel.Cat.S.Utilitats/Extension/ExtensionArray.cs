@@ -8,23 +8,19 @@ namespace Gabriel.Cat.S.Extension
     {
         public static void SetValue(this Array array, int indexTotal, object objValue)
         {
-
             array.SetValue(array.GetDimensiones(), indexTotal, objValue);
         }
         public static void SetValue(this Array array, int[] dimensiones, int indexTotal, object objValue)
         {
-            //no funciona...
-            array.SetValue(objValue, array.GetIndex(dimensiones, indexTotal));
+            array.SetValue(objValue, GetIndex(dimensiones, indexTotal));
         }
         public static object GetValue(this Array array, int indexTotal)
         {
-
             return array.GetValue(array.GetDimensiones(), indexTotal);
         }
         public static object GetValue(this Array array, int[] dimensiones, int indexTotal)
         {
-            //funciona
-            return array.GetValue(array.GetIndex(dimensiones, indexTotal));
+            return array.GetValue(GetIndex(dimensiones, indexTotal));
         }
 
         public static int[] GetDimensiones(this Array array)
@@ -36,10 +32,10 @@ namespace Gabriel.Cat.S.Extension
         }
         public static int[] GetIndex(this Array array, int indexTotal)
         {
-            return GetIndex(array, array.GetDimensiones(), indexTotal);
+            return GetIndex( array.GetDimensiones(), indexTotal);
         }
 
-        public static int[] GetIndex(this Array array, int[] dimensiones, int indexTotal)
+        public static int[] GetIndex( int[] dimensiones, int indexTotal)
         {//por probar
             int[] index = new int[dimensiones.Length];
             int aux;
