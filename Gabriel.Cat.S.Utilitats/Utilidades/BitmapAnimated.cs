@@ -116,6 +116,8 @@ namespace Gabriel.Cat.S.Utilitats
         }
         private void ChangeFrame(object sender, ElapsedEventArgs e)
         {
+            int intervalo = frames[ActualFrameIndex].Value;
+
             if (AnimarCiclicamente || numeroDeRepeticiones < NumeroDeRepeticionesFijas)
             {
                 if (numeroDeRepeticiones==1&&!SaltarFramePrimerCiclo||ActualFrameIndex != FrameASaltarAnimacionCiclica)
@@ -131,7 +133,7 @@ namespace Gabriel.Cat.S.Utilitats
             if (ActualFrameIndex == 0)
                 numeroDeRepeticiones++;
 
-            timer.Interval = frames[ActualFrameIndex].Value;
+            timer.Interval = intervalo <= 0 ? 100 : intervalo; 
         }
         public void Start()
         {
