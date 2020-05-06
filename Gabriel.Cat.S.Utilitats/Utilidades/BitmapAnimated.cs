@@ -90,10 +90,14 @@ namespace Gabriel.Cat.S.Utilitats
         public KeyValuePair<Bitmap, int> this[int index]
         {
             get { return frames[index]; }
+            set
+            {
+                frames[index] = value;
+            }
         }
         public void AddFrame(Bitmap bmp, int delay = 500, int posicion = -1)
         {
-            if (bmp == null || delay < 0)
+            if (bmp == default || delay <= 0)
                 throw new ArgumentException();
 
             KeyValuePair<Bitmap, int> frame = new KeyValuePair<Bitmap, int>(bmp, delay);
@@ -133,7 +137,8 @@ namespace Gabriel.Cat.S.Utilitats
         {
             if (FrameChanged == default)
                 throw new Exception("FrameChanged doesn't asigned ");
-            timer.Interval = frames[ActualFrameIndex].Value;
+            int intervalo = frames[ActualFrameIndex].Value;
+            timer.Interval = intervalo<=0?100:intervalo;
             timer.Start();
 
         }
