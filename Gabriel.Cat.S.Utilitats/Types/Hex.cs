@@ -237,7 +237,7 @@ namespace Gabriel.Cat.S.Utilitats
         public static implicit operator Hex(string numero)
         {
             const int BASEHEX = 16;
-            return (Hex)Convert.ToUInt64(numero, BASEHEX);
+            return (Hex)Convert.ToUInt64(numero.Trim(), BASEHEX);
         }
         public static implicit operator Hex(int numero)
         {
