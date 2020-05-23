@@ -54,5 +54,18 @@ namespace Gabriel.Cat.S.Extension
             index[0] = aux;
             return index;
         }
+
+        public static T[] GetFila<T>(this T[,] matriz, int fila)
+        {
+            T[] tFila = new T[matriz.GetDimensiones()[0]];
+            for (int i = 0; i < tFila.Length; i++)
+                tFila[i] = matriz[i, fila];
+            return tFila;
+        }
+        public static void SetFila<T>(this T[,] matriz, int fila, T[] tFila)
+        {
+            for (int i = 0; i < tFila.Length; i++)
+                matriz[i, fila] = tFila[i];
+        }
     }
 }
