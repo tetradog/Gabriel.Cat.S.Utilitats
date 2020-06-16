@@ -158,7 +158,7 @@ namespace Gabriel.Cat.S.Extension
             return new MemoryStream(stream.GetAllBytes());
         }
 
-        public static void TrataBytes(this Bitmap bmp, MetodoTratarByteArray metodo)
+        public static void TrataBytes(this Bitmap bmp, MetodoTratarUnmanagedTypeArray<byte> metodo)
         {
             BitmapData bmpData = bmp.LockBits();
             // Get the address of the first line.
@@ -181,14 +181,14 @@ namespace Gabriel.Cat.S.Extension
             bmp.UnlockBits(bmpData);
 
         }
-        public static unsafe void TrataBytes(this Bitmap bmp, MetodoTratarBytePointer metodo)
+        public static unsafe void TrataBytes(this Bitmap bmp, MetodoTratarUnmanagedTypePointer<byte> metodo)
         {
 
             BitmapData bmpData = bmp.LockBits();
             // Get the address of the first line.
 
             IntPtr ptr = bmpData.Scan0;
-            if (metodo != null)
+            if (!Equals(metodo,default))
             {
                 metodo((byte*)ptr.ToPointer());//se modifican los bytes :D
             }
@@ -256,7 +256,7 @@ namespace Gabriel.Cat.S.Extension
             Color[,] matriz = new Color[bmp.Width, bmp.Height];
             unsafe
             {
-                bmp.TrataBytes(((MetodoTratarBytePointer)((ptrBytesBmp) =>
+                bmp.TrataBytes(((MetodoTratarUnmanagedTypePointer<byte>)((ptrBytesBmp) =>
                 {
 
                     Gabriel.Cat.S.Utilitats.V2.Color* ptrColoresBmp = (Gabriel.Cat.S.Utilitats.V2.Color*)ptrBytesBmp;
@@ -277,7 +277,7 @@ namespace Gabriel.Cat.S.Extension
             Bitmap bmp = new Bitmap(array.GetLength(DimensionMatriz.X), array.GetLength(DimensionMatriz.Y));
             unsafe
             {
-                bmp.TrataBytes(((MetodoTratarBytePointer)((ptrBytesBmp) =>
+                bmp.TrataBytes(((MetodoTratarUnmanagedTypePointer<byte>)((ptrBytesBmp) =>
                 {
               
                     Gabriel.Cat.S.Utilitats.V2.Color* ptrColoresBmp = (Gabriel.Cat.S.Utilitats.V2.Color*)ptrBytesBmp;
@@ -303,7 +303,7 @@ namespace Gabriel.Cat.S.Extension
                 throw new Exception("La matriz no tiene las medidas de la imagen");
             unsafe
             {
-                bmp.TrataBytes(((MetodoTratarBytePointer)((ptrBytesBmp) =>
+                bmp.TrataBytes(((MetodoTratarUnmanagedTypePointer<byte>)((ptrBytesBmp) =>
                 {
                     byte* ptBytesBmp = ptrBytesBmp;
                     for (long y = 0, yFinal = matriuBytes.GetLongLength((int)DimensionMatriz.Y), xFinal = matriuBytes.GetLongLength((int)DimensionMatriz.X); y < yFinal; y++)
@@ -351,7 +351,7 @@ namespace Gabriel.Cat.S.Extension
           
             unsafe
             {
-                bmp.TrataBytes(((MetodoTratarBytePointer)((ptrbyteArray) =>
+                bmp.TrataBytes(((MetodoTratarUnmanagedTypePointer<byte>)((ptrbyteArray) =>
                 {
                     byte* ptByteArray = ptrbyteArray;
                     for (int i = 0, iFinal = bmp.LengthBytes(); i < iFinal; i += incremento)
@@ -403,7 +403,7 @@ namespace Gabriel.Cat.S.Extension
             int incremento = bmp.IsArgb() ? 4 : 3;
             unsafe
             {
-                bmp.TrataBytes(((MetodoTratarBytePointer)((ptrBytesBmp) =>
+                bmp.TrataBytes(((MetodoTratarUnmanagedTypePointer<byte>)((ptrBytesBmp) =>
                 {
                     byte* ptColorLeido, ptColorObtenido;
                     byte* ptBytesBmp = ptrBytesBmp;

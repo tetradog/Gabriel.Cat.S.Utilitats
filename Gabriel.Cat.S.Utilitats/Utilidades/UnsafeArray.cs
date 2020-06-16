@@ -4,13 +4,13 @@ using System.Text;
 
 namespace Gabriel.Cat.S.Utilitats
 {
-    public delegate void MetodoUnsafeArray(UnsafeArray unsafeArray);
-    public unsafe class UnsafeArray 
+    public delegate void MetodoUnsafeArray<T>(UnsafeArray<T> unsafeArray) where T:unmanaged;
+    public unsafe class UnsafeArray <T> where T:unmanaged
     {
-        public byte* PtrArray;
-        public readonly byte* PtrArrayInicial;
+        public T* PtrArray;
+        public readonly T* PtrArrayInicial;
         public readonly long Length;
-        public UnsafeArray(byte* ptrArrayIncial, long length)
+        public UnsafeArray(T* ptrArrayIncial, long length)
         {
             Length = length;
             PtrArrayInicial = ptrArrayIncial;
@@ -31,31 +31,31 @@ namespace Gabriel.Cat.S.Utilitats
                 PtrArray = PtrArrayInicial + Posicion;
             }
         }
-        public byte this[long posicion]
+        public T this[long posicion]
         {
             get { return PtrArrayInicial[posicion]; }
             set { PtrArrayInicial[posicion] = value; }
         }
-        public byte* PtrArrayFin
+        public T* PtrArrayFin
         {
             get { return PtrArrayInicial + Length - 1; }
         }
-        public static unsafe explicit operator byte* (UnsafeArray unsafeArray)
+        public static unsafe explicit operator T* (UnsafeArray<T> unsafeArray)
         {
             return unsafeArray.PtrArray;
         }
-        public static void Usar(byte[] array, MetodoUnsafeArray metodo)
+        public static void Usar<T>(T[] array, MetodoUnsafeArray<T> metodo) where T:unmanaged
         {
             if (array == default || metodo == default)
                 throw new ArgumentNullException();
             Exception exAux = default;
             unsafe
             {
-                fixed (byte* ptrArray = array)
+                fixed (T* ptrArray = array)
                 {
                     try
                     {
-                        metodo(new UnsafeArray(ptrArray, array.Length));
+                        metodo(new UnsafeArray<T>(ptrArray, array.Length));
                     }
                     catch (Exception ex)
                     {

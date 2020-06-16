@@ -37,35 +37,6 @@ namespace Gabriel.Cat.S.Extension
             return bytes;
 
         }
-        public static bool[] SubArray(this bool[] array,  int length) {
-            return SubArray(array, 0, length);
-        }
-        public static bool[] SubArray(this bool[] array, int startIndex, int length)
-        {
-            if (startIndex < 0 || startIndex + length > array.Length)
-                throw new ArgumentOutOfRangeException();
-            bool[] subArray = new bool[length];
-            unsafe
-            {
-                bool* ptrArray, ptrSubArray;
-                fixed (bool* ptArray = array)
-                {
-                    fixed (bool* ptSubArray = subArray)
-                    {
-                        ptrArray = ptArray;
-                        ptrSubArray = ptSubArray;
-                        ptrArray += startIndex;//asigno el inicio aqui :D
-                        for (int j = 0, f = length; j < length; j++)
-                        {
-                            *ptrSubArray = *ptrArray;
-                            ptrArray++;
-                            ptrSubArray++;
-                        }
-                    }
-                }
-            }
-            return subArray;
-        }
         public static byte ToByte(this bool[] bits)
         {
             byte byteBuild = new byte();
