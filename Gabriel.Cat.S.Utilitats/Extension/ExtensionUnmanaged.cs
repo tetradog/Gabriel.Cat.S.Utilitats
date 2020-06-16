@@ -239,11 +239,11 @@ namespace Gabriel.Cat.S.Extension
 
         }
 
-        public static int IndexByte<T>(this T[] array, T byteAEcontrar) where T : unmanaged
+        public static int IndexOfT<T>(this T[] array, T byteAEcontrar) where T : unmanaged
         {
-            return IndexByte(array, 0, byteAEcontrar);
+            return IndexOfT(array, 0, byteAEcontrar);
         }
-        public static int IndexByte<T>(this T[] array, int offsetInicio, T byteAEcontrar) where T : unmanaged
+        public static int IndexOfT<T>(this T[] array, int offsetInicio, T byteAEcontrar) where T : unmanaged
         {
             const int NOENCONTRADO = -1;
             int indexOf = NOENCONTRADO;
