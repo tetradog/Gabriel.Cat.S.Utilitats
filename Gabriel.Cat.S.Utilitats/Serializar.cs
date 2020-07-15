@@ -48,21 +48,26 @@ namespace Gabriel.Cat.S.Utilitats
         public static readonly string[] AsseblyQualifiedName = new String[] {
             StringAssemblyName,
             BitmapAssemblyName,
+
             NullAssemblyName,
             ByteAssemblyName,
             BooleanAssemblyName,
+
             ShortAssemblyName,
             UShortAssemblyName,
-            UIntAssemblyName,
             IntAssemblyName,
+            UIntAssemblyName,
+
             LongAssemblyName,
             ULongAssemblyName,
             DoubleAssemblyName,
             FloatAssemblyName,
+
             CharAssemblyName,
             DateTimeAssemblyName,
             PointAssemblyName,
             PointZAssemblyName,
+
             ColorAssemblyName,
             TimeSpanAssemblyName,
             SizeAssemblyName,
@@ -79,18 +84,22 @@ namespace Gabriel.Cat.S.Utilitats
             Null,
             Byte,
             Bool,
+
             Short,
             UShort,
             Int,
             UInt,
+
             Long,
             ULong,
             Double,
             Float,
+
             Char,
             DateTime,
             Point,
             PointZ,
+
             Color,
             TimeSpan,
             Size,
@@ -114,7 +123,7 @@ namespace Gabriel.Cat.S.Utilitats
         /// <returns></returns>
         public static TiposAceptados GetType(object obj)
         {
-            return obj != null ? AssemblyToEnumTipoAceptado(obj.GetType().AssemblyQualifiedName) : TiposAceptados.Null;
+            return !Equals(obj, null) ? AssemblyToEnumTipoAceptado(obj.GetType().AssemblyQualifiedName) : TiposAceptados.Null;
         }
         public static TiposAceptados AssemblyToEnumTipoAceptado(string assemblyName)
         {
@@ -224,7 +233,7 @@ namespace Gabriel.Cat.S.Utilitats
                         break;
                 }
             }
-            catch
+            catch(Exception ex)
             {
                 throw new Exception("El objeto no es del tipo indicado como parametro");
             }
