@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "TGkGCGEufm5CUZHvyqsxECdXUdNAWskdONDe50zjWOm0fyYd60qCsPvluv9/VBjiSoyoolczgJJMd7RGGyTGfA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\pc\\Documents\\GitHub\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\pc\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\pc\\.nuget\\packages\\system.drawing.common\\4.7.0\\system.drawing.common.4.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}

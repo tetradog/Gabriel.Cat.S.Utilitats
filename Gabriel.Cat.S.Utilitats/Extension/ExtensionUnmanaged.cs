@@ -9,13 +9,17 @@ namespace Gabriel.Cat.S.Extension
     public unsafe delegate void MetodoTratarUnmanagedTypePointer<T>(T* prtByteArray) where T : unmanaged;
     public static class ExtensionUnmanaged
     {
-        public static T[] AddArray<T>(this T[] array, params T[][] arraysToAdd) where T : unmanaged
+        public static T[] AddArray<T>(this T[] array, params T[][] arraisToAdd) where T : unmanaged
+        {
+            return AddArray<T>(array, (IList<T[]>)arraisToAdd);
+        }
+        public static T[] AddArray<T>(this T[] array, IList<T[]> arraysToAdd) where T : unmanaged
         {
 
             T[] arrayFinal;
             int lenght = array.Length;
-            for (int i = 0; i < arraysToAdd.Length; i++)
-                if (arraysToAdd[i] != null)
+            for (int i = 0; i < arraysToAdd.Count; i++)
+                if (!Equals(arraysToAdd[i], default))
                     lenght += arraysToAdd[i].Length;
             arrayFinal = new T[lenght];
             unsafe
@@ -37,8 +41,8 @@ namespace Gabriel.Cat.S.Extension
                             ptrBytes++;
                         }
                     }
-                    for (int j = 0; j < arraysToAdd.Length; j++)
-                        if (arraysToAdd[j] != null)
+                    for (int j = 0; j < arraysToAdd.Count; j++)
+                        if (!Equals(arraysToAdd[j], default))
                             fixed (T* ptBytes = arraysToAdd[j])
                             {
                                 ptrBytes = ptBytes;
@@ -54,7 +58,6 @@ namespace Gabriel.Cat.S.Extension
             }
             return arrayFinal;
         }
-
         public static T[] SubArray<T>(this T[] array, int lenght) where T : unmanaged
         {
             return SubArray(array, 0, lenght);
@@ -65,20 +68,19 @@ namespace Gabriel.Cat.S.Extension
                 throw new IndexOutOfRangeException();
 
             T[] bytes = new T[lenght];
+            int aux=inicio+ lenght;
+            int total=aux>array.Length? lenght - (aux-array.Length): lenght;
             unsafe
             {
                 T* ptrArray;
                 T* ptrBytes;
-                fixed (T* ptArray = array)
-                fixed (T* ptBytes = bytes)
+                fixed (T* ptArray = array, ptBytes = bytes)
                 {
                     ptrArray = ptArray + inicio;
                     ptrBytes = ptBytes;
-                    for (int i = 0; i < lenght; i++)
+                    for (int i = 0; i < total; i++,ptrArray++,ptrBytes++)
                     {
                         *ptrBytes = *ptrArray;
-                        ptrArray++;
-                        ptrBytes++;
                     }
                 }
             }
@@ -96,7 +98,7 @@ namespace Gabriel.Cat.S.Extension
         public static int SearchArray<T>(this T[] datos, int offsetInicio, int offsetFin, T[] arrayAEncontrar) where T : unmanaged
         {
 
-            if (arrayAEncontrar == null)
+            if (Equals(arrayAEncontrar, default))
                 throw new ArgumentNullException("arrayAEncontrar");
             if (offsetInicio < 0 || offsetInicio + arrayAEncontrar.Length > datos.Length)
                 throw new ArgumentOutOfRangeException();
@@ -152,11 +154,11 @@ namespace Gabriel.Cat.S.Extension
             return direccionBytes;
         }
 
-        public static void UnsafeMethod<T>(this T[] array, MetodoUnsafeArray<T> metodo) where T : unmanaged
+        public static void UnsafeMethod<T>(this T[] array, MetodoUnsafeArray<T> mathod) where T : unmanaged
         {
-            if (metodo == null)
+            if (Equals(mathod,default))
                 throw new ArgumentNullException("metodo");
-            UnsafeArray<T>.Usar(array, metodo);
+            UnsafeArray<T>.Usar(array, mathod);
         }
 
         public static List<T[]> Split<T>(this T[] array, T byteSplit) where T : unmanaged
@@ -165,7 +167,9 @@ namespace Gabriel.Cat.S.Extension
         }
         public static List<T[]> Split<T>(this T[] array, T[] bytesSplit) where T : unmanaged
         {
-            if (bytesSplit == null) throw new ArgumentNullException();
+            if (Equals(bytesSplit,default))
+             throw new ArgumentNullException();
+
             List<T[]> bytesSplited = new List<T[]>();
             int posicionArray;
             int posicionArrayEncontrada;
@@ -204,7 +208,7 @@ namespace Gabriel.Cat.S.Extension
         }
         public static bool ArrayEqual<T>(this T[] arrayLeft, T[] arrayRight, int inicioArrayLeft = 0, int inicioArrayRight = 0, int length = -1) where T : unmanaged
         {
-            bool equals = arrayRight != null;
+            bool equals = !Equals(arrayRight,default);
 
 
             if (equals)

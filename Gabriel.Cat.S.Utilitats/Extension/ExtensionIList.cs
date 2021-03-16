@@ -7,6 +7,7 @@ using System.Text;
 namespace Gabriel.Cat.S.Extension
 {
     public delegate bool ComprovaEventHandler<Tvalue>(Tvalue valorAComprovar);
+    public delegate TOut MetodoConvertir<TIn, TOut>(TIn input);
     public static class ExtensionIList
     {
         #region PuestoAPrueba 
@@ -413,6 +414,14 @@ namespace Gabriel.Cat.S.Extension
             }
             for (int i = 0; i < lstDesordenada.Length; i++)
                 lst.Add(lstDesordenada[i]);
+        }
+
+        public static TOut[] Convert<TIn,TOut>(this IList<TIn> ins,MetodoConvertir<TIn,TOut> method)
+        {
+            TOut[] outs = new TOut[ins.Count];
+            for (int i = 0; i < outs.Length; i++)
+                outs[i] = method(ins[i]);
+            return outs;
         }
     }
 }

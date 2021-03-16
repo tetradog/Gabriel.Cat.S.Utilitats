@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Gabriel.Cat.S.Utilitats</id>
+    <version>1.1.5.2</version>
+    <authors>Gabriel.Cat.Developer</authors>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="file">LICENSE</license>
+    <licenseUrl>https://aka.ms/deprecateLicenseUrl</licenseUrl>
+    <projectUrl>https://github.com/tetradog/Gabriel.Cat.S.Utilitats</projectUrl>
+    <description>Package Description</description>
+    <copyright>GNU v3</copyright>
+    <repository type="GIT" url="https://github.com/tetradog/Gabriel.Cat.S.Utilitats" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Microsoft.CSharp" version="4.7.0" exclude="Build,Analyzers" />
+        <dependency id="System.Drawing.Common" version="4.7.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\Users\pc\Documents\GitHub\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\bin\Release\netstandard2.0\Gabriel.Cat.S.Utilitats.dll" target="lib\netstandard2.0\Gabriel.Cat.S.Utilitats.dll" />
+    <file src="C:\Users\pc\Documents\GitHub\Gabriel.Cat.S.Utilitats\LICENSE" target="LICENSE" />
+  </files>
+</package>

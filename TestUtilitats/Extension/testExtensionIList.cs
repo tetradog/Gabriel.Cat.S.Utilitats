@@ -135,5 +135,13 @@ namespace UnitTestProjectgUtilitats.Extension
             ints.Swap(0, 2);
  
         }
+        [TestMethod]
+        public void TestExtensionIListConvert()
+        {
+            byte[] input = { 0x1, 0x2, 0x3 };
+            int[] answer = { 1, 2, 3 };
+            int[] converted = ExtensionIList.Convert(input,(i) => (int)i);
+            Assert.IsTrue(answer.AreEquals(converted));
+        }
     }
 }
