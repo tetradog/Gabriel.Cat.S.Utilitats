@@ -1,0 +1,9 @@
+
+*.txt
+*.dll
+*.pdb
+*.nupkg
+*.nuspec
+*.cache
+*.cache
+*.json
