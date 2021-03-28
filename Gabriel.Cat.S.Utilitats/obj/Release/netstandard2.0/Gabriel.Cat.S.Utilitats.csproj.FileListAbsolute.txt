@@ -7,3 +7,12 @@ C:\Users\pc\Documents\GitHub\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\obj
 C:\Users\pc\Documents\GitHub\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\obj\Release\netstandard2.0\Gabriel.Cat.S.Utilitats.csproj.CoreCompileInputs.cache
 C:\Users\pc\Documents\GitHub\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\obj\Release\netstandard2.0\Gabriel.Cat.S.Utilitats.dll
 C:\Users\pc\Documents\GitHub\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\obj\Release\netstandard2.0\Gabriel.Cat.S.Utilitats.pdb
+C:\Users\tetra\Documents\GitHub\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\bin\Release\netstandard2.0\Gabriel.Cat.S.Utilitats.deps.json
+C:\Users\tetra\Documents\GitHub\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\bin\Release\netstandard2.0\Gabriel.Cat.S.Utilitats.dll
+C:\Users\tetra\Documents\GitHub\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\bin\Release\netstandard2.0\Gabriel.Cat.S.Utilitats.pdb
+C:\Users\tetra\Documents\GitHub\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\obj\Release\netstandard2.0\Gabriel.Cat.S.Utilitats.AssemblyInfoInputs.cache
+C:\Users\tetra\Documents\GitHub\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\obj\Release\netstandard2.0\Gabriel.Cat.S.Utilitats.AssemblyInfo.cs
+C:\Users\tetra\Documents\GitHub\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\obj\Release\netstandard2.0\Gabriel.Cat.S.Utilitats.csproj.CoreCompileInputs.cache
+C:\Users\tetra\Documents\GitHub\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\obj\Release\netstandard2.0\Gabriel.Cat.S.Utilitats.dll
+C:\Users\tetra\Documents\GitHub\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\obj\Release\netstandard2.0\Gabriel.Cat.S.Utilitats.pdb
+C:\Users\tetra\Documents\GitHub\Gabriel.Cat.S.Utilitats\Gabriel.Cat.S.Utilitats\obj\Release\netstandard2.0\Gabriel.Cat.S.Utilitats.csprojAssemblyReference.cache

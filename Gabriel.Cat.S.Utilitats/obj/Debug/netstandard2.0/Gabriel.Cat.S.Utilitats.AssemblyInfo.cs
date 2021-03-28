@@ -13,9 +13,9 @@ using System.Reflection;
 
 [assembly: System.Reflection.AssemblyCompanyAttribute("Gabriel.Cat.Developer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
-[assembly: System.Reflection.AssemblyCopyrightAttribute("GNU v3")]
+[assembly: System.Reflection.AssemblyCopyrightAttribute("Gabriel.Cat.Developer")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.4.4")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.1.5.2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.1.5.3")]
 [assembly: System.Reflection.AssemblyProductAttribute("Gabriel.Cat.S.Utilitats")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Gabriel.Cat.S.Utilitats")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.4.4")]

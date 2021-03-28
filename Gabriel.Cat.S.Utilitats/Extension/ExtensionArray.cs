@@ -36,7 +36,7 @@ namespace Gabriel.Cat.S.Extension
         }
 
         public static int[] GetIndex( int[] dimensiones, int indexTotal)
-        {//por probar...no funciona...
+        {//falta hacer un test con todas las posibilidades
 
             int totalDim;
             int[] index = new int[dimensiones.Length];

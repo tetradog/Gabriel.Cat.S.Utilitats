@@ -6,10 +6,10 @@
     <RepositoryUrl>https://github.com/tetradog/Gabriel.Cat.S.Utilitats</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
     <PackageLicenseUrl></PackageLicenseUrl>
-    <Copyright>GNU v3</Copyright>
+    <Copyright>Gabriel.Cat.Developer</Copyright>
     <Authors>Gabriel.Cat.Developer</Authors>
     <SignAssembly>false</SignAssembly>
-    <Version>1.1.5.2</Version>
+    <Version>1.1.5.4</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Company>Gabriel.Cat.Developer</Company>
