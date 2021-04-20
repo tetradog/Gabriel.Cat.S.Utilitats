@@ -1,14 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "wBBo4lswr9IeJkXsLJuSBHgiv2vhELqiisYS6+rjOJthcdOy7KGYeQ/YeKmgRHXDgjbO3SWbZsabL73jTOI0Iw==",
+  "dgSpecHash": "iMvGNvFmDmkZsJqtkh7SXVCMyl/pSc/NHzRzrJthJCExxxMTT6ifuZnUTPH9TgKuRuazf4kPocezX/h5OsECIg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\pc\\Documents\\GitHub\\Gabriel.Cat.S.Utilitats\\TestUtilitatsGrafico\\TestUtilitatsGrafico.csproj",
+  "projectFilePath": "C:\\Users\\tetra\\Documents\\GitHub\\Gabriel.Cat.S.Utilitats\\TestUtilitatsGrafico\\TestUtilitatsGrafico.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\pc\\.nuget\\packages\\gabriel.cat.s.wpf\\1.0.1-preview1.0.8\\gabriel.cat.s.wpf.1.0.1-preview1.0.8.nupkg.sha512",
-    "C:\\Users\\pc\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
-    "C:\\Users\\pc\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
-    "C:\\Users\\pc\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
-    "C:\\Users\\pc\\.nuget\\packages\\system.drawing.common\\4.7.0\\system.drawing.common.4.7.0.nupkg.sha512"
+    "C:\\Users\\tetra\\.nuget\\packages\\gabriel.cat.s.wpf\\1.0.1-preview1.0.8\\gabriel.cat.s.wpf.1.0.1-preview1.0.8.nupkg.sha512",
+    "C:\\Users\\tetra\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\tetra\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+    "C:\\Users\\tetra\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "C:\\Users\\tetra\\.nuget\\packages\\system.drawing.common\\4.7.0\\system.drawing.common.4.7.0.nupkg.sha512",
+    "C:\\Users\\tetra\\.nuget\\packages\\gabriel.cat.s.utilitats\\1.1.5.4\\gabriel.cat.s.utilitats.1.1.5.4.nupkg.sha512"
   ],
   "logs": []
 }

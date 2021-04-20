@@ -2053,7 +2053,7 @@
           "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
         }
       },
-      "Gabriel.Cat.S.Utilitats/1.1.5.2": {
+      "Gabriel.Cat.S.Utilitats/1.1.5.4": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
@@ -6982,7 +6982,7 @@
         "system.xml.xpath.xmldocument.nuspec"
       ]
     },
-    "Gabriel.Cat.S.Utilitats/1.1.5.2": {
+    "Gabriel.Cat.S.Utilitats/1.1.5.4": {
       "type": "project",
       "path": "../Gabriel.Cat.S.Utilitats/Gabriel.Cat.S.Utilitats.csproj",
       "msbuildProject": "../Gabriel.Cat.S.Utilitats/Gabriel.Cat.S.Utilitats.csproj"
@@ -6990,7 +6990,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "Gabriel.Cat.S.Utilitats >= 1.1.5.2",
+      "Gabriel.Cat.S.Utilitats >= 1.1.5.4",
       "MSTest.TestAdapter >= 2.0.0",
       "MSTest.TestFramework >= 2.0.0",
       "Microsoft.NET.Test.Sdk >= 16.2.0",
@@ -6998,20 +6998,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\pc\\.nuget\\packages\\": {}
+    "C:\\Users\\tetra\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pc\\Documents\\GitHub\\Gabriel.Cat.S.Utilitats\\TestUtilitats\\TestUtilitats.csproj",
+      "projectUniqueName": "C:\\Users\\tetra\\Documents\\GitHub\\Gabriel.Cat.S.Utilitats\\TestUtilitats\\TestUtilitats.csproj",
       "projectName": "TestUtilitats",
-      "projectPath": "C:\\Users\\pc\\Documents\\GitHub\\Gabriel.Cat.S.Utilitats\\TestUtilitats\\TestUtilitats.csproj",
-      "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\pc\\Documents\\GitHub\\Gabriel.Cat.S.Utilitats\\TestUtilitats\\obj\\",
+      "projectPath": "C:\\Users\\tetra\\Documents\\GitHub\\Gabriel.Cat.S.Utilitats\\TestUtilitats\\TestUtilitats.csproj",
+      "packagesPath": "C:\\Users\\tetra\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\tetra\\Documents\\GitHub\\Gabriel.Cat.S.Utilitats\\TestUtilitats\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
-        "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\tetra\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -7022,9 +7027,10 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\pc\\Documents\\GitHub\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats.csproj": {
-              "projectPath": "C:\\Users\\pc\\Documents\\GitHub\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats.csproj"
+            "C:\\Users\\tetra\\Documents\\GitHub\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats.csproj": {
+              "projectPath": "C:\\Users\\tetra\\Documents\\GitHub\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats\\Gabriel.Cat.S.Utilitats.csproj"
             }
           }
         }
@@ -7037,6 +7043,7 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
+        "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "MSTest.TestAdapter": {
             "target": "Package",
@@ -7070,7 +7077,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

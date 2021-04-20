@@ -95,14 +95,14 @@ namespace Gabriel.Cat.S.Extension
         }
         public static Process Abrir(this FileInfo file)
         {
-            //source https://github.com/dotnet/wpf/issues/2566
+            //https://stackoverflow.com/questions/11365984/c-sharp-open-file-with-default-application-and-parameters
             return Process.Start(new ProcessStartInfo
             {
-                FileName = "cmd",
-                WindowStyle = ProcessWindowStyle.Hidden,
+                FileName = "explorer",
+                WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
                 UseShellExecute = false,
                 CreateNoWindow = true,
-                Arguments = $"/c start {file.FullName}"
+                Arguments = $"\"{file.FullName}\""
             });
 
         }
