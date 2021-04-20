@@ -315,14 +315,14 @@ namespace Gabriel.Cat.S.Extension
         }
         /*Lo demas ya esta revisado :)  */
         public static Process Abrir(this DirectoryInfo dir)
-        {//source https://github.com/dotnet/wpf/issues/2566
+        {//source igual que Abrir de FileInfo
             return Process.Start(new ProcessStartInfo
             {
-                FileName = "cmd",
+                FileName = "explorer",
                 WindowStyle = ProcessWindowStyle.Hidden,
                 UseShellExecute = false,
                 CreateNoWindow = true,
-                Arguments = $"/c start {dir.FullName + Path.DirectorySeparatorChar}"
+                Arguments = $"\"{dir.FullName}\""
             });
             //sino pongo la separacion me puede abrir un archivo con el nombre de la carpeta...
         }
