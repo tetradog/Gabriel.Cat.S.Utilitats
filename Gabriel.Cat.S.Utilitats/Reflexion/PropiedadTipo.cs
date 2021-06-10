@@ -11,10 +11,10 @@ namespace Gabriel.Cat.S.Utilitats
     {
         AtributoOrden orden;
         string nombre;
-        IList<System.Attribute> atributos;
+        IList<Attribute> atributos;
         Type tipo;
         UsoPropiedad uso;
-        public PropiedadTipo(string nombre, Type tipo, IList<System.Attribute> atributos, UsoPropiedad uso)
+        public PropiedadTipo(string nombre, Type tipo, IList<Attribute> atributos, UsoPropiedad uso)
         {
             this.nombre = nombre;
             this.atributos = atributos;
@@ -62,7 +62,7 @@ namespace Gabriel.Cat.S.Utilitats
         {
             get
             {
-                if(orden==null)
+                if(Equals(orden,default(AtributoOrden)))
                 {
                     orden = Atributos.Filtra((atributo) => atributo is AtributoOrden).FirstOrDefault() as AtributoOrden;
                 }
@@ -75,9 +75,9 @@ namespace Gabriel.Cat.S.Utilitats
             int compareTo;
             if (other != default)
             {
-                if (Orden == default && other.Orden != default)
+                if (Equals(orden,default(AtributoOrden)) && !Equals(other.Orden, default(AtributoOrden)))
                     compareTo = (int)Gabriel.Cat.S.Utilitats.CompareTo.Inferior;
-                else if (Orden != default && other.Orden == default)
+                else if (!Equals(Orden, default(AtributoOrden)) && Equals(other.Orden, default(AtributoOrden)))
                     compareTo = (int)Gabriel.Cat.S.Utilitats.CompareTo.Superior;
                 else compareTo = Orden.CompareTo(other.Orden);
             }
@@ -97,7 +97,7 @@ namespace Gabriel.Cat.S.Utilitats
         public int CompareTo(AtributoOrden other)
         {
             int compareTo;
-            if (other != null)
+            if (!Equals(other, default(AtributoOrden)))
                 compareTo = Orden.CompareTo(other.Orden);
             else compareTo = (int)Gabriel.Cat.S.Utilitats.CompareTo.Inferior;
             return compareTo;

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "XLPXsv4UxtZiVxFzqiIq+p4tGox/w2eaLmnwij9zu7KZ/2I6RBZ1+jDhySly56jwRFrcBHRQIWgU5AefyPTZCw==",
+  "dgSpecHash": "H4F44XaY19HjdtmhwiypgkiOsOJgO9YDlrykWVgPCLTe+1IR3BoZuX1eIy28tpuvUZtI7kojFClP4jf5WGxZHg==",
   "success": true,
   "projectFilePath": "C:\\Users\\tetra\\Documents\\GitHub\\Gabriel.Cat.S.Utilitats\\TestUtilitats\\TestUtilitats.csproj",
   "expectedPackageFiles": [
@@ -110,8 +110,7 @@
     "C:\\Users\\tetra\\.nuget\\packages\\system.xml.xmldocument\\4.0.1\\system.xml.xmldocument.4.0.1.nupkg.sha512",
     "C:\\Users\\tetra\\.nuget\\packages\\system.xml.xmlserializer\\4.0.11\\system.xml.xmlserializer.4.0.11.nupkg.sha512",
     "C:\\Users\\tetra\\.nuget\\packages\\system.xml.xpath\\4.0.1\\system.xml.xpath.4.0.1.nupkg.sha512",
-    "C:\\Users\\tetra\\.nuget\\packages\\system.xml.xpath.xmldocument\\4.0.1\\system.xml.xpath.xmldocument.4.0.1.nupkg.sha512",
-    "C:\\Users\\tetra\\.nuget\\packages\\gabriel.cat.s.utilitats\\1.1.5.4\\gabriel.cat.s.utilitats.1.1.5.4.nupkg.sha512"
+    "C:\\Users\\tetra\\.nuget\\packages\\system.xml.xpath.xmldocument\\4.0.1\\system.xml.xpath.xmldocument.4.0.1.nupkg.sha512"
   ],
   "logs": []
 }

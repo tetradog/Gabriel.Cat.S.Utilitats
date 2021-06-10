@@ -22,11 +22,11 @@ namespace Gabriel.Cat.S.Extension
         }
         public static bool IsNullableType(this Type type)
         {
-            return type.IsClass || type.IsInterface || type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+            return type.IsClass || type.IsInterface || type.IsGenericType && Equals(type.GetGenericTypeDefinition(), typeof(Nullable<>));
         }
         public static bool IsStruct(this Type type)
         { return !type.IsNullableType(); }
-        public static bool ImplementInterficie(this Type type, Type interficieType)
+        public static bool ImplementInterficie(this Type type,Type interficieType)
         {
             if (interficieType == null)
                 throw new ArgumentNullException();
@@ -37,7 +37,7 @@ namespace Gabriel.Cat.S.Extension
             Type[] interficiesTipo = type.GetInterfaces();
 
             for (int i = 0; i < interficiesTipo.Length && !implemented; i++)
-                implemented = Equals(interficiesTipo[i], interficieType);
+                implemented = Equals(interficiesTipo[i].IsGenericType ? interficiesTipo[i].GetGenericTypeDefinition() : interficiesTipo[i], interficieType);
 
 
             return implemented;

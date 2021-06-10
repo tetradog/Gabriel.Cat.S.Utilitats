@@ -76,7 +76,7 @@
           }
         }
       },
-      "Gabriel.Cat.S.Utilitats/1.1.5.4": {
+      "Gabriel.Cat.S.Utilitats/1.1.5.5": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
@@ -260,7 +260,7 @@
         "version.txt"
       ]
     },
-    "Gabriel.Cat.S.Utilitats/1.1.5.4": {
+    "Gabriel.Cat.S.Utilitats/1.1.5.5": {
       "type": "project",
       "path": "../Gabriel.Cat.S.Utilitats/Gabriel.Cat.S.Utilitats.csproj",
       "msbuildProject": "../Gabriel.Cat.S.Utilitats/Gabriel.Cat.S.Utilitats.csproj"
@@ -268,7 +268,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "Gabriel.Cat.S.Utilitats >= 1.1.5.4",
+      "Gabriel.Cat.S.Utilitats >= 1.1.5.5",
       "Gabriel.Cat.S.Wpf >= 1.0.1-preview1.0.8"
     ]
   },
@@ -343,7 +343,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.300\\RuntimeIdentifierGraph.json"
       }
     }
   }

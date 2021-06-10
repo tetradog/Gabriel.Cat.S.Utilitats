@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "iMvGNvFmDmkZsJqtkh7SXVCMyl/pSc/NHzRzrJthJCExxxMTT6ifuZnUTPH9TgKuRuazf4kPocezX/h5OsECIg==",
+  "dgSpecHash": "BRCsH+8npCOCH9T7RvA7cSF82PSAtzWgh8F4vRsQb9vZtJ5JXY9aTbx6pdR5M7BoKrFxYCvAh1KlYVru+I7EyQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\tetra\\Documents\\GitHub\\Gabriel.Cat.S.Utilitats\\TestUtilitatsGrafico\\TestUtilitatsGrafico.csproj",
   "expectedPackageFiles": [
@@ -8,8 +8,7 @@
     "C:\\Users\\tetra\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\tetra\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\tetra\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
-    "C:\\Users\\tetra\\.nuget\\packages\\system.drawing.common\\4.7.0\\system.drawing.common.4.7.0.nupkg.sha512",
-    "C:\\Users\\tetra\\.nuget\\packages\\gabriel.cat.s.utilitats\\1.1.5.4\\gabriel.cat.s.utilitats.1.1.5.4.nupkg.sha512"
+    "C:\\Users\\tetra\\.nuget\\packages\\system.drawing.common\\4.7.0\\system.drawing.common.4.7.0.nupkg.sha512"
   ],
   "logs": []
 }
