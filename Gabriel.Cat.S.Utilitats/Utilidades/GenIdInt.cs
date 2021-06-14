@@ -6,8 +6,8 @@ namespace Gabriel.Cat.S.Utilitats
 {
     public class GenIdInt : GenId<int>
     {
-
-        public GenIdInt() : this(0)
+        public static int Default = 0;
+        public GenIdInt() : this(Default)
         {
         }
         public GenIdInt(int inicio) : this(inicio, int.MaxValue)
@@ -15,6 +15,8 @@ namespace Gabriel.Cat.S.Utilitats
         }
         public GenIdInt(int inicio, int fin)
         {
+            if (inicio < fin)
+                throw new ArgumentOutOfRangeException(nameof(fin));
             Inicio = inicio;
             Fin = fin;
             MetodoSiguiente = ISiguiente;

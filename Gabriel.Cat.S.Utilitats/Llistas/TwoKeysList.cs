@@ -2,12 +2,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 
 namespace Gabriel.Cat.S.Utilitats
 {
-    public delegate ForContinue ForMethodTwoKeysList<Tkey1, Tkey2, Tvalue>(int index, Tkey1 key1, Tkey2 key2, Tvalue value);
+    public delegate ForContinue ForMethodTwoKeysList<Tkey1, Tkey2, Tvalue>(int index, [NotNull] Tkey1 key1, [NotNull] Tkey2 key2, Tvalue value);
     /// <summary>
     /// Description of TwoKeysList.
     /// </summary>
@@ -47,13 +48,7 @@ namespace Gabriel.Cat.S.Utilitats
             }
         }
 
-        public bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsReadOnly => false;
 
         public bool IsFixedSize => false;
 
@@ -65,7 +60,7 @@ namespace Gabriel.Cat.S.Utilitats
 
         public object SyncRoot =>null;
 
-        public object this[object key]
+        public object this[[NotNull] object key]
         {
             get
             {
@@ -115,7 +110,7 @@ namespace Gabriel.Cat.S.Utilitats
                 llista2[llistaClau1[key.Key1]] = value;
             }
         }
-        public TValue this[TKey1 key1]
+        public TValue this[[NotNull] TKey1 key1]
         {
             get { return llista1[key1]; }
             set
@@ -125,7 +120,7 @@ namespace Gabriel.Cat.S.Utilitats
                 llista2[llistaClau1[key1]] = value;
             }
         }
-        public TValue this[TKey2 key2]
+        public TValue this[[NotNull] TKey2 key2]
         {
             get { return llista2[key2]; }
             set
@@ -135,7 +130,7 @@ namespace Gabriel.Cat.S.Utilitats
             }
         }
 
-        public void Add(TKey1 key1, TKey2 key2, TValue value)
+        public void Add([NotNull] TKey1 key1, [NotNull] TKey2 key2, TValue value)
         {
             if (llista1.ContainsKey(key1))
                 throw new Exception("Esta duplicada la clave1 para el valor");
@@ -146,20 +141,22 @@ namespace Gabriel.Cat.S.Utilitats
             llistaClau1.Add(key1, key2);
             llistaClau2.Add(key2, key1);
         }
-        public bool Remove1(TKey1 key1)
-        {
-            TKey2 key2 = llistaClau1[key1];
+        public bool Remove1([NotNull] TKey1 key1)
+        { 
             bool removed;
+            TKey2 key2 = llistaClau1[key1];
+            
             llistaClau1.Remove(key1);
             llistaClau2.Remove(key2);
             removed = llista1.Remove(key1);
             llista2.Remove(key2);
             return removed;
         }
-        public bool Remove2(TKey2 key2)
-        {
-            TKey1 key1 = llistaClau2[key2];
+        public bool Remove2([NotNull] TKey2 key2)
+        {   
             bool removed;
+            TKey1 key1 = llistaClau2[key2];
+            
             llistaClau1.Remove(key1);
             llistaClau2.Remove(key2);
             removed = llista1.Remove(key1);
@@ -178,24 +175,24 @@ namespace Gabriel.Cat.S.Utilitats
         {
             return llistaClau1.GetValueAt(index);
         }
-        public TValue GetValueWithKey1(TKey1 key)
+        public TValue GetValueWithKey1([NotNull] TKey1 key)
         {
             return llista1[key];
         }
-        public TValue GetValueWithKey2(TKey2 key)
+        public TValue GetValueWithKey2([NotNull] TKey2 key)
         {
             return llista2[key];
         }
-        public TKey1 GetTkey1WhithTkey2(TKey2 key2)
+        public TKey1 GetTkey1WhithTkey2([NotNull] TKey2 key2)
         {
             return llistaClau2[key2];
         }
-        public TKey2 GetTkey2WhithTkey1(TKey1 key1)
+        public TKey2 GetTkey2WhithTkey1([NotNull] TKey1 key1)
         {
             return llistaClau1[key1];
         }
 
-        public void ChangeKey2(TKey2 key2Old, TKey2 key2New)
+        public void ChangeKey2([NotNull] TKey2 key2Old, [NotNull] TKey2 key2New)
         {
             if (key2Old.CompareTo(key2New) != 0)
             {
@@ -207,7 +204,7 @@ namespace Gabriel.Cat.S.Utilitats
                 Add(key1, key2New, value);
             }
         }
-        public void ChangeKey1(TKey1 key1Old, TKey1 key1New)
+        public void ChangeKey1([NotNull] TKey1 key1Old, [NotNull] TKey1 key1New)
         {
             if (key1Old.CompareTo(key1New) != 0)
             {
@@ -257,11 +254,11 @@ namespace Gabriel.Cat.S.Utilitats
                 twoKeys[i] = new TwoKeys<TKey1, TKey2>(keys[i].Key, keys[i].Value);
             return twoKeys;
         }
-        public bool ContainsKey1(TKey1 key1)
+        public bool ContainsKey1([NotNull] TKey1 key1)
         {
             return llistaClau1.ContainsKey(key1);
         }
-        public bool ContainsKey2(TKey2 key2)
+        public bool ContainsKey2([NotNull] TKey2 key2)
         {
             return llistaClau2.ContainsKey(key2);
         }
@@ -330,7 +327,7 @@ namespace Gabriel.Cat.S.Utilitats
 
 
 
-        public void For(ForMethodTwoKeysList<TKey1, TKey2, TValue> methodInnerFor, bool leftToRight = true)
+        public void For([NotNull] ForMethodTwoKeysList<TKey1, TKey2, TValue> methodInnerFor, bool leftToRight = true)
         {
             try
             {
@@ -347,11 +344,11 @@ namespace Gabriel.Cat.S.Utilitats
         {
             return IndexOf(item.Key.Key1);
         }
-        public int IndexOf(TKey1 key)
+        public int IndexOf([NotNull] TKey1 key)
         {
             return llistaClau1.IndexOfKey(key);
         }
-        public int IndexOf(TKey2 key)
+        public int IndexOf([NotNull] TKey2 key)
         {
             return IndexOf(llistaClau2[key]);
         }
@@ -371,12 +368,12 @@ namespace Gabriel.Cat.S.Utilitats
         }
 
 
-        void ICollection<KeyValuePair<TwoKeys<TKey1, TKey2>, TValue>>.CopyTo(KeyValuePair<TwoKeys<TKey1, TKey2>, TValue>[] array, int arrayIndex)
+        void ICollection<KeyValuePair<TwoKeys<TKey1, TKey2>, TValue>>.CopyTo([NotNull] KeyValuePair<TwoKeys<TKey1, TKey2>, TValue>[] array, int arrayIndex)
         {
             CopyTo(array, arrayIndex);
         }
 
-        public void Add(object key, object value)
+        public void Add([NotNull] object key, [NotNull] object value)
         {
             if (!(key is TwoKeys<TKey1, TKey2>))
                 throw new Exception(typeof(TwoKeys<TKey1, TKey2>).Name);
@@ -385,7 +382,7 @@ namespace Gabriel.Cat.S.Utilitats
             Add(new KeyValuePair<TwoKeys<TKey1, TKey2>, TValue>((TwoKeys<TKey1, TKey2>)key, (TValue)value));
         }
 
-        public bool Contains(object key)
+        public bool Contains([NotNull] object key)
         {
             bool contains;
             if (key is TKey1)
@@ -401,7 +398,7 @@ namespace Gabriel.Cat.S.Utilitats
             return base.GetEnumerator();
         }
 
-        public void Remove(object key)
+        public void Remove([NotNull] object key)
         {
             if (key is TKey1)
                 Remove1((TKey1)key);
@@ -412,7 +409,7 @@ namespace Gabriel.Cat.S.Utilitats
             else throw new Exception(String.Format("key most be {0} or {1}", typeof(TKey1), typeof(TKey2)));
         }
 
-        public new void CopyTo(Array array, int index)
+        public new void CopyTo([NotNull] Array array, int index)
         {
             base.CopyTo(array, index);
         }
@@ -421,7 +418,7 @@ namespace Gabriel.Cat.S.Utilitats
     {
         Tkey1 key1;
         Tkey2 key2;
-        public TwoKeys(Tkey1 key1, Tkey2 key2)
+        public TwoKeys([NotNull] Tkey1 key1, [NotNull] Tkey2 key2)
         {
             this.key1 = key1;
             this.key2 = key2;
@@ -442,6 +439,10 @@ namespace Gabriel.Cat.S.Utilitats
             get
             {
                 return key1;
+            }
+            set
+            {
+                key1 = value;
             }
         }
     }

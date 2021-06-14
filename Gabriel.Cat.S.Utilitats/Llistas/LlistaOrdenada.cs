@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -92,31 +93,15 @@ namespace Gabriel.Cat.S.Utilitats
             }
         }
 
-        public bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsReadOnly => false;
 
-        IEnumerable<TKey> IReadOnlyDictionary<TKey, TValue>.Keys
-        {
-            get
-            {
+        IEnumerable<TKey> IReadOnlyDictionary<TKey, TValue>.Keys =>
                 //coge la propiedad que devuelve IColeccionable<TKey>
-                return Keys;
-            }
-        }
+                Keys;
 
-        IEnumerable<TValue> IReadOnlyDictionary<TKey, TValue>.Values
-        {
-            get
-            {
+        IEnumerable<TValue> IReadOnlyDictionary<TKey, TValue>.Values =>
                 //coge la propiedad que devuelve IColeccionable<TValue>
-                return Values;
-            }
-        }
+                Values;
 
         bool IDictionary.IsFixedSize => false;
 
@@ -132,7 +117,7 @@ namespace Gabriel.Cat.S.Utilitats
 
         object ICollection.SyncRoot => false;
 
-        object IDictionary.this[object key] { get => this[(TKey)key]; set => this[(TKey)key]=(TValue)value; }
+        object IDictionary.this[[NotNull] object key] { get => this[(TKey)key]; set => this[(TKey)key]=(TValue)value; }
 
         public KeyValuePair<TKey, TValue> this[int index]
         {
@@ -165,7 +150,7 @@ namespace Gabriel.Cat.S.Utilitats
             }
         }
 
-        public TValue this[TKey key]
+        public TValue this[[NotNull] TKey key]
         {
             get
             {
@@ -178,7 +163,7 @@ namespace Gabriel.Cat.S.Utilitats
             }
         }
 
-        public void Add(TKey key, TValue value)
+        public void Add([NotNull] TKey key, TValue value)
         {
             bool añadir = AddConfirmation == null || AddConfirmation(this, key, value);
             if (añadir)
@@ -201,10 +186,9 @@ namespace Gabriel.Cat.S.Utilitats
 
                 }
         }
-        public void AddRange(IList<KeyValuePair<TKey, TValue>> llista, bool throwException = false)
+        public void AddRange([NotNull] IList<KeyValuePair<TKey, TValue>> llista, bool throwException = false)
         {
-            if (llista == null)
-                throw new ArgumentNullException();
+
             for (int i = 0; i < llista.Count; i++)
                 try
                 {
@@ -216,14 +200,12 @@ namespace Gabriel.Cat.S.Utilitats
                         throw;
                 }
         }
-        public void AddOrReplaceRange(IList<KeyValuePair<TKey, TValue>> llista)
+        public void AddOrReplaceRange([NotNull] IList<KeyValuePair<TKey, TValue>> llista)
         {
-            if (llista == null)
-                throw new ArgumentNullException();
             for (int i = 0; i < llista.Count; i++)
                 AddOrReplace(llista[i].Key, llista[i].Value);
         }
-        public void ChangeKey(TKey keyAnt, TKey keyNew)
+        public void ChangeKey([NotNull] TKey keyAnt, [NotNull] TKey keyNew)
         {
             if (!ContainsKey(keyAnt))
                 throw new Exception("no existeix la clau a remplaçar");
@@ -238,7 +220,7 @@ namespace Gabriel.Cat.S.Utilitats
                     Updated(this, new DicEventArgs<TKey, TValue>(keyNew, this[keyNew]));
             }
         }
-        public bool Remove(TKey key)
+        public bool Remove([NotNull] TKey key)
         {
             bool fer = RemoveConfirmation == null || RemoveConfirmation(this, key);
             TValue value = this[key];
@@ -266,10 +248,9 @@ namespace Gabriel.Cat.S.Utilitats
                 }
             return fer;
         }
-        public bool[] RemoveRange(IList<TKey> keysToRemove)
+        public bool[] RemoveRange([NotNull] IList<TKey> keysToRemove)
         {
-            if (keysToRemove == null)
-                throw new ArgumentNullException();
+
             bool[] seHaPodidoHacer = new bool[keysToRemove.Count];
             for (int i = 0; i < keysToRemove.Count; i++)
                 seHaPodidoHacer[i] = Remove(keysToRemove[i]);
@@ -304,7 +285,7 @@ namespace Gabriel.Cat.S.Utilitats
 
                 }
         }
-        public void AddOrReplace(TKey clau, TValue nouValor)
+        public void AddOrReplace([NotNull] TKey clau, TValue nouValor)
         {
             bool hecho = false;
             try
@@ -366,12 +347,12 @@ namespace Gabriel.Cat.S.Utilitats
             llista.Insert(posToInsert, key);
             Monitor.Exit(llista);
         }
-        public void Insert(int index, TKey key, TValue value)
+        public void Insert(int index, [NotNull] TKey key, TValue value)
         {
             Add(key, value);
             ChangePosicion(IndexOfKey(key), index);//si pongo como posActual Count-1 puedo tener problemas si se usan threads y hay cola para el add
         }
-        public bool ContainsKey(TKey key)
+        public bool ContainsKey([NotNull] TKey key)
         {
             bool existeix;
             Monitor.Enter(llistaOrdenada);
@@ -580,7 +561,7 @@ namespace Gabriel.Cat.S.Utilitats
 
         #endregion
 
-        public int IndexOfKey(TKey key)
+        public int IndexOfKey([NotNull] TKey key)
         {
             int indexOf;
             Monitor.Enter(llista);
@@ -622,7 +603,7 @@ namespace Gabriel.Cat.S.Utilitats
             return ContainsKey(item.Key);
         }
 
-        void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+        void ICollection<KeyValuePair<TKey, TValue>>.CopyTo([NotNull] KeyValuePair<TKey, TValue>[] array, int arrayIndex)
         {
             CopyTo(array, arrayIndex);
         }
@@ -632,7 +613,7 @@ namespace Gabriel.Cat.S.Utilitats
             return Remove(item.Key);
         }
 
-        void IDictionary.Add(object key, object value)
+        void IDictionary.Add([NotNull] object key, object value)
         {
             if (!(key is TKey))
                 throw new Exception(String.Format("key must be {0}",typeof(TKey)));
@@ -646,7 +627,7 @@ namespace Gabriel.Cat.S.Utilitats
             Clear();
         }
 
-        bool IDictionary.Contains(object key)
+        bool IDictionary.Contains([NotNull] object key)
         {
             if (!(key is TKey))
                 throw new Exception(String.Format("key must be {0}", typeof(TKey)));
@@ -659,14 +640,14 @@ namespace Gabriel.Cat.S.Utilitats
             return base.GetEnumerator();
         }
 
-        void IDictionary.Remove(object key)
+        void IDictionary.Remove([NotNull] object key)
         {
             if (!(key is TKey))
                 throw new Exception(String.Format("key must be {0}", typeof(TKey)));
             Remove((TKey)key);
         }
 
-        void ICollection.CopyTo(Array array, int index)
+        void ICollection.CopyTo([NotNull] Array array, int index)
         {
             base.CopyTo(array, index);
         }
@@ -677,10 +658,9 @@ namespace Gabriel.Cat.S.Utilitats
         {
             base.Add(value, value);
         }
-        public void AddRange(IList<T> values, bool throwException = false)
+        public void AddRange([NotNull] IList<T> values, bool throwException = false)
         {
-            if (values == null)
-                throw new ArgumentNullException();
+
             for (int i = 0; i < values.Count; i++)
                 try
                 {
@@ -692,10 +672,8 @@ namespace Gabriel.Cat.S.Utilitats
                         throw;
                 }
         }
-        public void AddOrReplaceRange(IList<T> values, bool throwException = false)
+        public void AddOrReplaceRange([NotNull] IList<T> values, bool throwException = false)
         {
-            if (values == null)
-                throw new ArgumentNullException();
             for (int i = 0; i < values.Count; i++)
                 try
                 {
@@ -711,10 +689,8 @@ namespace Gabriel.Cat.S.Utilitats
         {
             return base.Remove(value);
         }
-        public bool[] Remove(IList<T> values)
+        public bool[] Remove([NotNull] IList<T> values)
         {
-            if (values == null)
-                throw new ArgumentNullException();
             bool[] resultRemove = new bool[values.Count];
             for (int i = 0; i < values.Count; i++)
                 resultRemove[i] = base.Remove(values[i]);

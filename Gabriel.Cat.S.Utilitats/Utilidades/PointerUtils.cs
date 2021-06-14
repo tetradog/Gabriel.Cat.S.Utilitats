@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Gabriel.Cat.S.Utilitats
 {
     public static class PointerUtils
     {
 
-        public static unsafe byte[] ReadLine(byte*[] ptrs, bool ptrNext = true)
+        public static unsafe byte[] ReadLine([NotNull] byte*[] ptrs, bool ptrNext = true)
         {
             byte[] bytesLine = new byte[ptrs.Length];
             byte* ptrBytes;
@@ -23,12 +25,12 @@ namespace Gabriel.Cat.S.Utilitats
             }
             return bytesLine;
         }
-        public static unsafe void WriteLine(byte*[] ptrs, byte[] data, bool ptrNext = true)
+        public static unsafe void WriteLine([NotNull] byte*[] ptrs, [NotNull] byte[] data, bool ptrNext = true)
         {
             fixed (byte* ptData = data)
                 WriteLine(ptrs, ptData, ptrNext);
         }
-        public static unsafe void WriteLine(byte*[] ptrs, byte* ptrData, bool ptrNext = true)
+        public static unsafe void WriteLine([NotNull] byte*[] ptrs, byte* ptrData, bool ptrNext = true)
         {
             for (int i = 0; i < ptrs.Length; i++)
             {
@@ -50,7 +52,7 @@ namespace Gabriel.Cat.S.Utilitats
             return partes;
         }
 
-        public static unsafe void Seek(byte*[] ptrs, int toAdd = 1)
+        public static unsafe void Seek([NotNull] byte*[] ptrs, int toAdd = 1)
         {
             for (int i = 0; i < ptrs.Length; i++)
                 ptrs[i] += toAdd;

@@ -3,30 +3,31 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 using Gabriel.Cat.S.Utilitats;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Gabriel.Cat.S.Extension
 {
     public static class ExtensionType
     {
-        public static object GetObj(this Type type, params object[] partes)
+        public static object GetObj([NotNull] this Type type, [NotNull] params object[] partes)
         {
             return Activator.CreateInstance(type, partes);
         }
-        public static Type SetTypes(this Type type, params Type[] types)
+        public static Type SetTypes([NotNull] this Type type, [NotNull] params Type[] types)
         {
             return type.MakeGenericType(types);
         }
-        public static Type GetArrayType(this Type tipoObj)
+        public static Type GetArrayType([NotNull] this Type tipoObj)
         {
             return tipoObj.GetElementType();
         }
-        public static bool IsNullableType(this Type type)
+        public static bool IsNullableType([NotNull] this Type type)
         {
             return type.IsClass || type.IsInterface || type.IsGenericType && Equals(type.GetGenericTypeDefinition(), typeof(Nullable<>));
         }
-        public static bool IsStruct(this Type type)
+        public static bool IsStruct([NotNull] this Type type)
         { return !type.IsNullableType(); }
-        public static bool ImplementInterficie(this Type type,Type interficieType)
+        public static bool ImplementInterficie([NotNull] this Type type, [NotNull] Type interficieType)
         {
             if (interficieType == null)
                 throw new ArgumentNullException();
@@ -42,7 +43,7 @@ namespace Gabriel.Cat.S.Extension
 
             return implemented;
         }
-        public static IList<PropiedadTipo> GetPropiedadesTipos(this Type tipo)
+        public static IList<PropiedadTipo> GetPropiedadesTipo([NotNull] this Type tipo)
         {
             List<PropiedadTipo> lstPropiedades = new List<PropiedadTipo>();
             foreach (PropertyInfo propertyInfo in tipo.GetRuntimeProperties())

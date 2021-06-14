@@ -11,8 +11,8 @@ namespace Gabriel.Cat.S.Utilitats
     /// </summary>
     public class GenId<TValue> : ObjectAutoId
     {
-        public MetodoGeneradorID MetodoSiguiente;
-        public MetodoGeneradorID MetodoAnterior;
+        public MetodoGeneradorID MetodoSiguiente { get; set; }
+        public MetodoGeneradorID MetodoAnterior { get; set; }
 
         Semaphore semaphore = new Semaphore(1, 1);
         public TValue Inicio

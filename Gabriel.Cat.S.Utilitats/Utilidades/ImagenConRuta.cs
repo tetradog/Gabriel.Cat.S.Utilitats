@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -19,10 +20,8 @@ namespace Gabriel.Cat.S.Utilitats
         string ruta;
         string hash;
         static TwoKeysList<string, string, Bitmap> imagenes = new TwoKeysList<string, string, Bitmap>();
-        public ImagenConRuta(string ruta)
-        {
-            this.Ruta = ruta;
-        }
+        public ImagenConRuta(string ruta)=> Ruta = ruta;
+
         public string Ruta
         {
             get
@@ -32,24 +31,25 @@ namespace Gabriel.Cat.S.Utilitats
             set
             {
                 byte[] buffer;
-                Stream str=null;
+                Stream str=default;
                 ruta = value;
-                string hash = "";
+          
                 if (File.Exists(Ruta))
                 {
                     try
                     {
                         str = new FileInfo(Ruta).OpenRead();
-                        buffer = Gabriel.Cat.S.Extension.ExtensionStream.Read(str,(int) str.Length);
-
+                        buffer = ExtensionStream.Read(str,(int) str.Length);
+                        Hash = buffer.Hash();
                     }
                     catch { throw; }
                     finally {
-                        str.Close();
+                        if(!Equals(str,default))
+                           str.Close();
                     }
-                    hash = buffer.Hash();
+                  
                 }
-                Hash = hash;
+             
             }
         }
 
@@ -75,7 +75,7 @@ namespace Gabriel.Cat.S.Utilitats
             }
             set
             {
-                Ruta = "";
+                Ruta = String.Empty;
                 Hash = value.GetBytes().Hash();
                 if (!imagenes.ContainsKey2(hash))
                 {
@@ -103,12 +103,12 @@ namespace Gabriel.Cat.S.Utilitats
             private set
             {
 
-                if (value != "")
+                if (!string.IsNullOrEmpty(value))
                     hash = value;
-                else if (Ruta != null)
-                    hash = Serializar.GetBytes(ruta).Hash();
+                else if (!string.IsNullOrEmpty(Ruta))
+                    hash = Serializar.GetBytes(Ruta).Hash();
                 else
-                    hash = null;
+                    hash = string.Empty;
             }
         }
 
@@ -122,23 +122,19 @@ namespace Gabriel.Cat.S.Utilitats
         #region IEquatable implementation
 
 
-        public bool Equals(ImagenConRuta other)
+        public bool Equals( ImagenConRuta other)
         {
-            return Equals(other.Hash, Hash);
+            return !Equals(other,default(ImagenConRuta)) && Equals(other.Hash, Hash);
         }
-        public override string ToString()
-        {
-            return ruta;
-        }
+        public override string ToString() => $"{(Equals(Ruta,default)?"Sin ruta":Ruta)}";
+       
         #region Equals and GetHashCode implementation
-        public override bool Equals(object obj)
-        {
-            return (obj is ImagenConRuta) && Equals((ImagenConRuta)obj);
-        }
+        public override bool Equals(object obj)=> Equals(obj as ImagenConRuta);
+
 
         bool IEquatable<ImagenConRuta>.Equals(ImagenConRuta other)
         {
-            return this.Hash == other.Hash;
+            return Hash == other.Hash;
         }
 
         public override int GetHashCode()
@@ -175,10 +171,10 @@ namespace Gabriel.Cat.S.Utilitats
         /// 
         /// </summary>
         /// <returns>devuelve la imagen o Resource1.sinImagen en caso de no encontrar ninguna valida</returns>
-        public static ImagenConRuta ImagenRandom(string[] rutasImg, int intentosMaximos)
+        public static ImagenConRuta ImagenRandom([NotNull]string[] rutasImg, int intentosMaximos)
         {
             int posImgRandom;
-            string ruta = "";
+            string ruta = String.Empty;
             if (rutasImg.Length > 0)
             {
                 do

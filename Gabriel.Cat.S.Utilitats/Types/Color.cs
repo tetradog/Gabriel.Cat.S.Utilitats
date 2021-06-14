@@ -87,14 +87,18 @@ namespace Gabriel.Cat.S.Utilitats.V2
             }
         }
 
-        public byte A { get => a; set => Alfa = value; }
-        public byte R { get => r; set => Red = value; }
-        public byte G { get => g; set => Green = value; }
-        public byte B { get => b; set => Blue = value; }
+        public byte A { get => a; set => a = value; }
+        public byte R { get => r; set => r = value; }
+        public byte G { get => g; set => g = value; }
+        public byte B { get => b; set => b = value; }
 
         public int ToArgb()
         {
             return Serializar.ToInt(new byte[] { A, R, G, B });
+        }
+        public int ToRgb()
+        {
+            return Serializar.ToInt(new byte[] { byte.MinValue, R, G, B });
         }
 
         #region IComparable implementation

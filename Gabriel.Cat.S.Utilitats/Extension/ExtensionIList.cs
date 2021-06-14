@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Gabriel.Cat.S.Extension
 {
@@ -12,15 +13,6 @@ namespace Gabriel.Cat.S.Extension
     {
         #region PuestoAPrueba 
 
-        static Type IListOfWhat<T>(this IList<T> list)
-        {
-            return typeof(T);
-        }
-
-        public static Type ListOfWhat(this IList list)
-        {
-            return IListOfWhat((dynamic)list);
-        }
 
         public static TCasting[] Casting<TCasting>(this IList lst, bool elementosNoCompatiblesDefault = true)
         {
@@ -218,7 +210,7 @@ namespace Gabriel.Cat.S.Extension
 
         public static T LastOrDefault<T>(this IList<T> lst)
         {
-            return lst.Count > 0 ? lst[lst.Count - 1] : default;
+            return lst.Count > 0 ? lst[lst.Count - 1] : default(T);
         }
         public static object[] ToArray(this IList lst)
         {
@@ -242,16 +234,17 @@ namespace Gabriel.Cat.S.Extension
 
 
         //poder hacer que se pueda poner los valores en el orden contrario, de izquierda a derecha o  al rebes o por culumnas en vez de por filas...(y=0,x=0,y=1,x=0...)
-        public static Tvalue[,] ToMatriu<Tvalue>(this IList<Tvalue> llista, int length, DimensionMatriz dimensionTamañoMax = DimensionMatriz.Fila)
+        public static Tvalue[,] ToMatriu<Tvalue>(this IList<Tvalue> llista, int length, DimensionMatriz colocarTamañoGrandeEn = DimensionMatriz.Fila)
         {
             if (length < 1)
-                throw new Exception("Como minimo 1 " + dimensionTamañoMax.ToString());
+                throw new ArgumentOutOfRangeException("Como minimo 1 " + colocarTamañoGrandeEn.ToString());
 
+            Tvalue[,] matriu;
             int numeroOtraDimension = (llista.Count / (length * 1.0)) > (llista.Count / length) ? (llista.Count / length) + 1 : (llista.Count / length);
             int contador = 0;
-            Tvalue[,] matriu;
+  
 
-            if (dimensionTamañoMax.Equals(DimensionMatriz.Fila))
+            if (colocarTamañoGrandeEn.Equals(DimensionMatriz.Fila))
                 matriu = new Tvalue[numeroOtraDimension, length];
             else
                 matriu = new Tvalue[length, numeroOtraDimension];
@@ -265,11 +258,8 @@ namespace Gabriel.Cat.S.Extension
         }
 
         //para los tipos genericos :) el tipo generico se define en el NombreMetodo<Tipo> y se usa en todo el metodoConParametros ;)
-        public static List<Tvalue> Filtra<Tvalue>(this IList<Tvalue> valors, ComprovaEventHandler<Tvalue> comprovador)
+        public static List<Tvalue> Filtra<Tvalue>(this IList<Tvalue> valors,[NotNull] ComprovaEventHandler<Tvalue> comprovador)
         {
-            if (comprovador == null)
-                throw new ArgumentNullException("El metodo para realizar la comparacion no puede ser null");
-
             List<Tvalue> valorsOk = new List<Tvalue>();
             for (int i = 0; i < valors.Count; i++)
                 if (comprovador(valors[i]))
@@ -280,6 +270,7 @@ namespace Gabriel.Cat.S.Extension
         public static int BinarySearch<T>(this IList<T> list, T value) where T : IComparable
         {//source https://stackoverflow.com/questions/8067643/binary-search-of-a-sorted-array
             const int IGUALES = 0;
+            const int MINIMO = 2;
             int pos = -1;
             int compareTo;
 
@@ -288,26 +279,41 @@ namespace Gabriel.Cat.S.Extension
 
             list.SortByQuickSort(false);
             //for a sorted array with descending values
-            while (!found && first <= last)
+            if (list.Count > MINIMO)
             {
-                mid = (first + last) / 2;
-                compareTo = ExtensionIComparable.CompareTo(list[mid], value);
-                if (IGUALES < compareTo)
+                while (!found && first <= last)
                 {
-                    first = mid + 1;
-                }
+                    mid = (first + last) / 2;
+                    compareTo = ExtensionIComparable.CompareTo(list[mid], value);
+                    if (IGUALES < compareTo)
+                    {
+                        first = mid + 1;
+                    }
 
-                if (IGUALES > compareTo)
-                {
-                    last = mid - 1;
-                }
+                    if (IGUALES > compareTo)
+                    {
+                        last = mid - 1;
+                    }
 
-                else
-                {
-                    // You need to stop here once found or it's an infinite loop once it finds it.
-                    found = true;
-                    pos = mid;
+                    else
+                    {
+                        // You need to stop here once found or it's an infinite loop once it finds it.
+                        found = true;
+                        pos = mid;
+                    }
                 }
+            }
+            else
+            {
+                for (int i = 0; i < list.Count && !found; i++)
+                {
+                    found = list[i].CompareTo(value) == IGUALES;
+                    if (found)
+                    {
+                        pos = i;
+                    }
+                }
+                       
             }
 
             return pos;
@@ -320,14 +326,13 @@ namespace Gabriel.Cat.S.Extension
         /// <param name="list"></param>
         /// <param name="listToContain">lista a tener dentro de la otra</param>
         /// <returns></returns>
-        public static bool Contains<T>(this IList<T> list, IList<T> listToContain) where T : IComparable
+        public static bool Contains<T>(this IList<T> list,[NotNull] IList<T> listToContain) where T : IComparable
         {
-            if (listToContain == null)
-                throw new ArgumentNullException("La lista ha contener no puede ser null!!");
+
             bool contains = false;
-            for (int i = 0; i < list.Count && !contains; i++)
+            for (int i = 0; i < listToContain.Count && !contains; i++)
             {
-                contains = list.Contains(list[i]) || Contains(list, list[i]);
+                contains = Contains(list, listToContain[i]);
 
             }
             return contains;
@@ -364,34 +369,32 @@ namespace Gabriel.Cat.S.Extension
             return subArray;
 
         }
-        public static void SetIList<T>(this IList<T> listToSet, IList<T> source, int startIndexListToSet = 0, int startIndexSource = 0, int endIndexSource = -1)
+        public static void SetIList<T>(this IList<T> listToSet,[NotNull] IList<T> source, int startIndexListToSet = 0, int startIndexSource = 0, int endIndexSource = -1)
         {
-            if (source == null)
-                throw new ArgumentNullException();
             if (startIndexSource < 0 || source.Count < startIndexSource || endIndexSource > 0 && (source.Count < endIndexSource || listToSet.Count < startIndexListToSet + (endIndexSource - startIndexSource)))
                 throw new ArgumentOutOfRangeException();
             for (int i = startIndexListToSet, j = startIndexSource; i < source.Count && (endIndexSource == -1 || j < endIndexSource); i++, j++)
                 listToSet[i] = source[j];
         }
-        public static bool AreEqual(this IList lstLeft, IList lstRight)
+        public static bool AreEqual(this IList lstLeft, [AllowNull] IList lstRight)
         {
-            bool equals = lstRight != null && lstLeft.Count == lstRight.Count;
+            bool equals = !Equals(lstRight,default(IList)) && lstLeft.Count == lstRight.Count;
             for (int i = 0; i < lstLeft.Count && equals; i++)
                 equals = Equals(lstLeft[i], lstRight[i]);
             return equals;
         }
-        public static bool AreEquals<T>(this IList<T> lstLeft, IList<T> lstRight)
+        public static bool AreEquals<T>(this IList<T> lstLeft, [AllowNull] IList<T> lstRight)
         {
 
-            bool equals = lstRight != null && lstLeft.Count == lstRight.Count;
+            bool equals = !Equals(lstRight, default(IList)) && lstLeft.Count == lstRight.Count;
             for (int i = 0; i < lstLeft.Count && equals; i++)
                 equals = Equals(lstLeft[i], lstRight[i]);
             return equals;
         }
-        public static bool AreEquals<T>(this IList<T> lstLeft, IList<T?> lstRight) where T : struct
+        public static bool AreEquals<T>(this IList<T> lstLeft,[AllowNull] IList<T?> lstRight) where T : struct
         {
 
-            bool equals = lstRight != null && lstLeft.Count == lstRight.Count;
+            bool equals = !Equals(lstRight, default(IList)) && lstLeft.Count == lstRight.Count;
             object right;
             for (int i = 0; i < lstLeft.Count && equals; i++)
             {
@@ -416,7 +419,7 @@ namespace Gabriel.Cat.S.Extension
                 lst.Add(lstDesordenada[i]);
         }
 
-        public static TOut[] Convert<TIn,TOut>(this IList<TIn> ins,MetodoConvertir<TIn,TOut> method)
+        public static TOut[] Convert<TIn,TOut>(this IList<TIn> ins,[NotNull]MetodoConvertir<TIn,TOut> method)
         {
             TOut[] outs = new TOut[ins.Count];
             for (int i = 0; i < outs.Length; i++)

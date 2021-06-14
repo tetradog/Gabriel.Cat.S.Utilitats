@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 
@@ -15,12 +16,10 @@ namespace Gabriel.Cat.S.Utilitats
         {
             diccionari = new LlistaOrdenada<TKey, LlistaOrdenada<IComparable, TValue>>();
         }
-        public TValue[] this[TKey key]
+        public TValue[] this[[NotNull] TKey key]
         {
             get
             {
-                if (key == null)
-                    throw new ArgumentNullException();
                 return (TValue[])diccionari[key].Values;
             }
         }
@@ -33,16 +32,13 @@ namespace Gabriel.Cat.S.Utilitats
 
             return total;
         }
-        public int Count(TKey key)
+        public int Count([NotNull] TKey key)
         {
             return diccionari[key].Count;
         }
-        public void Add(TKey key, IList<TValue> values)
+        public void Add([NotNull] TKey key, [NotNull] IList<TValue> values)
         {
-            if (key == null)
-                throw new ArgumentNullException();
-            if (values == null)
-                throw new ArgumentNullException("values");
+
             for (int i = 0; i < values.Count; i++)
             {
                 try
@@ -52,33 +48,20 @@ namespace Gabriel.Cat.S.Utilitats
                 catch { }//si ya esta añadido no pasa nada :D
             }
         }
-        public void Add(TKey key, TValue value)
+        public void Add([NotNull] TKey key, [NotNull] TValue value)
         {
-            if (key == null)
-                throw new ArgumentNullException();
-            if (value == null)
-                throw new ArgumentNullException();
             if (!diccionari.ContainsKey(key))
                 diccionari.Add(key, new LlistaOrdenada<IComparable, TValue>());
             diccionari[key].Add(value, value);
         }
-        public void Remove(TKey key, IList<TValue> values)
+        public void Remove([NotNull] TKey key, [NotNull] IList<TValue> values)
         {
-            if (key == null)
-                throw new ArgumentNullException();
-            if (values == null)
-                throw new ArgumentNullException("values");
             for (int i = 0; i < values.Count; i++)
                 if (values[i] != null)
                     Remove(key, values[i]);
         }
-        public void Remove(TKey key, TValue value)
+        public void Remove([NotNull] TKey key, [NotNull] TValue value)
         {
-            if (key == null)
-                throw new ArgumentNullException();
-            if (value == null)
-                throw new ArgumentNullException();
-
             if (diccionari.ContainsKey(key))
             {
                 if (diccionari[key].ContainsKey(value))
@@ -89,57 +72,45 @@ namespace Gabriel.Cat.S.Utilitats
                 }
             }
         }
-        public void Remove(IList<TKey> keys)
+        public void Remove([NotNull] IList<TKey> keys)
         {
-            if (keys == null)
-                throw new ArgumentNullException("keys");
             for (int i = 0; i < keys.Count; i++)
                 if (keys[i] != null)
                     Remove(keys[i]);
         }
-        public void Remove(TKey key)
+        public void Remove([NotNull] TKey key)
         {
-            if (key == null)
-                throw new ArgumentNullException();
             diccionari.Remove(key);
         }
         public void Clear()
         {
             diccionari.Clear();
         }
-        public void ClearValues(TKey key)
+        public void ClearValues([NotNull] TKey key)
         {
             if (ContainsKey(key))
                 diccionari[key].Clear();
         }
-        public bool ContainsKey(TKey key)
+        public bool ContainsKey([NotNull] TKey key)
         {
-            if (key == null)
-                throw new ArgumentNullException();
             return diccionari.ContainsKey(key);
         }
-        public bool ContainValues(TKey key)
+        public bool ContainValues([NotNull] TKey key)
         {
             return !ContainsKey(key) ? false : diccionari[key].Count != 0;
         }
-        public bool ContainsValue(TKey key, TValue value)
+        public bool ContainsValue([NotNull] TKey key, [NotNull] TValue value)
         {
-            if (key == null)
-                throw new ArgumentNullException();
-            if (value == null)
-                throw new ArgumentNullException();
             return ContainsKey(key) ? diccionari[key].ContainsKey(value) : false;
         }
-        public bool ContainsValue(TValue value)
+        public bool ContainsValue([NotNull] TValue value)
         {
-            if (value == null)
-                throw new ArgumentNullException();
             bool encontrado = false;
             for (int i = 0; i < diccionari.Count && !encontrado; i++)
                 encontrado = diccionari.GetValueAt(i).ContainsKey(value);
             return encontrado;
         }
-        public TValue GetValueAt(TKey key, int index)
+        public TValue GetValueAt([NotNull] TKey key, int index)
         {
             return diccionari[key].GetValueAt(index);
         }

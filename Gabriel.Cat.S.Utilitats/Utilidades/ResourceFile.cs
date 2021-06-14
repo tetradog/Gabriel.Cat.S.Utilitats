@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Text;
 
@@ -11,7 +12,7 @@ namespace Gabriel.Cat.S.Utilitats
         string nombreRecurso;
         byte[] file;
 
-        public ResourceFile(Type claseRecurso, string nombreRecurso)
+        public ResourceFile([NotNull] Type claseRecurso, [NotNull] string nombreRecurso)
         {
             this.claseRecurso = claseRecurso;
             this.nombreRecurso = nombreRecurso;
@@ -21,7 +22,7 @@ namespace Gabriel.Cat.S.Utilitats
         {
             get
             {
-                if (file == default)
+                if (Equals(file, default))
                     file = (byte[])claseRecurso.GetProperty(nombreRecurso).GetValue(default);
                 return file;
             }
@@ -34,7 +35,7 @@ namespace Gabriel.Cat.S.Utilitats
     public class ResourceImage : ResourceFile
     {
         Bitmap img;
-        public ResourceImage(Type claseRecurso, string nombreRecurso) : base(claseRecurso, nombreRecurso)
+        public ResourceImage([NotNull] Type claseRecurso, [NotNull] string nombreRecurso) : base(claseRecurso, nombreRecurso)
         {
         }
         ~ResourceImage() => Dispose();
@@ -42,7 +43,7 @@ namespace Gabriel.Cat.S.Utilitats
         {
             get
             {
-                if (img == default)
+                if (Equals(img, default))
                 {
                     img = (Bitmap)Bitmap.FromStream(new System.IO.MemoryStream(File));
                     base.Dispose();

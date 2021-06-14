@@ -40,8 +40,9 @@ namespace Gabriel.Cat.S.Utilitats
         }
         public Point GetPoint(System.Drawing.Color color)
         {
-            int colorInt = color.ToArgb();
             Point location;
+            int colorInt = color.ToArgb();
+
             if (pointLocatedByColorList.ContainsKey(colorInt))
                 location = pointLocatedByColorList[colorInt].Value;
             else
@@ -52,10 +53,12 @@ namespace Gabriel.Cat.S.Utilitats
         public Point GetPoint(int colorInt)
         {
             const int ARGB = 4;
+
             int posicion;
             byte[] bytesColor;
             Point location = default(Point);
             bool encontrado = false;
+
             if (pointLocatedByColorList.ContainsKey(colorInt))
                 location = pointLocatedByColorList[colorInt].Value;
             else

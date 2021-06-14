@@ -1,6 +1,7 @@
 ﻿using Gabriel.Cat.S.Extension;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace Gabriel.Cat.S.Utilitats
@@ -40,7 +41,7 @@ namespace Gabriel.Cat.S.Utilitats
                 0x06, 0x07, 0x08, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F
             };
-        string numberHex;
+
         static Hex()
         {
             diccionarioCaracteresValidos = new LlistaOrdenada<char, char>();
@@ -49,34 +50,18 @@ namespace Gabriel.Cat.S.Utilitats
         }
 
 
-        public Hex(string numero)
+        public Hex([NotNull]string numero)
         {
             if (!ValidaString(numero))
                 throw new Exception("la string contiene caracteres no HEX");
-            this.numberHex = numero;
+            this.Number = numero;
         }
         // this is just an example member, replace it with your own struct members!
-        public string Number
-        {
-            get
-            {
-                return numberHex;
-            }
-            private set
-            {
-                numberHex = value;
-            }
-        }
+        public string Number { get; private set; }
         /// <summary>
         /// Concatena 0x al numero
         /// </summary>
-        public string ByteString
-        {
-            get
-            {
-                return "0x" + Number;
-            }
-        }
+        public string ByteString => $"0x{Number}";
 
 
         #region Equals and GetHashCode implementation
@@ -101,19 +86,19 @@ namespace Gabriel.Cat.S.Utilitats
 
         public bool Equals(Hex other)
         {
-            string thisNumber = QuitaCerosInutiles(this.numberHex), otherNumber = QuitaCerosInutiles(other.numberHex);
+            string thisNumber = QuitaCerosInutiles(this.Number), otherNumber = QuitaCerosInutiles(other.Number);
             // add comparisions for all members here
             return thisNumber.Equals(otherNumber);
         }
         public override string ToString()
         {
-            return numberHex;
+            return Number;
         }
 
         public override int GetHashCode()
         {
             // combine the hash codes of all members here (e.g. with XOR operator ^)
-            return numberHex.GetHashCode();
+            return Number.GetHashCode();
         }
 
         public static bool operator ==(Hex left, Hex right)
@@ -234,7 +219,7 @@ namespace Gabriel.Cat.S.Utilitats
 
 
 
-        public static implicit operator Hex(string numero)
+        public static implicit operator Hex([NotNull] string numero)
         {
             const int BASEHEX = 16;
             return (Hex)Convert.ToUInt64(numero.Trim(), BASEHEX);
@@ -247,7 +232,7 @@ namespace Gabriel.Cat.S.Utilitats
         {
             return (Hex)Serializar.GetBytes(numero).InvertirClone();
         }
-        public static explicit operator Hex(byte[] numero)
+        public static explicit operator Hex([NotNull] byte[] numero)
         {
             //sacado de internet
             List<char> bytesHex = new List<char>();
@@ -281,7 +266,7 @@ namespace Gabriel.Cat.S.Utilitats
         {
             return new Hex(QuitaCerosInutiles(numero.ToString("X4")));
         }
-        static string QuitaCerosInutiles(string numero)
+        static string QuitaCerosInutiles([NotNull] string numero)
         {
             StringBuilder num = new StringBuilder(numero);
             while (num.Length > 0 && num[0] == '0') num.Remove(0, 1);
@@ -289,21 +274,21 @@ namespace Gabriel.Cat.S.Utilitats
                 num = new StringBuilder("0");
             return num.ToString();
         }
-        public static implicit operator string(Hex numero)
+        public static implicit operator string( Hex numero)
         {
-            return numero.numberHex;
+            return numero.Number;
         }
-        public static explicit operator int(Hex numero)
+        public static explicit operator int( Hex numero)
         {
             const int LENGHT = 4;
             return Serializar.ToInt(DameArray(numero, LENGHT));
         }
-        public static explicit operator uint(Hex numero)
+        public static explicit operator uint( Hex numero)
         {
             const int LENGHT = 4;
             return Serializar.ToUInt(DameArray(numero, LENGHT));
         }
-        static byte[] DameArray(byte[] bytes, int lenght)
+        static byte[] DameArray([NotNull]byte[] bytes, int lenght)
         {
             bytes.Invertir();
             if (bytes.Length < lenght)
@@ -376,7 +361,7 @@ namespace Gabriel.Cat.S.Utilitats
 
         public int CompareTo(Hex other)
         {
-            return numberHex.CompareTo(other.numberHex);
+            return Number.CompareTo(other.Number);
         }
     }
 }

@@ -84,6 +84,7 @@ namespace Gabriel.Cat.S.Utilitats
             else compareTo = (int)Gabriel.Cat.S.Utilitats.CompareTo.Inferior;
             return compareTo;
         }
+        public override string ToString() => Nombre;
     }
     public class AtributoOrden:System.Attribute,IComparable<AtributoOrden>
     {

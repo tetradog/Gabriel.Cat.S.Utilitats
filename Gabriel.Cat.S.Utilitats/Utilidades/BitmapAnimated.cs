@@ -1,6 +1,7 @@
 ﻿using Gabriel.Cat.S.Utilitats;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Text;
 using System.Threading;
@@ -15,17 +16,14 @@ namespace Gabriel.Cat.S.Utilitats
         int frameAlAcabar;
         int index;
         System.Timers.Timer timer;
+        int numeroDeRepeticiones;
+        int numeroDeRepeticionesFijas;
 
-        #region Variables
-        int numeroDeRepeticiones = 0;
-        private int numeroDeRepeticionesFijas;
-
-
-        #endregion
 
         public event BitmapAnimatedFrameChangedEventHanlder FrameChanged;
-        public BitmapAnimated(IList<Bitmap> bmps, params int[] delays)
+        public BitmapAnimated(IList<Bitmap> bmps, [NotNull] params int[] delays)
         {
+            numeroDeRepeticiones = 0;
             SaltarFramePrimerCiclo = false;
             FrameASaltarAnimacionCiclica = -1;
             NumeroDeRepeticionesFijas = 1;
@@ -83,9 +81,9 @@ namespace Gabriel.Cat.S.Utilitats
         {
             get; set;
         }
-        public int NumeroDeRepeticionesFijas { get => numeroDeRepeticionesFijas; set { numeroDeRepeticionesFijas = value+1; AnimarCiclicamente = numeroDeRepeticionesFijas <= 0; } }
+        public int NumeroDeRepeticionesFijas { get => numeroDeRepeticionesFijas; set { numeroDeRepeticionesFijas = value + 1; AnimarCiclicamente = numeroDeRepeticionesFijas <= 0; } }
 
-        public bool SaltarFramePrimerCiclo { get;  set; }
+        public bool SaltarFramePrimerCiclo { get; set; }
 
         public KeyValuePair<Bitmap, int> this[int index]
         {
@@ -95,10 +93,10 @@ namespace Gabriel.Cat.S.Utilitats
                 frames[index] = value;
             }
         }
-        public void AddFrame(Bitmap bmp, int delay = 500, int posicion = -1)
+        public void AddFrame([NotNull] Bitmap bmp, int delay = 500, int posicion = -1)
         {
-            if (bmp == default || delay <= 0)
-                throw new ArgumentException();
+            if (delay <= 0)
+                throw new ArgumentOutOfRangeException(nameof(delay));
 
             KeyValuePair<Bitmap, int> frame = new KeyValuePair<Bitmap, int>(bmp, delay);
 
@@ -114,39 +112,23 @@ namespace Gabriel.Cat.S.Utilitats
                 throw new ArgumentOutOfRangeException();
             frames.RemoveAt(index);
         }
-        private void ChangeFrame(object sender, ElapsedEventArgs e)
-        {
-            int intervalo = frames[ActualFrameIndex].Value;
 
-            if (AnimarCiclicamente || numeroDeRepeticiones < NumeroDeRepeticionesFijas)
-            {
-                if (numeroDeRepeticiones==1&&!SaltarFramePrimerCiclo||ActualFrameIndex != FrameASaltarAnimacionCiclica)
-                    FrameChanged(this, frames[ActualFrameIndex].Key);
-                ActualFrameIndex++;
-            }
-            else
-            {
-                if(FrameAlAcabar>=0)
-                FrameChanged(this, frames[FrameAlAcabar].Key);
-                Stop();
-            }
-            if (ActualFrameIndex == 0)
-                numeroDeRepeticiones++;
-
-            timer.Interval = intervalo <= 0 ? 100 : intervalo; 
-        }
         public void Start()
         {
-            if (FrameChanged == default)
+            if (Equals(FrameChanged, default))
                 throw new Exception("FrameChanged doesn't asigned ");
             int intervalo = frames[ActualFrameIndex].Value;
-            timer.Interval = intervalo<=0?100:intervalo;
+            timer.Interval = intervalo <= 0 ? 100 : intervalo;
+            Stop();
             timer.Start();
 
         }
         public void Stop()
         {
-            timer.Stop();
+
+            if (timer.Enabled)
+                timer.Stop();
+
         }
         /// <summary>
         /// Stop and init animation
@@ -159,7 +141,27 @@ namespace Gabriel.Cat.S.Utilitats
 
         }
 
+        private void ChangeFrame(object sender, ElapsedEventArgs e)
+        {
+            int intervalo = frames[ActualFrameIndex].Value;
 
+            if (AnimarCiclicamente || numeroDeRepeticiones < NumeroDeRepeticionesFijas)
+            {
+                if (numeroDeRepeticiones == 1 && !SaltarFramePrimerCiclo || ActualFrameIndex != FrameASaltarAnimacionCiclica)
+                    FrameChanged(this, frames[ActualFrameIndex].Key);
+                ActualFrameIndex++;
+            }
+            else
+            {
+                if (FrameAlAcabar >= 0)
+                    FrameChanged(this, frames[FrameAlAcabar].Key);
+                Stop();
+            }
+            if (ActualFrameIndex == 0)
+                numeroDeRepeticiones++;
+
+            timer.Interval = intervalo <= 0 ? 100 : intervalo;
+        }
 
     }
 }

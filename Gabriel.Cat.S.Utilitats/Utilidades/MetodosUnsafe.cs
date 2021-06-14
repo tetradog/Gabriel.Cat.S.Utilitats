@@ -1,4 +1,6 @@
-﻿namespace Gabriel.Cat.S.Extension
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Gabriel.Cat.S.Extension
 {
     public static class MetodosUnsafe
     {
@@ -19,14 +21,14 @@
             }
             return array;
         }
-        public unsafe static void WriteBytes(byte[] bytesLeft, byte* ptrBytesRight)
+        public unsafe static void WriteBytes([NotNull] byte[] bytesLeft, byte* ptrBytesRight)
         {
             fixed (byte* ptrBytesLeft = bytesLeft)
             {
                 WriteBytes(ptrBytesLeft, ptrBytesRight, bytesLeft.Length);
             }
         }
-        public unsafe static void WriteBytes(byte* ptrBytesLeft, byte[] bytesRight)
+        public unsafe static void WriteBytes(byte* ptrBytesLeft, [NotNull] byte[] bytesRight)
         {
             fixed (byte* ptrBytesRight = bytesRight)
             {

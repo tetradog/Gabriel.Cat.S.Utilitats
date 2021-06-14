@@ -29,7 +29,7 @@ namespace Gabriel.Cat.S.Utilitats
         {
             get
             {
-                if (idUnic == null)
+                if (Equals(idUnic, null))
                 {
                     idUnic = partA.ToString().PadLeft(long.MaxValue.ToString().Length, '0') + partB.ToString().PadLeft(long.MaxValue.ToString().Length, '0');
                 }
@@ -48,7 +48,7 @@ namespace Gabriel.Cat.S.Utilitats
 
         int IComparable<ObjectAutoId>.CompareTo(ObjectAutoId other)
         {
-            int compareTo = other == null ? (int)Gabriel.Cat.S.Utilitats.CompareTo.Inferior : partA.CompareTo(other.partA);
+            int compareTo = Equals(other,default(ObjectAutoId)) ? (int)Gabriel.Cat.S.Utilitats.CompareTo.Inferior : partA.CompareTo(other.partA);
             if ((int)Gabriel.Cat.S.Utilitats.CompareTo.Iguals == compareTo)
                 compareTo = partB.CompareTo(other.partB);
             return compareTo;

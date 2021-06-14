@@ -21,9 +21,9 @@ namespace Gabriel.Cat.S.Utilitats
             semaphoreRandom = new Semaphore(1, 1);
         }
        
-        public IdUnico(byte[] idUnico=null)
+        public IdUnico(byte[] idUnico=default)
         {
-            if (idUnico == null)
+            if (Equals(idUnico,default))
                 idUnico = GenIdAuto();
             this.idUnico = idUnico;
         }

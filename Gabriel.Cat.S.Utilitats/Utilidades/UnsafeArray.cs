@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace Gabriel.Cat.S.Utilitats
 {
-    public delegate void MetodoUnsafeArray<T>(UnsafeArray<T> unsafeArray) where T:unmanaged;
+    public delegate void MetodoUnsafeArray<T>([NotNull]UnsafeArray<T> unsafeArray) where T:unmanaged;
     public unsafe class UnsafeArray <T> where T:unmanaged
     {
         public T* PtrArray;
@@ -40,14 +41,12 @@ namespace Gabriel.Cat.S.Utilitats
         {
             get { return PtrArrayInicial + Length - 1; }
         }
-        public static unsafe explicit operator T* (UnsafeArray<T> unsafeArray)
+        public static unsafe explicit operator T* ([NotNull] UnsafeArray<T> unsafeArray)
         {
             return unsafeArray.PtrArray;
         }
-        public static void Usar<T>(T[] array, MetodoUnsafeArray<T> metodo) where T:unmanaged
+        public static void Usar<T>([NotNull] T[] array, [NotNull] MetodoUnsafeArray<T> metodo) where T:unmanaged
         {
-            if (array == default || metodo == default)
-                throw new ArgumentNullException();
             Exception exAux = default;
             unsafe
             {

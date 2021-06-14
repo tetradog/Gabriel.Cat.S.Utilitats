@@ -1,6 +1,7 @@
 ﻿using Gabriel.Cat.S.Extension;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Text;
 
@@ -8,11 +9,11 @@ namespace Gabriel.Cat.S.Utilitats
 {
     public class Propiedad:IComparable<Propiedad>
     {
-        public Propiedad(object obj,string nombre):this(new PropiedadTipo(obj.GetType().GetRuntimeProperty(nombre)),obj)
+        public Propiedad([NotNull] object obj, [NotNull] string nombre):this(new PropiedadTipo(obj.GetType().GetRuntimeProperty(nombre)),obj)
         {
 
         }
-        public Propiedad(PropiedadTipo info, object obj)
+        public Propiedad([NotNull] PropiedadTipo info,[NotNull] object obj)
         {
             this.Info = info;
             this.Objeto = obj;

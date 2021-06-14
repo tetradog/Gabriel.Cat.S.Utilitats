@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace Gabriel.Cat.S.Utilitats
@@ -8,12 +9,16 @@ namespace Gabriel.Cat.S.Utilitats
     {
         IComparable Clau { get; }
     }
+    public interface IDosClausUniquesPerObjecte : IClauUnicaPerObjecte
+    {
+        IComparable Clau2 { get; }
+    }
     /// <summary>
     /// Sirve para usar clases y structs que son IComparable pero que no son IClauUnicaPerObjecte, hay conversiones implicitas a los tipos basicos
     /// </summary>
     public class ClauUnicaPerObjecte : IClauUnicaPerObjecte
     {
-        public ClauUnicaPerObjecte(IComparable clau)
+        public ClauUnicaPerObjecte([NotNull] IComparable clau)
         { this.Clau = clau; }
         public IComparable Clau { get; private set; }
         #region conversion
@@ -68,8 +73,5 @@ namespace Gabriel.Cat.S.Utilitats
         #endregion
 
     }
-    public interface IDosClausUniquesPerObjecte : IClauUnicaPerObjecte
-    {
-        IComparable Clau2 { get; }
-    }
+
 }

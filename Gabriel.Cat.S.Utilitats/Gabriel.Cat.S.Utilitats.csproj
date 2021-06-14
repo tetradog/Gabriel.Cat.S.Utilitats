@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <PackageProjectUrl>https://github.com/tetradog/Gabriel.Cat.S.Utilitats</PackageProjectUrl>
     <RepositoryUrl>https://github.com/tetradog/Gabriel.Cat.S.Utilitats</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
@@ -9,13 +9,14 @@
     <Copyright>Gabriel.Cat.Developer</Copyright>
     <Authors>Gabriel.Cat.Developer</Authors>
     <SignAssembly>false</SignAssembly>
-    <Version>1.1.5.5</Version>
+    <Version>1.2</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Company>Gabriel.Cat.Developer</Company>
     <AssemblyVersion>1.0.4.4</AssemblyVersion>
     <FileVersion>1.0.4.4</FileVersion>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Description>Clases de extensión útiles para el dia a dia y más</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

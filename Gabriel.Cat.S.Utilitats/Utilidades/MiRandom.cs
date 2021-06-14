@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace Gabriel.Cat.S.Utilitats
@@ -24,9 +25,8 @@ namespace Gabriel.Cat.S.Utilitats
             llavor.NextBytes(randomArray);
             return randomArray;
         }
-        public static void SetRandom(Random r) {
+        public static void SetRandom([NotNull] Random r) {
 
-            if (r != default) 
                 llavor = r; 
         }
     }

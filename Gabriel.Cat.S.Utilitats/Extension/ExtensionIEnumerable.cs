@@ -1,6 +1,8 @@
 ﻿using Gabriel.Cat.S.Utilitats;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 
@@ -10,15 +12,22 @@ namespace Gabriel.Cat.S.Extension
 
     public static class ExtensionIEnumerable
     {
+        static Type IListOfWhat<T>(this IEnumerable<T> list)
+        {
+            return typeof(T);
+        }
+
+        public static Type ListOfWhat(this IEnumerable list)
+        {
+            return IListOfWhat((dynamic)list);
+        }
+
         public static IEnumerator<T> ObtieneEnumerador<T>(this IEnumerable<T> enumerator)
         {
             return enumerator.GetEnumerator();
         }
-        public static void WhileEach<T>(this IEnumerable<T> enumeracion,MetodoWhileEach<T> metodo)
+        public static void WhileEach<T>(this IEnumerable<T> enumeracion,[NotNull] MetodoWhileEach<T> metodo)
         {
-            if (metodo == null)
-                throw new ArgumentNullException("metodo");
-
             IEnumerator<T> enumerator = enumeracion.GetEnumerator();
             while (enumerator.MoveNext() && metodo(enumerator.Current)) ;
             
@@ -46,7 +55,7 @@ namespace Gabriel.Cat.S.Extension
         }
         public static Tvalue[,] ToMatriu<Tvalue>(this IEnumerable<Tvalue> llista, int numeroDimension, DimensionMatriz dimensionTamañoMax = DimensionMatriz.Fila)
         { return llista.ToArray().ToMatriu(numeroDimension, dimensionTamañoMax); }
-        public static List<Tvalue> Filtra<Tvalue>(this IEnumerable<Tvalue> valors, ComprovaEventHandler<Tvalue> comprovador)
+        public static List<Tvalue> Filtra<Tvalue>(this IEnumerable<Tvalue> valors, [NotNull] ComprovaEventHandler<Tvalue> comprovador)
         { return valors.ToArray().Filtra(comprovador); }
         public static List<Tvalue> AfegirValor<Tvalue>(this IEnumerable<Tvalue> valors, Tvalue valorNou)
         {
@@ -58,10 +67,10 @@ namespace Gabriel.Cat.S.Extension
         {
             List<Tvalue> llista = new List<Tvalue>(valors);
             bool valorEnLista = true;
-            if (valorsNous != null)
+            if (!Equals(valorsNous, default(IEnumerable<Tvalue>)))
             {
 
-                if (valorsNous != null)
+            
                     foreach (Tvalue valor in valorsNous)
                     {
                         if (noPosarValorsJaExistents)
@@ -81,8 +90,10 @@ namespace Gabriel.Cat.S.Extension
         public static List<Tvalue> AfegirValors<Tvalue>(this IEnumerable<Tvalue> valors, IEnumerable<Tvalue> valorsNous)
         {
             List<Tvalue> llista = new List<Tvalue>(valors);
-            if (valorsNous != null)
+            if (!Equals(valorsNous, default(IEnumerable<Tvalue>)))
+            {
                 llista.AddRange(valorsNous);
+            }
             return llista;
 
         }

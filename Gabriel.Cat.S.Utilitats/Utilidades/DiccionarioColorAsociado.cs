@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Text;
 
@@ -27,7 +28,7 @@ namespace Gabriel.Cat.S.Utilitats
             Añadir(colorsKeyValue);
         }
 
-        private byte Posicion(byte[] color)
+        private byte Posicion([NotNull] byte[] color)
         { return color[Pixel.A]; }
         /// <summary>
         /// es para ir rapido
@@ -97,7 +98,7 @@ namespace Gabriel.Cat.S.Utilitats
                     Añadir(keyValue.Key, keyValue.Value);
 
         }
-        public void Eliminar(byte[] key)
+        public void Eliminar([NotNull] byte[] key)
         {
             byte posicion = Posicion(key);
             if (diccionario[posicion] != null)
@@ -108,14 +109,14 @@ namespace Gabriel.Cat.S.Utilitats
 
         }
 
-        public void Eliminar(byte[] key, int index)
+        public void Eliminar([NotNull] byte[] key, int index)
         {
             byte posicion = Posicion(key);
             if (diccionario[posicion] != null)
                 diccionario[posicion].Eliminar(key, index);
         }
 
-        public byte[][] ObtenerTodos(byte[] key)
+        public byte[][] ObtenerTodos([NotNull] byte[] key)
         {
             byte[][] todos = null;
             int posicion = Posicion(key);
@@ -176,7 +177,7 @@ namespace Gabriel.Cat.S.Utilitats
             return GetEnumerator();
         }
 
-        public byte[][] this[byte[] key]
+        public byte[][] this[[NotNull] byte[] key]
         {
             get { return ObtenerTodos(key); }
         }

@@ -63,9 +63,9 @@ namespace Gabriel.Cat.S.Utilitats
         #region IComparable implementation
         public int CompareTo(PointZ other)
         {
-            int compareTo = -1;
 
-            compareTo = Z.CompareTo(other.Z);
+           int compareTo = Z.CompareTo(other.Z);
+
             if (compareTo == 0)
             {
                 if (X < other.X)

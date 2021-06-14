@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -125,10 +126,8 @@ namespace Gabriel.Cat.S.Utilitats
                 return syncRoot;
             }
         }
-        public void AddRange(IList<T> items)
+        public void AddRange([NotNull] IList<T> items)
         {
-            if (items == null)
-                throw new ArgumentNullException("items");
             try
             {
                 semaphore.WaitOne();
@@ -196,7 +195,7 @@ namespace Gabriel.Cat.S.Utilitats
             return contains;
         }
 
-        public void CopyTo(T[] array, int arrayIndex)
+        public void CopyTo([NotNull] T[] array, int arrayIndex)
         {
             try
             {
@@ -323,7 +322,7 @@ namespace Gabriel.Cat.S.Utilitats
             return Contains((T)value);
         }
 
-        void ICollection.CopyTo(Array array, int index)
+        void ICollection.CopyTo([NotNull] Array array, int index)
         {
            
             try
@@ -368,8 +367,6 @@ namespace Gabriel.Cat.S.Utilitats
     }
     public class ListEventArgs<T> : EventArgs
     {
-        IList<T> items;
-        object list;
         public ListEventArgs(object list) : this(list, new T[0])
         { }
         public ListEventArgs(object list, T item) : this(list, new T[] { item })
@@ -378,23 +375,11 @@ namespace Gabriel.Cat.S.Utilitats
         { }
         public ListEventArgs(object list, IList<T> items)
         {
-            this.list = list;
-            this.items = items;
+            this.List = list;
+            this.Items = items;
         }
-        public object List
-        {
-            get
-            {
-                return list;
-            }
-        }
-        public IList<T> Items
-        {
-            get
-            {
-                return items;
-            }
-        }
+        public object List { get; private set; }
+        public IList<T> Items { get; private set; }
     }
 
 
