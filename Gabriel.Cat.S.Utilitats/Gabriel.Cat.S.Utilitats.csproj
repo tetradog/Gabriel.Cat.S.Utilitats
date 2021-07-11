@@ -9,12 +9,12 @@
     <Copyright>Gabriel.Cat.Developer</Copyright>
     <Authors>Gabriel.Cat.Developer</Authors>
     <SignAssembly>false</SignAssembly>
-    <Version>1.2</Version>
+    <Version>1.2.1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Company>Gabriel.Cat.Developer</Company>
-    <AssemblyVersion>1.0.4.4</AssemblyVersion>
-    <FileVersion>1.0.4.4</FileVersion>
+    <AssemblyVersion>1.2.1.0</AssemblyVersion>
+    <FileVersion>1.2.1.0</FileVersion>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Description>Clases de extensión útiles para el dia a dia y más</Description>
   </PropertyGroup>
