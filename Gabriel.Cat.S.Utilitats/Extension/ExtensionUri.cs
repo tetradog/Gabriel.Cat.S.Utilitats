@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,28 +25,27 @@ namespace Gabriel.Cat.S.Extension
                Arguments = $"/c start \"{url.AbsoluteUri}\""
            });
         }
-        public static Bitmap GetBitmap([NotNull] this Uri url)
+        public static async Task<Bitmap> GetBitmap([NotNull] this Uri url)
         {
-            WebRequest request = WebRequest.Create(url.AbsoluteUri);
-            WebResponse response = request.GetResponse();
-            System.IO.Stream responseStream = response.GetResponseStream();
-            return new Bitmap(responseStream);
+            return new Bitmap(await (await url.GetResponse()).Content.ReadAsStreamAsync());
         }
-        public static HttpStatusCode GetStatusCode([NotNull] this Uri url)
+        public static async Task<HttpResponseMessage> GetResponse([NotNull]this Uri url)
         {
-            HttpStatusCode response; 
-            HttpWebRequest httpReq;
-            HttpWebResponse httpRes=default;
-            
+            System.Net.Http.HttpClient httpClient;
+            httpClient = new System.Net.Http.HttpClient();
+            httpClient.DefaultRequestHeaders.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
+            return await httpClient.GetAsync(url);
+        }
+        public static async Task<HttpStatusCode> GetStatusCode([NotNull] this Uri url)
+        {
+            HttpStatusCode response;
+           
+
             try
             {
-                httpReq = (HttpWebRequest)WebRequest.Create(url.AbsoluteUri);
+     
+                response = (await url.GetResponse()).StatusCode;
 
-                httpReq.AllowAutoRedirect = false;
-                httpRes = (HttpWebResponse)httpReq.GetResponse();
-
-                response = httpRes.StatusCode;
-               
             }
             catch
             {
@@ -53,31 +53,21 @@ namespace Gabriel.Cat.S.Extension
             }
             finally
             {
-                if(!Equals(httpRes, default))
-                    httpRes.Close();
+
             }
 
             return response;
         }
        
-        public static async Task<string> DownloadStringAsync(this Uri url)
-        {
-            string result = string.Empty;
-            Task download = new Task(new Action(() => result = url.DownloadString()));
-            await download;
-            return result;
-        }
-        public static string DownloadString(this Uri url)
+        public static async Task<string> DownloadString(this Uri url)
         {
             string html;
-            WebClient wbClient;
 
             try
             {
                 smDownloading.WaitOne();
-                wbClient = new WebClient();
-                wbClient.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
-                html = wbClient.DownloadString(url);
+     
+                html = await (await url.GetResponse()).Content.ReadAsStringAsync();
             }
             catch
             {
