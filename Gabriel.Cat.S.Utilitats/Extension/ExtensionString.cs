@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Gabriel.Cat.S.Extension
 {
-   public static class ExtensionString
+    public static class ExtensionString
     {
         #region NormalizarXml
         //voy ha escapar caracteres no permitidos
@@ -40,7 +40,7 @@ namespace Gabriel.Cat.S.Extension
         #region NormalizarXml
         private static string TratarCaracteresXML(string textoHaEscapar, string[] caracteresASustituir)
         {
-            StringBuilder texto = new StringBuilder( textoHaEscapar);
+            StringBuilder texto = new StringBuilder(textoHaEscapar);
             for (int j = 0; j < caracteresASustituir.Length; j++)
                 texto.Replace(caracteresASustituir[j], caracteresReservadosXml[caracteresASustituir[j]]);
             return texto.ToString();
@@ -54,7 +54,16 @@ namespace Gabriel.Cat.S.Extension
             return TratarCaracteresXML(textoHaDesescapar, caracteresXmlSustitutos);
         }
         #endregion
-        public static string[] Divide(this string txt,string caracteresSplitSeguidos)
+        public static string NormalitzeFileName(this string fileName, string toReplace = "-")
+        {
+            //source:https://stackoverflow.com/questions/309485/c-sharp-sanitize-file-name
+            string invalidChars = System.Text.RegularExpressions.Regex.Escape(new string(System.IO.Path.GetInvalidFileNameChars()));
+            string invalidRegStr = string.Format(@"([{0}]*\.+$)|([{0}]+)", invalidChars);
+
+            return System.Text.RegularExpressions.Regex.Replace(fileName, invalidRegStr, toReplace);
+
+        }
+        public static string[] Divide(this string txt, string caracteresSplitSeguidos)
         {
             if (string.IsNullOrEmpty(caracteresSplitSeguidos))
                 throw new ArgumentException("Se requieren caracteres para realizar el Split!");

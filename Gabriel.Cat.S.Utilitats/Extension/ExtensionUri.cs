@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,44 +16,71 @@ namespace Gabriel.Cat.S.Extension
     public static class ExtensionUri
     {
         static Semaphore smDownloading = new Semaphore(1, 1);
-        public static Process Abrir([NotNull]this Uri url)
-        {//source https://github.com/dotnet/wpf/issues/2566
-            return Process.Start(new ProcessStartInfo
-           {
-               FileName = "cmd",
-               WindowStyle = ProcessWindowStyle.Hidden,
-               UseShellExecute = false,
-               CreateNoWindow = true,
-               Arguments = $"/c start \"{url.AbsoluteUri}\""
-           });
-        }
-        public static async Task<Bitmap> GetBitmap([NotNull] this Uri url)
+        public static Process Abrir([NotNull]this Uri uri)
         {
-            Stream sr=(await url.GetResponse()).GetResponseStream();
+            Process process;
+            string url = uri.ToString();
+            try
+            {
+                process=Process.Start(url);
+            }
+            catch
+            {
+                // hack because of this: https://github.com/dotnet/corefx/issues/10361
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    url = url.Replace("&", "^&");
+                    process = Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    process = Process.Start("xdg-open", url);
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    process = Process.Start("open", url);
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return process;
+        }
+        public static Bitmap DownloadBitmap([NotNull] this Uri url)
+        {
+            Stream sr=new MemoryStream(IGetWebClient(url).DownloadData(url));
             return new Bitmap(sr);
         }
-        public static async Task<WebResponse> GetResponse([NotNull] this Uri url, IWebProxy proxy = default)
+        public static byte[] DownloadData([NotNull] this Uri url)
         {
-            HttpWebRequest httpWebRequest;
-            httpWebRequest = (HttpWebRequest)HttpWebRequest.Create(url);
-            httpWebRequest.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
-            if (!Equals(proxy, default))
-                httpWebRequest.Proxy = proxy;
-            return await httpWebRequest.GetResponseAsync();
+            return IGetWebClient(url).DownloadData(url);
+        }
+        static WebClient IGetWebClient( Uri url)
+        {
+            WebClient client = new WebClient();
+            //client.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (compatible; MSIE 10.0;     Windows NT 6.2; WOW64; Trident/6.0)");
+            if (url.ToString().Contains("https"))
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            }
+            else
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.SystemDefault;
+            }
+            return  client;
         }
 
        
-        public static async Task<string> DownloadString(this Uri url, IWebProxy proxy = default)
+        public static string DownloadString(this Uri url, IWebProxy proxy = default)
         {
             string html;
-            StreamReader srHtml;
-            WebResponse response;
+            WebClient client;
             try
             {
                 smDownloading.WaitOne();
-                response = await url.GetResponse(proxy);
-                srHtml =new StreamReader(response.GetResponseStream());
-                html = await srHtml.ReadToEndAsync();
+                client = IGetWebClient(url);
+                html = client.DownloadString(url);
             }
             catch
             {
