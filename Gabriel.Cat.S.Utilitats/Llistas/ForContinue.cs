@@ -8,8 +8,8 @@ namespace Gabriel.Cat.S.Utilitats
     {
         public ForContinue(int incrementOrDecrement = 1, bool finished = false)
         {
-            this.IncrementOrDecrement = incrementOrDecrement;
-            this.Finished = finished;
+            IncrementOrDecrement = incrementOrDecrement;
+            Finished = finished;
         }
         public int IncrementOrDecrement { get; private set; }
 

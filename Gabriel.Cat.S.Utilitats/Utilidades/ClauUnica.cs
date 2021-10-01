@@ -19,7 +19,7 @@ namespace Gabriel.Cat.S.Utilitats
     public class ClauUnicaPerObjecte : IClauUnicaPerObjecte
     {
         public ClauUnicaPerObjecte([NotNull] IComparable clau)
-        { this.Clau = clau; }
+        { Clau = clau; }
         public IComparable Clau { get; private set; }
         #region conversion
         public static implicit operator ClauUnicaPerObjecte(char clau)

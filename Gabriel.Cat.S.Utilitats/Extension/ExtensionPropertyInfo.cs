@@ -18,18 +18,16 @@ namespace Gabriel.Cat.S.Extension
         }
         public static UsoPropiedad GetPropertyUsage(this PropertyInfo propiedad)
         {
-            UsoPropiedad uso = (UsoPropiedad)0;
+            UsoPropiedad uso = default;
             if (propiedad.CanRead)
                 uso = UsoPropiedad.Get;
             if (propiedad.CanWrite)
                 uso = (UsoPropiedad)((int)uso + (int)UsoPropiedad.Set);
             return uso;
         }
-        public static IList<Attribute> GetAttributes(this PropertyInfo propiedad)
+        public static IEnumerable<Attribute> GetAttributes(this PropertyInfo propiedad)
         {
-            List<System.Attribute> atributos = new List<Attribute>();
-            atributos.AddRange(propiedad.GetCustomAttributes(true).Casting<System.Attribute>());
-            return atributos;
+            return propiedad.GetCustomAttributes(true).Casting<System.Attribute>();
         }
     }
 }

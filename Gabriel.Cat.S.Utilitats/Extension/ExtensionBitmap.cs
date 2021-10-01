@@ -82,12 +82,11 @@ namespace Gabriel.Cat.S.Extension
         //}
 
         #endregion
-        private static System.Drawing.Color[] DamePixelesRandom(int numPixeles)
+        private static IEnumerable<System.Drawing.Color> GetPixelesRandom(this int numPixeles)
         {
-            System.Drawing.Color[] pixeles = new System.Drawing.Color[numPixeles];
-            for (int i = 0; i < pixeles.Length; i++)
-                pixeles[i] = System.Drawing.Color.FromArgb(MiRandom.Next());
-            return pixeles;
+            for (int i = 0; i < numPixeles; i++)
+                yield return System.Drawing.Color.FromArgb(MiRandom.Next());
+      
         }
         public static byte[] GetBytes(this Bitmap bmp)
         {

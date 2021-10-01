@@ -34,11 +34,11 @@ namespace Gabriel.Cat.S.Extension
         }
         public static T[] SortByQuickSort<T>(this IEnumerable<T> list) where T : IComparable
         {
-            return (T[])SortByQuickSort(list.ToArray());
+            return list.Sort(SortMethod.QuickSort);
         }
         public static T[] SortByBubble<T>(this IEnumerable<T> list) where T : IComparable
         {
-            return (T[])SortByBubble(list.ToArray());
+            return list.Sort(SortMethod.Bubble);
 
         }
         /// <summary>
@@ -55,15 +55,19 @@ namespace Gabriel.Cat.S.Extension
         }
         public static Tvalue[,] ToMatriu<Tvalue>(this IEnumerable<Tvalue> llista, int numeroDimension, DimensionMatriz dimensionTamañoMax = DimensionMatriz.Fila)
         { return llista.ToArray().ToMatriu(numeroDimension, dimensionTamañoMax); }
-        public static List<Tvalue> Filtra<Tvalue>(this IEnumerable<Tvalue> valors, [NotNull] ComprovaEventHandler<Tvalue> comprovador)
-        { return valors.ToArray().Filtra(comprovador); }
-        public static List<Tvalue> AfegirValor<Tvalue>(this IEnumerable<Tvalue> valors, Tvalue valorNou)
+
+        public static IEnumerable<Tvalue> Join<Tvalue>(this IEnumerable<Tvalue> valors, Tvalue valorNou,bool joinValueAtTop=false)
         {
-            List<Tvalue> valorsFinals = new List<Tvalue>(valors);
-            valorsFinals.Add(valorNou);
-            return valorsFinals;
+            if (joinValueAtTop)
+                yield return valorNou;
+
+            foreach (Tvalue value in valors)
+                yield return value;
+
+            if(!joinValueAtTop)
+                yield return valorNou;
         }
-        public static List<Tvalue> AfegirValors<Tvalue>(this IEnumerable<Tvalue> valors, IEnumerable<Tvalue> valorsNous, bool noPosarValorsJaExistents = false) where Tvalue : IComparable
+        public static List<Tvalue> Join<Tvalue>(this IEnumerable<Tvalue> valors, IEnumerable<Tvalue> valorsNous, bool noPosarValorsJaExistents = false) where Tvalue : IComparable
         {
             List<Tvalue> llista = new List<Tvalue>(valors);
             bool valorEnLista = true;
@@ -87,24 +91,16 @@ namespace Gabriel.Cat.S.Extension
             return llista;
 
         }
-        public static List<Tvalue> AfegirValors<Tvalue>(this IEnumerable<Tvalue> valors, IEnumerable<Tvalue> valorsNous)
+        public static IEnumerable<Tvalue> Join<Tvalue>([NotNull]this IEnumerable<Tvalue> valors, IEnumerable<Tvalue> valorsNous)
         {
-            List<Tvalue> llista = new List<Tvalue>(valors);
-            if (!Equals(valorsNous, default(IEnumerable<Tvalue>)))
-            {
-                llista.AddRange(valorsNous);
-            }
-            return llista;
+            foreach (Tvalue value in valors)
+                yield return value;
+            if (!ReferenceEquals(valorsNous, default))
+                foreach (Tvalue value in valorsNous)
+                    yield return value;
 
         }
-        public static T[] SubList<T>(this IEnumerable<T> arrayB, int inicio)
-        {
-            return arrayB.ToArray().SubList(inicio);
-        }
-        public static T[] SubList<T>(this IEnumerable<T> arrayB, int inicio, int longitud)
-        {
-            return arrayB.ToArray().SubList(inicio, longitud);
-        }
+
 
         
     }

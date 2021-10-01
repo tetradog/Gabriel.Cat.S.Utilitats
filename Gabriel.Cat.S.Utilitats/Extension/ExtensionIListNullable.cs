@@ -17,7 +17,7 @@ namespace Gabriel.Cat.S.Extension
 
         public static IList<T?> Sort<T>(this IList<T?> lst, SortMethod orden = SortMethod.QuickSort, bool ordenAscendente = true) where T : struct, IComparable
         {
-            IList<T?> listSorted = default;
+            IList<T?> listSorted;
             switch (orden)
             {
                 case SortMethod.QuickSort:

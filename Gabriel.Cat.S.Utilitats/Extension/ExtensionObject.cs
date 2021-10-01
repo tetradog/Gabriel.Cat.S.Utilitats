@@ -13,7 +13,7 @@ namespace Gabriel.Cat.S.Extension
 
             Type type = obj.GetType().GetProperty(property).PropertyType;
 
-            if (ifNullableGetValue && type.Name.Contains("Nullable"))
+            if (ifNullableGetValue && type.Name.Contains(nameof(Nullable)))
                 type = Nullable.GetUnderlyingType(type);
 
             return type;
@@ -23,7 +23,7 @@ namespace Gabriel.Cat.S.Extension
         {
             Type type = obj.GetType().GetProperty(property).PropertyType;
 
-            return type.Name.Contains("Nullable");
+            return type.Name.Contains(nameof(Nullable));
         }
    
         public static List<Propiedad> GetPropiedades(this object obj)

@@ -10,16 +10,13 @@ namespace Gabriel.Cat.S.Utilitats
     public class PropiedadTipo:IComparable<PropiedadTipo>
     {
         AtributoOrden orden;
-        string nombre;
-        IList<Attribute> atributos;
-        Type tipo;
-        UsoPropiedad uso;
-        public PropiedadTipo(string nombre, Type tipo, IList<Attribute> atributos, UsoPropiedad uso)
+
+        public PropiedadTipo(string nombre, Type tipo, IEnumerable<Attribute> atributos, UsoPropiedad uso)
         {
-            this.nombre = nombre;
-            this.atributos = atributos;
-            this.uso = uso;
-            this.tipo = tipo;
+            Nombre = nombre;
+            Atributos = atributos;
+            Uso = uso;
+            Tipo = tipo;
         }
 
         public PropiedadTipo(PropertyInfo campoTipo) : this(campoTipo.Name, campoTipo.PropertyType, campoTipo.GetAttributes(), campoTipo.GetPropertyUsage())
@@ -27,44 +24,20 @@ namespace Gabriel.Cat.S.Utilitats
 
         }
 
-        public string Nombre
-        {
-            get
-            {
-                return nombre;
-            }
-        }
+        public string Nombre { get; private set; }
 
-        public IList<System.Attribute> Atributos
-        {
-            get
-            {
-                return atributos;
-            }
-        }
+        public IEnumerable<System.Attribute> Atributos { get; private set; }
 
-        public UsoPropiedad Uso
-        {
-            get
-            {
-                return uso;
-            }
-        }
+        public UsoPropiedad Uso { get; private set; }
 
-        public Type Tipo
-        {
-            get
-            {
-                return tipo;
-            }
-        }
+        public Type Tipo { get; private set; }
         public AtributoOrden Orden
         {
             get
             {
                 if(Equals(orden,default(AtributoOrden)))
                 {
-                    orden = Atributos.Filtra((atributo) => atributo is AtributoOrden).FirstOrDefault() as AtributoOrden;
+                    orden = Atributos.Where((atributo) => atributo is AtributoOrden).FirstOrDefault() as AtributoOrden;
                 }
                 return orden;
             }

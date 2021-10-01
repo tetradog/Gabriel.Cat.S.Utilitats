@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Gabriel.Cat.S.Extension
 {
@@ -14,24 +15,24 @@ namespace Gabriel.Cat.S.Extension
         #region PuestoAPrueba 
 
 
-        public static TCasting[] Casting<TCasting>(this IList lst, bool elementosNoCompatiblesDefault = true)
+        public static IEnumerable<TCasting> Casting<TCasting>(this IList lst, bool elementosNoCompatiblesDefault = true)
         {
-
-            TCasting[] castings = new TCasting[lst.Count];
+            TCasting value;
             for (int i = 0; i < lst.Count; i++)
             {
                 try
                 {
-                    castings[i] = (TCasting)lst[i];
+                    value=(TCasting)lst[i];
                 }
                 catch
                 {
                     if (!elementosNoCompatiblesDefault)
                         throw;
-                    else castings[i] = default(TCasting);
+                    else value=default;
                 }
+                yield return value;
             }
-            return castings;
+
         }
         public static T GetElementActual<T>(this IList<T> llista, Ordre orden, int contador)
         {
@@ -257,16 +258,6 @@ namespace Gabriel.Cat.S.Extension
 
         }
 
-        //para los tipos genericos :) el tipo generico se define en el NombreMetodo<Tipo> y se usa en todo el metodoConParametros ;)
-        public static List<Tvalue> Filtra<Tvalue>(this IList<Tvalue> valors,[NotNull] ComprovaEventHandler<Tvalue> comprovador)
-        {
-            List<Tvalue> valorsOk = new List<Tvalue>();
-            for (int i = 0; i < valors.Count; i++)
-                if (comprovador(valors[i]))
-                    valorsOk.Add(valors[i]);
-            return valorsOk;
-
-        }
         public static int BinarySearch<T>(this IList<T> list, T value) where T : IComparable
         {//source https://stackoverflow.com/questions/8067643/binary-search-of-a-sorted-array
             const int IGUALES = 0;
@@ -347,26 +338,22 @@ namespace Gabriel.Cat.S.Extension
             }
             return contains;
         }
-        public static T[] SubList<T>(this IList<T> arrayB, int inicio)
+        public static IEnumerable<T> SubList<T>(this IList<T> arrayB, int inicio)
         {
             return arrayB.SubList(inicio, arrayB.Count - inicio);
         }
-        public static T[] SubList<T>(this IList<T> arrayB, int inicio, int longitud)
+        public static IEnumerable<T> SubList<T>(this IList<T> arrayB, int inicio, int longitud)
         {
-
-            T[] subArray;
 
             if (inicio < 0 || longitud <= 0)
                 throw new IndexOutOfRangeException();
             if (longitud + inicio > arrayB.Count)
                 throw new IndexOutOfRangeException();
 
-            subArray =new T[longitud];
 
             for (int i = inicio, fin = inicio + longitud,j=0; i < fin; i++,j++)
-                subArray[j]=arrayB[i];
+                yield return arrayB[i];
 
-            return subArray;
 
         }
         public static void SetIList<T>(this IList<T> listToSet,[NotNull] IList<T> source, int startIndexListToSet = 0, int startIndexSource = 0, int endIndexSource = -1)
@@ -406,25 +393,36 @@ namespace Gabriel.Cat.S.Extension
             }
             return equals;
         }
+        public static void AddRange<T>(this IList<T> lst, IList<T> toAdd)
+        {
+           for(int i=0;i<toAdd.Count;i++)
+                lst.Add(toAdd[i]);
+        }
+        public static void AddRange<T>(this IList<T> lst,IEnumerable<T> toAdd)
+        {
+            foreach (T item in toAdd)
+                lst.Add(item);
+        }
         public static void Desordena<T>(this IList<T> lst)
         {
-            T[] lstDesordenada = new T[lst.Count];
-            for (int i = 0, posRandom; i < lstDesordenada.Length; i++)
-            {
-                posRandom = MiRandom.Next(0, lst.Count);
-                lstDesordenada[i] = lst[posRandom];
-                lst.RemoveAt(posRandom);
-            }
-            for (int i = 0; i < lstDesordenada.Length; i++)
-                lst.Add(lstDesordenada[i]);
+            T[] lstDesordenada = lst.GetRandom().ToArray();
+            lst.Clear();
+            lst.AddRange(lstDesordenada);
+
+        }
+        public static IEnumerable<T> GetRandom<T>(this IList<T> lst)
+        {
+            foreach (int randomPos in lst.Count.GetRandomPositionList())
+                yield return lst[randomPos];
         }
 
-        public static TOut[] Convert<TIn,TOut>(this IList<TIn> ins,[NotNull]MetodoConvertir<TIn,TOut> method)
+
+        public static IEnumerable<TOut> Convert<TIn,TOut>(this IList<TIn> ins,[NotNull]MetodoConvertir<TIn,TOut> method)
         {
-            TOut[] outs = new TOut[ins.Count];
-            for (int i = 0; i < outs.Length; i++)
-                outs[i] = method(ins[i]);
-            return outs;
+
+            for (int i = 0; i < ins.Count; i++)
+                yield return method(ins[i]);
+         
         }
     }
 }

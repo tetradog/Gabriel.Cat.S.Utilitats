@@ -17,7 +17,7 @@ namespace Gabriel.Cat.S.Utilitats
         {
             list = new List<T>();
             semaphore = new Semaphore(1, 1);
-            if (initialElements != null)
+            if (!ReferenceEquals(initialElements,default))
                 list.AddRange(initialElements);
         }
 

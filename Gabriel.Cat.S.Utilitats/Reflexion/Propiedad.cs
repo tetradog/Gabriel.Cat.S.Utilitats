@@ -15,28 +15,23 @@ namespace Gabriel.Cat.S.Utilitats
         }
         public Propiedad([NotNull] PropiedadTipo info,[NotNull] object obj)
         {
-            this.Info = info;
-            this.Objeto = obj;
+            Info = info;
+            Objeto = obj;
         }
         public PropiedadTipo Info { get; private set; }
 
         public object Objeto { get; private set; }
         public object Value
         {
-            get
-            {
-                return Objeto.GetProperty(Info.Nombre);
-            }
-            set
-            {
-                Objeto.SetProperty(Info.Nombre, value);
-            }
+            get=> Objeto.GetProperty(Info.Nombre);
+            
+            set=>Objeto.SetProperty(Info.Nombre, value);   
         }
 
         int IComparable<Propiedad>.CompareTo(Propiedad other)
         {
             int compareTo;
-            if (other != default)
+            if (!Equals(other, default))
                 compareTo = ((IComparable<PropiedadTipo>)Info).CompareTo(other.Info);
             else compareTo = (int)Gabriel.Cat.S.Utilitats.CompareTo.Inferior;
             return compareTo;

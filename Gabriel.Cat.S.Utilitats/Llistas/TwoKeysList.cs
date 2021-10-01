@@ -69,7 +69,7 @@ namespace Gabriel.Cat.S.Utilitats
                     obj = this[(TKey1)key];
                 else if (key is TKey2)
                     obj = this[(TKey2)key];
-                else throw new Exception("el tipo no es ningun TKey");
+                else throw new Exception($"el tipo no es ningun TKey ('{typeof(TKey1).Name}' or '{typeof(TKey2).Name}')");
                 return obj;
             }
             set
@@ -78,7 +78,7 @@ namespace Gabriel.Cat.S.Utilitats
                     this[(TKey1)key] = (TValue)value;
                 else if (key is TKey2)
                     this[(TKey2)key] = (TValue)value;
-                else throw new Exception("el tipo no es ningun TKey");
+                else throw new Exception($"el tipo no es ningun TKey ('{typeof(TKey1).Name}' or '{typeof(TKey2).Name}')");
             }
         }
 

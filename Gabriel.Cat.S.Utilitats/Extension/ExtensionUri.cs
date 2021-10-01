@@ -72,7 +72,7 @@ namespace Gabriel.Cat.S.Extension
         }
 
        
-        public static string DownloadString(this Uri url, IWebProxy proxy = default)
+        public static string DownloadString([NotNull]this Uri url)
         {
             string html;
             WebClient client;
