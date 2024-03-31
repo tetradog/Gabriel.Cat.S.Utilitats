@@ -27,10 +27,10 @@ namespace UnitTestProjectgUtilitats.Extension
             public string T3 { set { t3 = value; } }
         }
         [TestMethod]
-        public void TestExtensionTypeGetPropiedadesTiposNumero()
+        public void TestExtensionTypeGetPropiedadesTipoNumero()
         {
             const int TOTALPROEPIEDADES = 3;
-            IList<PropiedadTipo> list = Gabriel.Cat.S.Extension.ExtensionType.GetPropiedadesTipos((typeof(Test)));
+            IList<PropiedadTipo> list = Gabriel.Cat.S.Extension.ExtensionType.GetPropiedadesTipo((typeof(Test)));
             Assert.AreEqual(TOTALPROEPIEDADES, list.Count);
            
 
@@ -39,7 +39,7 @@ namespace UnitTestProjectgUtilitats.Extension
         public void TestExtensionTypeGetPropiedadesNombreBien()
         {
         
-            IList<PropiedadTipo> list = Gabriel.Cat.S.Extension.ExtensionType.GetPropiedadesTipos((typeof(Test)));
+            IList<PropiedadTipo> list = Gabriel.Cat.S.Extension.ExtensionType.GetPropiedadesTipo((typeof(Test)));
             bool pasada=list[0].Nombre=="T1"&& list[1].Nombre == "T2"&& list[2].Nombre == "T3";
             Assert.IsTrue(pasada);
             
@@ -49,7 +49,7 @@ namespace UnitTestProjectgUtilitats.Extension
         public void TestExtensionTypeGetPropiedadesTipoBien()
         {
           
-            IList<PropiedadTipo> list = Gabriel.Cat.S.Extension.ExtensionType.GetPropiedadesTipos((typeof(Test)));
+            IList<PropiedadTipo> list = Gabriel.Cat.S.Extension.ExtensionType.GetPropiedadesTipo((typeof(Test)));
             bool pasada = list[0].Tipo.Equals(typeof(char)) && list[1].Tipo.Equals(typeof(int)) && list[2].Tipo.Equals(typeof(string));
             Assert.IsTrue(pasada);
 
@@ -59,7 +59,7 @@ namespace UnitTestProjectgUtilitats.Extension
         public void TestExtensionTypeGetPropiedadesUsoBien()
         {
          
-            IList<PropiedadTipo> list = Gabriel.Cat.S.Extension.ExtensionType.GetPropiedadesTipos((typeof(Test)));
+            IList<PropiedadTipo> list = Gabriel.Cat.S.Extension.ExtensionType.GetPropiedadesTipo((typeof(Test)));
             bool pasada = list[0].Uso==(UsoPropiedad.Get|UsoPropiedad.Set) && list[1].Uso == UsoPropiedad.Get && list[2].Uso == UsoPropiedad.Set;
             Assert.IsTrue(pasada);
          
@@ -69,7 +69,7 @@ namespace UnitTestProjectgUtilitats.Extension
         public void TestExtensionTypeGetPropiedadesAtributosBien()
         {
 
-            IList<PropiedadTipo> list = Gabriel.Cat.S.Extension.ExtensionType.GetPropiedadesTipos((typeof(Test)));
+            IList<PropiedadTipo> list = Gabriel.Cat.S.Extension.ExtensionType.GetPropiedadesTipo((typeof(Test)));
             bool pasada = list[0].Atributos[0] is AtributeA && list[1].Atributos[0] is AtributeB && list[2].Atributos[0] is AtributeC;
             Assert.IsTrue(pasada);
 

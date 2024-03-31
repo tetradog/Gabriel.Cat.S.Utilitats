@@ -119,7 +119,8 @@ namespace Gabriel.Cat.S.Extension
                     T* ptrBytesAEcontrar = ptBytesAEcontrar;
                     for (int i = offsetInicio, finDatos = hastaElFinal ? datos.Length : offsetFin, totalBytesArrayAEncontrar = arrayAEncontrar.Length; direccionBytes == DIRECCIONNOENCONTRADO && i < finDatos && i + (totalBytesArrayAEncontrar - 1 - numBytesEncontrados) < finDatos/*si los bytes que quedan por ver se pueden llegar a ver continuo sino paro*/; i++)
                     {
-                        if (Equals(*ptrBytesDatos, *ptrBytesAEcontrar))
+                        // Comparación especial para bytes
+                        if (EqualityComparer<T>.Default.Equals(*ptrBytesDatos, *ptrBytesAEcontrar))
                         {
                             numBytesEncontrados++;
                             //si no es el siguiente va al otro pero si es el primero se lo salta como si fuese malo...

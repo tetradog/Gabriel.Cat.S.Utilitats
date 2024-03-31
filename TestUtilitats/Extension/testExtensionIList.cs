@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Gabriel.Cat.S.Extension;
 using System.Collections;
 using Gabriel.Cat.S.Utilitats;
+using System.Linq;
 
 namespace UnitTestProjectgUtilitats.Extension
 {
@@ -25,7 +26,7 @@ namespace UnitTestProjectgUtilitats.Extension
             objs.Add(10);
             objs.Add("test");
             objs.Add(112);
-            ints= objs.Casting<int>();
+            ints= objs.Casting<int>().ToArray();
             Assert.IsTrue(objs[0].Equals(ints[0])&&!objs[1].Equals(ints[1])&& objs[2].Equals(ints[2]));
         }
         [TestMethod]
@@ -37,7 +38,7 @@ namespace UnitTestProjectgUtilitats.Extension
             objs.Add(10);
             objs.Add("test");
             objs.Add(112);
-            ints = objs.Casting<int>(false);
+            ints = objs.Casting<int>(false).ToArray();
            
         }
         [TestMethod]
@@ -140,7 +141,7 @@ namespace UnitTestProjectgUtilitats.Extension
         {
             byte[] input = { 0x1, 0x2, 0x3 };
             int[] answer = { 1, 2, 3 };
-            int[] converted = ExtensionIList.Convert(input,(i) => (int)i);
+            int[] converted = ExtensionIList.Convert(input,(i) => (int)i).ToArray();
             Assert.IsTrue(answer.AreEquals(converted));
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Gabriel.Cat.S.Extension;
+using System.Linq;
 namespace UnitTestProjectgUtilitats.Extension.Reflexion
 {
     [TestClass]
@@ -24,7 +25,7 @@ namespace UnitTestProjectgUtilitats.Extension.Reflexion
         [TestMethod]
         public void ExtensionPropertyInfoGetAttibutesPropertyInfo()
         {
-            Assert.IsTrue(Gabriel.Cat.S.Extension.ExtensionPropertyInfo.GetAttributes(typeof(Test).GetProperty("Get"))[0] is CustomAttribute);
+            Assert.IsTrue(Gabriel.Cat.S.Extension.ExtensionPropertyInfo.GetAttributes(typeof(Test).GetProperty("Get")).ToArray()[0] is CustomAttribute);
 
         }
         [TestMethod]

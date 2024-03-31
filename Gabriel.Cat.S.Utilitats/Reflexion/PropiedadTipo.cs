@@ -14,7 +14,7 @@ namespace Gabriel.Cat.S.Utilitats
         public PropiedadTipo(string nombre, Type tipo, IEnumerable<Attribute> atributos, UsoPropiedad uso)
         {
             Nombre = nombre;
-            Atributos = atributos;
+            Atributos = atributos.ToList();
             Uso = uso;
             Tipo = tipo;
         }
@@ -26,7 +26,7 @@ namespace Gabriel.Cat.S.Utilitats
 
         public string Nombre { get; private set; }
 
-        public IEnumerable<System.Attribute> Atributos { get; private set; }
+        public IList<System.Attribute> Atributos { get; private set; }
 
         public UsoPropiedad Uso { get; private set; }
 
