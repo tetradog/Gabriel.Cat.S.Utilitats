@@ -75,9 +75,7 @@ namespace Gabriel.Cat.S.Utilitats
                 else
                     compareTo = Y.CompareTo(other.Y);
             }
-            else
-                compareTo = Z.CompareTo(other.Z) * -1;
-
+       
             return compareTo;
         }
 

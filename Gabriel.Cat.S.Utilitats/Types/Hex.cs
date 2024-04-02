@@ -257,6 +257,10 @@ namespace Gabriel.Cat.S.Utilitats
         {
             return (Hex)Serializar.GetBytes(numero).InvertirClone();
         }
+        public static implicit operator Hex(ushort numero)
+        {
+            return new Hex(QuitaCerosInutiles(numero.ToString("X4")));
+        }
 
         public static implicit operator Hex(long numero)
         {
